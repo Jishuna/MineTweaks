@@ -1,0 +1,7 @@
+# Enable or disable this entire module.
+enabled: true
+
+# Automatically give armor stands arms when they are placed.
+armorstand-arms: true
+# Allows placing items in the off-hand of an armor stand when holding them in your off-hand, and removing items from the off-hand of an armor stand when both your hands are empty.
+armorstand-offhand: true

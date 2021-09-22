@@ -1,0 +1,5 @@
+#Enable or disable this entire module.
+enabled: true
+
+# Allows players to dye the name of named mobs.
+dyeable-names: true

@@ -1,0 +1,21 @@
+# Eclipse stuff
+.classpath
+.project
+.settings
+.metadata
+.recommenders
+.ucdetector_reports
+
+# various other potential build files
+target
+build
+.gradle
+bin
+dist
+out
+
+# Filesystem dust
+Thumbs.db
+.DS_Store
+*.lock
+*.launch

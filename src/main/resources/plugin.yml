@@ -1,0 +1,5 @@
+name: MineTweaks
+version: @version@
+main: me.jishuna.minetweaks.MineTweaks
+authors: [Jishuna]
+api-version: 1.17

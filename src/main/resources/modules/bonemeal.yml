@@ -1,0 +1,17 @@
+#Enable or disable this entire module.
+enabled: true
+
+# Allows players to bonemeal cactus.
+bonemeal-cactus: true
+# The maximum height of cactus when bonemealed.
+cactus-bonemeal-height: 3
+
+# Allows players to bonemeal sugar cane.
+bonemeal-sugarcane: true
+# The maximum height of sugar cane when bonemealed.
+sugarcane-bonemeal-height: 3
+
+# Allows players to bonemeal sand to grow dead bushes.
+bonemeal-sand: true
+# Allows players to bonemeal red sand to grow dead bushes.
+bonemeal-redsand: true

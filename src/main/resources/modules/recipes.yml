@@ -1,0 +1,31 @@
+# Enable or disable this entire module.
+enabled: true
+
+# Unlock all recipes for a player when they join the server.
+unlock-on-join: true
+
+# Crafting stairs will yield more than 4 stairs.
+more-stairs: true
+# How many stairs will be crafted at once.
+more-stairs-amount: 8
+# Crafting trapdoors will yield more than 3 trapdoors.
+more-trapdoors: true
+# How many trapdoors will be crafted at once.
+more-stairs-amount: 12
+
+# Allows players to smelt rotten flesh into leather.
+rotten-flesh-to-leather: false
+# The cooking time (in ticks) for rotten flesh.
+rotten-flesh-cook-time: 200
+# Allows players to turn quartz blocks back into 4 quartz.
+uncompress-quartz: true
+# Allows players to create red sand with sand and iron nuggets.
+red-sand-iron: true
+# Allows players to create red sand with sand and red dye.
+red-sand-dye: false
+# Allows players to craft dispensers using a dropper, sticks, and string.
+dispensers-from-droppers: true
+# Allows players to craft the bundle item from 1.18 using rabbit hide and string.
+hide-bundle: true
+# Allows players to craft the bundle item from 1.18 using rleather and string.
+leather-bundle: true

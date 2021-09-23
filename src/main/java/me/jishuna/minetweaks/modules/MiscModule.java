@@ -6,11 +6,14 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffectType;
 
 import me.jishuna.minetweaks.api.module.TweakModule;
 import net.md_5.bungee.api.ChatColor;
@@ -22,10 +25,19 @@ public class MiscModule extends TweakModule {
 
 		addEventHandler(PlayerInteractEntityEvent.class, this::onInteractEntity);
 		addEventHandler(EntityChangeBlockEvent.class, this::onBlockLand);
+		addEventHandler(EntityCombustEvent.class, this::onCombust);
+	}
+
+	private void onCombust(EntityCombustEvent event) {
+		if (getBoolean("remove-screen-fire", true) && event.getEntity()instanceof Player player
+				&& player.hasPotionEffect(PotionEffectType.FIRE_RESISTANCE)) {
+			event.setCancelled(true);
+			player.setFireTicks(-20);
+		}
 	}
 
 	private void onBlockLand(EntityChangeBlockEvent event) {
-		if (getBoolean("anvil-cobble-to-sand", true) && event.getEntity()instanceof FallingBlock block) {
+		if (getBoolean("anvil-cobble-to-sand", true) && event.getEntity() instanceof FallingBlock block) {
 			Material material = block.getBlockData().getMaterial();
 			if (material != Material.ANVIL && material != Material.CHIPPED_ANVIL && material != Material.DAMAGED_ANVIL)
 				return;

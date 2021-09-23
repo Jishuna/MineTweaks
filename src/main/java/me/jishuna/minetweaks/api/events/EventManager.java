@@ -8,6 +8,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
@@ -66,6 +67,7 @@ public class EventManager {
 		registerListener(EntityInteractEvent.class, event -> processEvent(event, EntityInteractEvent.class), EventPriority.HIGHEST);
 		registerListener(BlockDispenseEvent.class, event -> processEvent(event, BlockDispenseEvent.class), EventPriority.HIGHEST);
 		registerListener(EntitySpawnEvent.class, event -> processEvent(event, EntitySpawnEvent.class));
+		registerListener(EntityCombustEvent.class, event -> processEvent(event, EntityCombustEvent.class));
 		registerListener(PlayerJoinEvent.class, event -> processEvent(event, PlayerJoinEvent.class));
 		registerListener(EntityExplodeEvent.class, event -> processEvent(event, EntityExplodeEvent.class));
 		registerListener(EntityChangeBlockEvent.class, event -> processEvent(event, EntityChangeBlockEvent.class));

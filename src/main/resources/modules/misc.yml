@@ -6,3 +6,6 @@ dyeable-names: true
 
 # Allows falling anvils to crush cobblestone blocks into sand.
 anvil-cobble-to-sand: true
+
+# Remove the fire effect from player's screens if they have fire resistance.
+remove-screen-fire: true

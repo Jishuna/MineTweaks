@@ -69,7 +69,7 @@ public class BonemealModule extends TweakModule {
 	}
 
 	// Handles bonemealing cactus and sugar cane
-	public static void handleTallPlant(ItemStack item, Block block, int maxHeight) {
+	public static boolean handleTallPlant(ItemStack item, Block block, int maxHeight) {
 		TallPlantData data = evaluateTallPlantData(block, new TallPlantData(block), null);
 
 		Block top = data.getTopBlock();
@@ -83,13 +83,16 @@ public class BonemealModule extends TweakModule {
 		if (blockData.getAge() == age) {
 			item.setAmount(item.getAmount() - 1);
 			block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 0.5, 0.5), 15, 0.3d, 0.3d, 0.3d);
+			return true;
 		}
 
 		if (age > blockData.getMaximumAge() && data.getHeight() < maxHeight) {
 			block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 0.5, 0.5), 15, 0.3d, 0.3d, 0.3d);
 			top.getRelative(BlockFace.UP).setType(top.getType());
 			item.setAmount(item.getAmount() - 1);
+			return true;
 		}
+		return false;
 	}
 
 	// Handles detecting height and top block of sugar cane

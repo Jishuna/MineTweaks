@@ -88,8 +88,9 @@ public class DispenserModule extends TweakModule {
 		// Bonemeal
 		if (item.getType() == Material.BONE_MEAL) {
 			if (target.getType() == Material.SUGAR_CANE && getBoolean("bonemeal-sugarcane", true)) {
-				BonemealModule.handleTallPlant(item, target, getInt("sugarcane-bonemeal-height", 3));
-				removeUsedItem(event.getBlock(), item, 1);
+				if (BonemealModule.handleTallPlant(item, target, getInt("sugarcane-bonemeal-height", 3))) {
+					removeUsedItem(event.getBlock(), item, 1);
+				}
 			} else if (face != BlockFace.DOWN && target.getType() == Material.SAND
 					&& getBoolean("bonemeal-sand", true)) {
 				BonemealModule.handleSand(item, target);

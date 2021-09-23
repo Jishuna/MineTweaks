@@ -9,6 +9,8 @@ import me.jishuna.minetweaks.modules.BonemealModule;
 import me.jishuna.minetweaks.modules.DispenserModule;
 import me.jishuna.minetweaks.modules.ItemframeModule;
 import me.jishuna.minetweaks.modules.MiscModule;
+import me.jishuna.minetweaks.modules.MobModule;
+import me.jishuna.minetweaks.modules.RecipeModule;
 
 public class MineTweaks extends JavaPlugin {
 	
@@ -27,6 +29,8 @@ public class MineTweaks extends JavaPlugin {
 		this.moduleManager.registerModule(new BonemealModule(this));
 		this.moduleManager.registerModule(new DispenserModule(this));
 		this.moduleManager.registerModule(new MiscModule(this));
+		this.moduleManager.registerModule(new MobModule(this));
+		this.moduleManager.registerModule(new RecipeModule(this));
 	}
 
 	public ModuleManager getModuleManager() {

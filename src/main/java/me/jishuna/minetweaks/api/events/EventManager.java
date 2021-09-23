@@ -7,11 +7,15 @@ import java.util.function.Consumer;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockDispenseEvent;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 import me.jishuna.commonlib.events.EventConsumer;
 import me.jishuna.minetweaks.MineTweaks;
@@ -59,8 +63,12 @@ public class EventManager {
 		registerListener(PlayerInteractAtEntityEvent.class, event -> processEvent(event, PlayerInteractAtEntityEvent.class), EventPriority.HIGHEST);
 		registerListener(PlayerInteractEntityEvent.class, event -> processEvent(event, PlayerInteractEntityEvent.class), EventPriority.HIGHEST);
 		registerListener(PlayerInteractEvent.class, event -> processEvent(event, PlayerInteractEvent.class), EventPriority.HIGHEST);
+		registerListener(EntityInteractEvent.class, event -> processEvent(event, EntityInteractEvent.class), EventPriority.HIGHEST);
 		registerListener(BlockDispenseEvent.class, event -> processEvent(event, BlockDispenseEvent.class), EventPriority.HIGHEST);
 		registerListener(EntitySpawnEvent.class, event -> processEvent(event, EntitySpawnEvent.class));
+		registerListener(PlayerJoinEvent.class, event -> processEvent(event, PlayerJoinEvent.class));
+		registerListener(EntityExplodeEvent.class, event -> processEvent(event, EntityExplodeEvent.class));
+		registerListener(EntityChangeBlockEvent.class, event -> processEvent(event, EntityChangeBlockEvent.class));
 		registerListener(PotionSplashEvent.class, event -> processEvent(event, PotionSplashEvent.class));
 	}
 }

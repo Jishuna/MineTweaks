@@ -1,0 +1,12 @@
+# Enable or disable this entire module.
+enabled: true
+
+# Prevent endermen picking up blocks.
+disable-endermen-griefing: true
+
+# Prevents any non-
+no-trampling-farmland: true
+
+# Creepers explode into fireworks instead of breaking blocks.
+firework-creepers: false
+

@@ -3,3 +3,6 @@ enabled: true
 
 # Allows players to dye the name of named mobs.
 dyeable-names: true
+
+# Allows falling anvils to crush cobblestone blocks into sand.
+anvil-cobble-to-sand: true

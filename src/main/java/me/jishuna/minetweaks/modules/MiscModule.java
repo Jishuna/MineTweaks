@@ -1,7 +1,12 @@
 package me.jishuna.minetweaks.modules;
 
 import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -9,7 +14,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.minetweaks.api.module.TweakModule;
 import net.md_5.bungee.api.ChatColor;
-import net.minecraft.world.level.block.BlockStoneButton;
 
 public class MiscModule extends TweakModule {
 
@@ -17,9 +21,29 @@ public class MiscModule extends TweakModule {
 		super(plugin, "misc");
 
 		addEventHandler(PlayerInteractEntityEvent.class, this::onInteractEntity);
+		addEventHandler(EntityChangeBlockEvent.class, this::onBlockLand);
 	}
 
-	public void onInteractEntity(PlayerInteractEntityEvent event) {
+	private void onBlockLand(EntityChangeBlockEvent event) {
+		if (getBoolean("anvil-cobble-to-sand", true) && event.getEntity()instanceof FallingBlock block) {
+			Material material = block.getBlockData().getMaterial();
+			if (material != Material.ANVIL && material != Material.CHIPPED_ANVIL && material != Material.DAMAGED_ANVIL)
+				return;
+
+			Block target = event.getBlock().getRelative(BlockFace.DOWN);
+
+			if (target.getType() == Material.COBBLESTONE) {
+				target.setType(Material.SAND);
+				target.getWorld().spawnParticle(Particle.BLOCK_DUST, target.getLocation().add(0.5, 0.5, 0.5), 25, 0.3,
+						0.3, 0.3, Material.COBBLESTONE.createBlockData());
+			}
+		}
+	}
+
+	private void onInteractEntity(PlayerInteractEntityEvent event) {
+		if (event.isCancelled())
+			return;
+
 		if (getBoolean("dyeable-names", true)) {
 			ItemStack item;
 
@@ -33,7 +57,6 @@ public class MiscModule extends TweakModule {
 				item = event.getPlayer().getEquipment().getItemInMainHand();
 			} else {
 				item = event.getPlayer().getEquipment().getItemInOffHand();
-				BlockStoneButton
 			}
 
 			if (!item.getType().toString().endsWith("_DYE"))

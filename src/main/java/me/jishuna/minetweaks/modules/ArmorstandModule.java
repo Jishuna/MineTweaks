@@ -1,7 +1,7 @@
 package me.jishuna.minetweaks.modules;
 
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.event.entity.EntitySpawnEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,12 +13,12 @@ public class ArmorstandModule extends TweakModule {
 	public ArmorstandModule(JavaPlugin plugin) {
 		super(plugin, "armor_stands");
 
-		addEventHandler(EntitySpawnEvent.class, this::onEntitySpawn);
+		addEventHandler(CreatureSpawnEvent.class, this::onEntitySpawn);
 		addEventHandler(PlayerInteractAtEntityEvent.class, this::onEntityInteract);
 	}
 
-	private void onEntitySpawn(EntitySpawnEvent event) {
-		if (getBoolean("armorstand-arms", true) && event.getEntity()instanceof ArmorStand stand) {
+	private void onEntitySpawn(CreatureSpawnEvent event) {
+		if (getBoolean("armorstand-arms", true) && event.getEntity() instanceof ArmorStand stand) {
 			stand.setArms(true);
 		}
 	}

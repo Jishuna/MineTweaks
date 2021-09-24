@@ -8,9 +8,13 @@ import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
+import org.bukkit.entity.Snowman;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -25,6 +29,26 @@ public class MobModule extends TweakModule {
 		addEventHandler(EntityChangeBlockEvent.class, this::onBlockChange);
 		addEventHandler(EntityExplodeEvent.class, this::onEntityExplode);
 		addEventHandler(EntityInteractEvent.class, this::onEntityTrample);
+		addEventHandler(PlayerInteractEntityEvent.class, this::onInteract);
+	}
+
+	private void onInteract(PlayerInteractEntityEvent event) {
+		if (getBoolean("replace-snowman-head", true) && event.getRightClicked()instanceof Snowman snowman
+				&& snowman.isDerp()) {
+			ItemStack item;
+
+			if (event.getHand() == EquipmentSlot.HAND) {
+				item = event.getPlayer().getEquipment().getItemInMainHand();
+			} else {
+				item = event.getPlayer().getEquipment().getItemInOffHand();
+			}
+
+			if (item.getType() == Material.CARVED_PUMPKIN) {
+				event.setCancelled(true);
+				snowman.setDerp(false);
+				item.setAmount(item.getAmount() - 1);
+			}
+		}
 	}
 
 	private void onEntityExplode(EntityExplodeEvent event) {
@@ -57,13 +81,14 @@ public class MobModule extends TweakModule {
 			event.setCancelled(true);
 		}
 	}
-	
+
 	private void onEntityTrample(EntityInteractEvent event) {
-		if (getBoolean("no-trampling-farmland", true) && event.getEntityType() != EntityType.PLAYER && event.getBlock().getType() == Material.FARMLAND) {
+		if (getBoolean("no-trampling-farmland", true) && event.getEntityType() != EntityType.PLAYER
+				&& event.getBlock().getType() == Material.FARMLAND) {
 			event.setCancelled(true);
 		}
 	}
-	
+
 	private Color getRandomColor(Random random) {
 		return Color.fromRGB(random.nextInt(256), random.nextInt(256), random.nextInt(256));
 	}

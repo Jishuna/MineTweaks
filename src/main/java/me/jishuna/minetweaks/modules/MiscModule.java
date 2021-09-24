@@ -57,14 +57,14 @@ public class MiscModule extends TweakModule {
 			return;
 
 		if (getBoolean("dyeable-names", true)) {
-			ItemStack item;
-
 			if (!event.getPlayer().isSneaking() || !(event.getRightClicked()instanceof LivingEntity livingEntity))
 				return;
 
 			if (livingEntity.getCustomName() == null)
 				return;
 
+			ItemStack item;
+			
 			if (event.getHand() == EquipmentSlot.HAND) {
 				item = event.getPlayer().getEquipment().getItemInMainHand();
 			} else {

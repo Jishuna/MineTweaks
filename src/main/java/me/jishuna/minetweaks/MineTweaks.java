@@ -11,6 +11,8 @@ import me.jishuna.minetweaks.modules.ItemframeModule;
 import me.jishuna.minetweaks.modules.MiscModule;
 import me.jishuna.minetweaks.modules.MobModule;
 import me.jishuna.minetweaks.modules.RecipeModule;
+import me.jishuna.minetweaks.modules.ScoreboardModule;
+import me.jishuna.minetweaks.modules.WanderingTraderModule;
 
 public class MineTweaks extends JavaPlugin {
 	
@@ -31,6 +33,8 @@ public class MineTweaks extends JavaPlugin {
 		this.moduleManager.registerModule(new MiscModule(this));
 		this.moduleManager.registerModule(new MobModule(this));
 		this.moduleManager.registerModule(new RecipeModule(this));
+		this.moduleManager.registerModule(new ScoreboardModule(this));
+		this.moduleManager.registerModule(new WanderingTraderModule(this));
 	}
 
 	public ModuleManager getModuleManager() {

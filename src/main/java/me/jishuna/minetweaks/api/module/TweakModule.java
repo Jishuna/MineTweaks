@@ -69,6 +69,10 @@ public class TweakModule {
 		return !this.enabled ? def : this.config.getInt(key, def);
 	}
 	
+	public String getString(String key, String def) {
+		return !this.enabled ? def : this.config.getString(key, def);
+	}
+	
 	public List<String> getStringList(String key) {
 		return !this.enabled ? Collections.emptyList() : this.config.getStringList(key);
 	}

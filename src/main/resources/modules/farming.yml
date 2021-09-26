@@ -15,3 +15,11 @@ sugarcane-bonemeal-height: 3
 bonemeal-sand: true
 # Allows players to bonemeal red sand to grow dead bushes.
 bonemeal-redsand: true
+
+right-click-harvest: true
+
+harvest-seed-mappings:
+  wheat: 'wheat_seeds'
+  carrots: 'carrot'
+  potatoes: 'potato'
+  beetroots: 'beetroot_seeds'

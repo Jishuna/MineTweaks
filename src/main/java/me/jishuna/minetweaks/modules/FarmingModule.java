@@ -1,5 +1,7 @@
 package me.jishuna.minetweaks.modules;
 
+import java.util.Collection;
+import java.util.EnumMap;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -9,6 +11,8 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Ageable;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -17,40 +21,89 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.minetweaks.api.module.TweakModule;
 
-public class BonemealModule extends TweakModule {
+public class FarmingModule extends TweakModule {
+	private EnumMap<Material, Material> seedMap;
 
-	public BonemealModule(JavaPlugin plugin) {
-		super(plugin, "bonemeal");
+	public FarmingModule(JavaPlugin plugin) {
+		super(plugin, "farming");
 
 		addEventHandler(PlayerInteractEvent.class, this::onInteract);
+	}
+
+	@Override
+	public void reload() {
+		super.reload();
+
+		seedMap = new EnumMap<>(Material.class);
+
+		ConfigurationSection section = getConfig().getConfigurationSection("harvest-seed-mappings");
+		for (String key : section.getKeys(true)) {
+			Material fromMaterial = Material.matchMaterial(key.toUpperCase());
+			Material toMaterial = Material.matchMaterial(section.getString(key).toUpperCase());
+
+			if (fromMaterial != null) {
+				seedMap.put(fromMaterial, toMaterial);
+			}
+		}
 	}
 
 	private void onInteract(PlayerInteractEvent event) {
 		if (!isEnabled() || event.useInteractedBlock() == Result.DENY || event.getAction() != Action.RIGHT_CLICK_BLOCK)
 			return;
 
-		ItemStack item = event.getItem();
-		if (item == null || item.getType() != Material.BONE_MEAL)
-			return;
-
 		Block block = event.getClickedBlock();
 
-		if (block.getType() == Material.CACTUS && getBoolean("bonemeal-cactus", true)) {
-			handleTallPlant(item, block, getInt("cactus-bonemeal-height", 3));
-		} else if (block.getType() == Material.SUGAR_CANE && getBoolean("bonemeal-sugarcane", true)) {
-			handleTallPlant(item, block, getInt("sugarcane-bonemeal-height", 3));
-		} else if (block.getType() == Material.SAND && getBoolean("bonemeal-sand", true)) {
-			handleSand(item, block);
-		} else if (block.getType() == Material.RED_SAND && getBoolean("bonemeal-redsand", true)) {
-			handleSand(item, block);
+		if (getBoolean("right-click-harvest", true)) {
+			handleHarvest(event, block);
+		}
+
+		ItemStack item = event.getItem();
+		if (item != null && item.getType() == Material.BONE_MEAL) {
+
+			if (block.getType() == Material.CACTUS && getBoolean("bonemeal-cactus", true)) {
+				handleTallPlant(item, block, getInt("cactus-bonemeal-height", 3));
+			} else if (block.getType() == Material.SUGAR_CANE && getBoolean("bonemeal-sugarcane", true)) {
+				handleTallPlant(item, block, getInt("sugarcane-bonemeal-height", 3));
+			} else if (block.getType() == Material.SAND && getBoolean("bonemeal-sand", true)) {
+				handleSand(item, block);
+			} else if (block.getType() == Material.RED_SAND && getBoolean("bonemeal-redsand", true)) {
+				handleSand(item, block);
+			}
+		}
+	}
+
+	// Handles right click harvesting
+	private void handleHarvest(PlayerInteractEvent event, Block block) {
+		BlockData data = block.getBlockData();
+		Material seed = this.seedMap.get(block.getType());
+
+		if (data instanceof Ageable ageable && seed != null && ageable.getAge() >= ageable.getMaximumAge()) {
+			Collection<ItemStack> drops = block.getDrops();
+
+			for (ItemStack item : drops) {
+				if (item.getType() == seed) {
+					item.setAmount(item.getAmount() - 1);
+					break;
+				}
+			}
+
+			drops.forEach(item -> {
+				if (item.getAmount() > 0)
+					block.getWorld().dropItemNaturally(block.getLocation(), item);
+			});
+
+			ageable.setAge(0);
+			block.setBlockData(ageable);
+			event.setCancelled(true);
 		}
 	}
 
 	// Handles growing dead bushes on sand
 	public static void handleSand(ItemStack item, Block block) {
 		Random random = ThreadLocalRandom.current();
-		block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 1.5, 0.5), 15, 3d, 0.5d, 3d);
-		
+		block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 1.5, 0.5), 15, 3d, 0.5d,
+				3d);
+
 		item.setAmount(item.getAmount() - 1);
 
 		for (int i = 0; i < 15; i++) {
@@ -82,12 +135,14 @@ public class BonemealModule extends TweakModule {
 
 		if (blockData.getAge() == age) {
 			item.setAmount(item.getAmount() - 1);
-			block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 0.5, 0.5), 15, 0.3d, 0.3d, 0.3d);
+			block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 0.5, 0.5), 15, 0.3d,
+					0.3d, 0.3d);
 			return true;
 		}
 
 		if (age > blockData.getMaximumAge() && data.getHeight() < maxHeight) {
-			block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 0.5, 0.5), 15, 0.3d, 0.3d, 0.3d);
+			block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 0.5, 0.5), 15, 0.3d,
+					0.3d, 0.3d);
 			top.getRelative(BlockFace.UP).setType(top.getType());
 			item.setAmount(item.getAmount() - 1);
 			return true;

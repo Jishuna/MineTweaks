@@ -38,3 +38,4 @@ placement-mappings:
   potato: 'potatoes'
   pumpkin_seeds: 'pumpkin_stem'
   melon_seeds: 'melon_stem'
+  redstone: 'redstone_wire'

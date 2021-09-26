@@ -5,8 +5,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import me.jishuna.minetweaks.api.events.EventManager;
 import me.jishuna.minetweaks.api.module.ModuleManager;
 import me.jishuna.minetweaks.modules.ArmorstandModule;
-import me.jishuna.minetweaks.modules.BonemealModule;
 import me.jishuna.minetweaks.modules.DispenserModule;
+import me.jishuna.minetweaks.modules.FarmingModule;
 import me.jishuna.minetweaks.modules.ItemframeModule;
 import me.jishuna.minetweaks.modules.MiscModule;
 import me.jishuna.minetweaks.modules.MobModule;
@@ -28,7 +28,7 @@ public class MineTweaks extends JavaPlugin {
 	private void registerBaseModules() {
 		this.moduleManager.registerModule(new ArmorstandModule(this));
 		this.moduleManager.registerModule(new ItemframeModule(this));
-		this.moduleManager.registerModule(new BonemealModule(this));
+		this.moduleManager.registerModule(new FarmingModule(this));
 		this.moduleManager.registerModule(new DispenserModule(this));
 		this.moduleManager.registerModule(new MiscModule(this));
 		this.moduleManager.registerModule(new MobModule(this));

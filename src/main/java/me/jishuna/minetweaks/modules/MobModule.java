@@ -33,7 +33,7 @@ public class MobModule extends TweakModule {
 	}
 
 	private void onInteract(PlayerInteractEntityEvent event) {
-		if (getBoolean("replace-snowman-head", true) && event.getRightClicked()instanceof Snowman snowman
+		if (getBoolean("replace-snowman-head", true) && event.getRightClicked() instanceof Snowman snowman
 				&& snowman.isDerp()) {
 			ItemStack item;
 

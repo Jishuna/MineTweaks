@@ -9,3 +9,6 @@ anvil-cobble-to-sand: true
 
 # Remove the fire effect from player's screens if they have fire resistance.
 remove-screen-fire: true
+
+# Allows players to convert pistons to sticky pistons by right clicking with a slimeball.
+slimeball-sticky-pistons: true

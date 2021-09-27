@@ -78,6 +78,9 @@ misc:
   dyeable-names:
     name: "Dyeable Name Tags"
     description: "Allows players to dye the name of named mobs using any type of dye."
+  slimeball-sticky-pistons:
+    name: "Slimeball Piston Conversion"
+    description: "Allows players to convert pistons into sticky pistons by right clicking with a slimeball."
 
 mobs:
   name: "Mobs"

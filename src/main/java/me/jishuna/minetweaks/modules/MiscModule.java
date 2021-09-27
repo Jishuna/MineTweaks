@@ -3,14 +3,19 @@ package me.jishuna.minetweaks.modules;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Directional;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event.Result;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,14 +32,40 @@ public class MiscModule extends TweakModule {
 		addSubModule("remove-screen-fire");
 		addSubModule("anvil-cobble-to-sand");
 		addSubModule("dyeable-names");
+		addSubModule("slimeball-sticky-pistons");
 
 		addEventHandler(PlayerInteractEntityEvent.class, this::onInteractEntity);
 		addEventHandler(EntityChangeBlockEvent.class, this::onBlockLand);
 		addEventHandler(EntityCombustEvent.class, this::onCombust);
+		addEventHandler(PlayerInteractEvent.class, this::onInteract);
+	}
+
+	private void onInteract(PlayerInteractEvent event) {
+		if (!isEnabled() || event.useInteractedBlock() == Result.DENY || event.getAction() != Action.RIGHT_CLICK_BLOCK)
+			return;
+
+		Block block = event.getClickedBlock();
+		ItemStack item = event.getItem();
+
+		if (item == null)
+			return;
+
+		if (getBoolean("slimeball-sticky-pistons", true) && block.getType() == Material.PISTON
+				&& item.getType() == Material.SLIME_BALL) {
+			Directional oldData = (Directional) block.getBlockData();
+
+			block.setType(Material.STICKY_PISTON);
+			Directional data = (Directional) block.getBlockData();
+			data.setFacing(oldData.getFacing());
+			block.setBlockData(data);
+
+			item.setAmount(item.getAmount() - 1);
+			event.getPlayer().playSound(block.getLocation(), Sound.BLOCK_SLIME_BLOCK_PLACE, 1f, 1f);
+		}
 	}
 
 	private void onCombust(EntityCombustEvent event) {
-		if (getBoolean("remove-screen-fire", true) && event.getEntity() instanceof Player player
+		if (getBoolean("remove-screen-fire", true) && event.getEntity()instanceof Player player
 				&& (player.hasPotionEffect(PotionEffectType.FIRE_RESISTANCE)
 						|| player.getGameMode() == GameMode.CREATIVE)) {
 			event.setCancelled(true);
@@ -43,7 +74,7 @@ public class MiscModule extends TweakModule {
 	}
 
 	private void onBlockLand(EntityChangeBlockEvent event) {
-		if (getBoolean("anvil-cobble-to-sand", true) && event.getEntity() instanceof FallingBlock block) {
+		if (getBoolean("anvil-cobble-to-sand", true) && event.getEntity()instanceof FallingBlock block) {
 			Material material = block.getBlockData().getMaterial();
 			if (material != Material.ANVIL && material != Material.CHIPPED_ANVIL && material != Material.DAMAGED_ANVIL)
 				return;
@@ -63,7 +94,7 @@ public class MiscModule extends TweakModule {
 			return;
 
 		if (getBoolean("dyeable-names", true)) {
-			if (!event.getPlayer().isSneaking() || !(event.getRightClicked() instanceof LivingEntity livingEntity))
+			if (!event.getPlayer().isSneaking() || !(event.getRightClicked()instanceof LivingEntity livingEntity))
 				return;
 
 			if (livingEntity.getCustomName() == null)

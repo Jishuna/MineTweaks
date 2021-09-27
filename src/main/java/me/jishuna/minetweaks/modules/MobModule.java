@@ -26,6 +26,11 @@ public class MobModule extends TweakModule {
 	public MobModule(JavaPlugin plugin) {
 		super(plugin, "mobs");
 
+		addSubModule("replace-snowman-head");
+		addSubModule("firework-creepers");
+		addSubModule("disable-endermen-griefing");
+		addSubModule("no-trampling-farmland");
+		
 		addEventHandler(EntityChangeBlockEvent.class, this::onBlockChange);
 		addEventHandler(EntityExplodeEvent.class, this::onEntityExplode);
 		addEventHandler(EntityInteractEvent.class, this::onEntityTrample);

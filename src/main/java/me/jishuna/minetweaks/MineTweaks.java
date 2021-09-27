@@ -4,6 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.minetweaks.api.events.EventManager;
 import me.jishuna.minetweaks.api.module.ModuleManager;
+import me.jishuna.minetweaks.commands.TempCommand;
 import me.jishuna.minetweaks.modules.ArmorstandModule;
 import me.jishuna.minetweaks.modules.DispenserModule;
 import me.jishuna.minetweaks.modules.FarmingModule;
@@ -22,7 +23,10 @@ public class MineTweaks extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		registerBaseModules();
+		
 		this.eventManager = new EventManager(this);
+		
+		getCommand("minetweaks").setExecutor(new TempCommand(this));
 	}
 
 	private void registerBaseModules() {

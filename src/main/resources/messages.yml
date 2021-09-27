@@ -1,0 +1,140 @@
+armor_stands:
+  name: "Armor Stands"
+  armorstand-arms:
+    name: "Armor Stand Arms"
+    description: "Gives all armor stands arms when they are placed."
+  armorstand-offhand:
+    name: "Armor Stand Offhand Items"
+    description: "Allows placing items in an armor stand's offhand when holding them in your offhand."
+
+dispensers:
+  name: "Dispensers"
+  allow-place-blocks:
+    name: "Dispenser Block Placing"
+    description: "Allows dispensers to place blocks in front of them."
+  bonemeal-sugarcane:
+    name: "Dispenser Sugar Cane Bonemealing"
+    description: "Allows dispensers to bonemeal sugar cane."
+  bonemeal-sand:
+    name: "Dispenser Sand Bonemealing"
+    description: "Allows dispensers to bonemeal sand for dead bushes."
+  bonemeal-redsand:
+    name: "Dispenser Red Sand Bonemealing"
+    description: "Allows dispensers to bonemeal red sand for dead bushes."
+  fill-cauldron-water:
+    name: "Dispenser Water Cauldron Filling"
+    description: "Allows dispensers to fill cauldrons with water."
+  fill-cauldron-lava:
+    name: "Dispenser Lava Cauldron Filling"
+    description: "Allows dispensers to fill cauldrons with lava."
+  fill-cauldron-snow:
+    name: "Dispenser Snow Cauldron Filling"
+    description: "Allows dispensers to fill cauldrons with powder snow."
+  empty-cauldron-water:
+    name: "Dispenser Water Cauldron Emptying"
+    description: "Allows dispensers to empty cauldrons filled with water."
+  empty-cauldron-lava:
+    name: "Dispenser Lava Cauldron Emptying"
+    description: "Allows dispensers to empty cauldrons filled with lava."
+  empty-cauldron-snow:
+    name: "Dispenser Snow Cauldron Emptying"
+    description: "Allows dispensers to empty cauldrons filled with powder snow."
+
+farming:
+  name: "Farming"
+  right-click-harvest:
+    name: "Right Click Harvesting"
+    description: "Allows players to harvest fully grown crops by right clicking."
+  bonemeal-sugarcane:
+    name: "Sugar Cane Bonemealing"
+    description: "Allows players to bonemeal sugar cane."
+  bonemeal-cactus:
+    name: "Cactus Bonemealing"
+    description: "Allows players to bonemeal cactus."
+  bonemeal-sand:
+    name: "Sand Bonemealing"
+    description: "Allows players to bonemeal sand for dead bushes."
+  bonemeal-redsand:
+    name: "Red Sand Bonemealing"
+    description: "Allows players to bonemeal red sand for dead bushes."
+
+item_frames:
+  name: "Item Frames"
+  water-bottle-frames:
+    name: "Water Removes Frame Invisibility"
+    description: "Splash water bottles will return invisible frames to visible."
+  invisibility-potion-frames:
+    name: "Invisibility Potion Frames"
+    description: "Splash invisibility potions will make item frames invisible."
+
+misc:
+  name: "Miscellaneous"
+  remove-screen-fire:
+    name: "Remove Screen Fire"
+    description: "Removes the fire effect from player's screens when they have fire resistance."
+  anvil-cobble-to-sand:
+    name: "Anvil Cobblestone Compressing"
+    description: "Allows anvils to convert cobblestone to sand when landing on it."
+  dyeable-names:
+    name: "Dyeable Name Tags"
+    description: "Allows players to dye the name of named mobs using any type of dye."
+
+mobs:
+  name: "Mobs"
+  replace-snowman-head:
+    name: "Snowman Head Restoration"
+    description: "Allows players to restore a snow man's pumpkin by right clicking with a pumpkin."
+  firework-creepers:
+    name: "Firework Creepers"
+    description: "Makes creepers explode into fireworks, disables block damage."
+  disable-endermen-griefing:
+    name: "Disable Enderman Griefing"
+    description: "Stops endermen from picking up blocks."
+  no-trampling-farmland:
+    name: "No Mob Farmland Trampling"
+    description: "Stops non-players from trampling farmland."
+
+recipes:
+  name: "Recipes"
+  unlock-on-join:
+    name: "Unlock All Recipes"
+    description: "Unlocks all recipes for a player when they join."
+  dispensers-from-droppers:
+    name: "Dispensers from Droppers"
+    description: "Allows crafting dispensers with droppers, sticks, and string."
+  uncompress-quartz:
+    name: "Uncompress Quartz"
+    description: "Allows converting quartz blocks back to quartz."
+  red-sand-iron:
+    name: "Red Sand from Iron"
+    description: "Allows crafting red sand with sand and iron nuggets."
+  red-sand-dye:
+    name: "Red Sand from Dye"
+    description: "Allows crafting red sand with sand and red dye."
+  hide-bundle:
+    name: "Hide Bundles"
+    description: "Allows crafting bundles with rabbit hide and string."
+  leather-bundle:
+    name: "Leather Bundles"
+    description: "Allows crafting bundles with leather and string."
+  rotten-flesh-to-leather:
+    name: "Rotten Flesh to Leather"
+    description: "Allows smelting rotten flesh to get leather."
+  more-trapdoors:
+    name: "More Trapdoors"
+    description: "Increases the number of trapdoors crafted at once."
+  more-stairs:
+    name: "More Stairs"
+    description: "Increases the number of stairs crafted at once."
+
+scoreboard:
+  name: "Scoreboard"
+  show-health-scoreboard:
+    name: "Scoreboard Health"
+    description: "Shows player health on the scoreboard."
+
+wandering_trader:
+  name: "Wandering Trader"
+  announce-spawn:
+    name: "Announce Spawn"
+    description: "Announces the location to all players when a wandering trader spawns."

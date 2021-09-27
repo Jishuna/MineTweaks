@@ -24,6 +24,17 @@ public class DispenserModule extends TweakModule {
 
 	public DispenserModule(JavaPlugin plugin) {
 		super(plugin, "dispensers");
+		
+		addSubModule("allow-place-blocks");
+		addSubModule("bonemeal-sugarcane");
+		addSubModule("bonemeal-sand");
+		addSubModule("bonemeal-redsand");
+		addSubModule("fill-cauldron-water");
+		addSubModule("fill-cauldron-lava");
+		addSubModule("fill-cauldron-snow");
+		addSubModule("empty-cauldron-water");
+		addSubModule("empty-cauldron-lava");
+		addSubModule("empty-cauldron-snow");
 
 		addEventHandler(BlockDispenseEvent.class, this::onDispense);
 	}

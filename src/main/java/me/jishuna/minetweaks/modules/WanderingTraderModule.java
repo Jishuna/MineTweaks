@@ -25,6 +25,8 @@ public class WanderingTraderModule extends TweakModule {
 
 	public WanderingTraderModule(JavaPlugin plugin) {
 		super(plugin, "wandering_trader");
+		
+		addSubModule("announce-spawn");
 
 		addEventHandler(CreatureSpawnEvent.class, this::onSpawn);
 	}

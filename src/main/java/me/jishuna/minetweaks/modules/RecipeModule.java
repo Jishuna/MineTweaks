@@ -25,6 +25,17 @@ public class RecipeModule extends TweakModule {
 
 	public RecipeModule(JavaPlugin plugin) {
 		super(plugin, "recipes");
+		
+		addSubModule("unlock-on-join");
+		addSubModule("dispensers-from-droppers");
+		addSubModule("uncompress-quartz");
+		addSubModule("red-sand-iron");
+		addSubModule("red-sand-dye");
+		addSubModule("hide-bundle");
+		addSubModule("leather-bundle");
+		addSubModule("rotten-flesh-to-leather");
+		addSubModule("more-trapdoors");
+		addSubModule("more-stairs");
 
 		addEventHandler(PlayerJoinEvent.class, this::onJoin);
 	}

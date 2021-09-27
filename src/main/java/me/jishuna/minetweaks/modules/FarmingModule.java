@@ -27,6 +27,12 @@ public class FarmingModule extends TweakModule {
 	public FarmingModule(JavaPlugin plugin) {
 		super(plugin, "farming");
 
+		addSubModule("right-click-harvest");
+		addSubModule("bonemeal-cactus");
+		addSubModule("bonemeal-sugarcane");
+		addSubModule("bonemeal-sand");
+		addSubModule("bonemeal-redsand");
+		
 		addEventHandler(PlayerInteractEvent.class, this::onInteract);
 	}
 

@@ -2,7 +2,7 @@
 enabled: true
 
 # Allows splash invisibilty potions to make item frames invisible.
-invisibilty-potion-frames: true
+invisibility-potion-frames: true
 
 # Allows splash water bottles to make item frames visible again.
 water-bottle-frames: true

@@ -12,6 +12,9 @@ public class ArmorstandModule extends TweakModule {
 
 	public ArmorstandModule(JavaPlugin plugin) {
 		super(plugin, "armor_stands");
+		
+		addSubModule("armorstand-arms");
+		addSubModule("armorstand-offhand");
 
 		addEventHandler(CreatureSpawnEvent.class, this::onEntitySpawn);
 		addEventHandler(PlayerInteractAtEntityEvent.class, this::onEntityInteract);

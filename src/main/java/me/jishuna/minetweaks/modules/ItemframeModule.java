@@ -15,6 +15,9 @@ public class ItemframeModule extends TweakModule {
 	public ItemframeModule(JavaPlugin plugin) {
 		super(plugin, "item_frames");
 
+		addSubModule("water-bottle-frames");
+		addSubModule("invisibility-potion-frames");
+		
 		addEventHandler(PotionSplashEvent.class, this::onPotionSplash);
 	}
 
@@ -36,7 +39,7 @@ public class ItemframeModule extends TweakModule {
 
 		for (PotionEffect effect : potion.getEffects()) {
 			if (effect.getType().equals(PotionEffectType.INVISIBILITY)
-					&& getBoolean("invisibilty-potion-frames", true)) {
+					&& getBoolean("invisibility-potion-frames", true)) {
 
 				for (Entity entity : potion.getNearbyEntities(3.5, 2, 3.5)) {
 					if (entity instanceof ItemFrame frame) {

@@ -15,6 +15,8 @@ public class ScoreboardModule extends TweakModule {
 	public ScoreboardModule(JavaPlugin plugin) {
 		super(plugin, "scoreboard");
 
+		addSubModule("show-health-scoreboard");
+		
 		addEventHandler(PlayerJoinEvent.class, this::onJoin);
 	}
 

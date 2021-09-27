@@ -1,5 +1,6 @@
 package me.jishuna.minetweaks.modules;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -23,14 +24,19 @@ public class MiscModule extends TweakModule {
 	public MiscModule(JavaPlugin plugin) {
 		super(plugin, "misc");
 
+		addSubModule("remove-screen-fire");
+		addSubModule("anvil-cobble-to-sand");
+		addSubModule("dyeable-names");
+
 		addEventHandler(PlayerInteractEntityEvent.class, this::onInteractEntity);
 		addEventHandler(EntityChangeBlockEvent.class, this::onBlockLand);
 		addEventHandler(EntityCombustEvent.class, this::onCombust);
 	}
 
 	private void onCombust(EntityCombustEvent event) {
-		if (getBoolean("remove-screen-fire", true) && event.getEntity()instanceof Player player
-				&& player.hasPotionEffect(PotionEffectType.FIRE_RESISTANCE)) {
+		if (getBoolean("remove-screen-fire", true) && event.getEntity() instanceof Player player
+				&& (player.hasPotionEffect(PotionEffectType.FIRE_RESISTANCE)
+						|| player.getGameMode() == GameMode.CREATIVE)) {
 			event.setCancelled(true);
 			player.setFireTicks(-20);
 		}
@@ -57,14 +63,14 @@ public class MiscModule extends TweakModule {
 			return;
 
 		if (getBoolean("dyeable-names", true)) {
-			if (!event.getPlayer().isSneaking() || !(event.getRightClicked()instanceof LivingEntity livingEntity))
+			if (!event.getPlayer().isSneaking() || !(event.getRightClicked() instanceof LivingEntity livingEntity))
 				return;
 
 			if (livingEntity.getCustomName() == null)
 				return;
 
 			ItemStack item;
-			
+
 			if (event.getHand() == EquipmentSlot.HAND) {
 				item = event.getPlayer().getEquipment().getItemInMainHand();
 			} else {

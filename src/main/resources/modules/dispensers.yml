@@ -32,6 +32,7 @@ placement-requires-air: true
 placement-mappings:
   obsidian: 'null'
   bedrock: 'null'
+  tnt: 'null'
   wheat_seeds: 'wheat'
   beetroot_seeds: 'beetroots'
   carrot: 'carrots'

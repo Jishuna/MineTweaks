@@ -20,12 +20,9 @@ import me.jishuna.minetweaks.api.module.TweakModule;
 
 public class RecipeModule extends TweakModule {
 
-	private static final String[] WOOD_TYPES = new String[] { "OAK", "BIRCH", "SPRUCE", "JUNGLE", "DARK_OAK", "ACACIA",
-			"CRIMSON", "WARPED" };
-
 	public RecipeModule(JavaPlugin plugin) {
 		super(plugin, "recipes");
-		
+
 		addSubModule("unlock-on-join");
 		addSubModule("dispensers-from-droppers");
 		addSubModule("uncompress-quartz");
@@ -106,111 +103,40 @@ public class RecipeModule extends TweakModule {
 			Bukkit.addRecipe(recipe);
 		}
 
-		if (getBoolean("more-trapdoors", true)) {
-			for (String wood : WOOD_TYPES) {
-				Material plank = Material.matchMaterial(wood + "_PLANKS");
-				Material trapdoor = Material.matchMaterial(wood + "_TRAPDOOR");
+		Iterator<Recipe> iterator = Bukkit.recipeIterator();
+		boolean stairs = getBoolean("more-stairs", true);
+		boolean trapdoors = getBoolean("more-trapdoors", true);
 
-				if (plank == null || trapdoor == null)
-					continue;
+		while (iterator.hasNext()) {
+			Recipe recipe = iterator.next();
+			ItemStack result = recipe.getResult();
 
-				Bukkit.getRecipesFor(new ItemStack(trapdoor)).forEach(recipe -> {
-					if (recipe instanceof Keyed keyed) {
-						Bukkit.removeRecipe(keyed.getKey());
-					}
-				});
+			if (stairs && result.getType().toString().endsWith("_STAIRS") && result.getAmount() > 1
+					&& recipe instanceof ShapedRecipe shaped) {
+				iterator.remove();
 
-				ShapedRecipe recipe = new ShapedRecipe(
-						new NamespacedKey(getOwningPlugin(), wood.toLowerCase() + "_trapdoors"),
-						new ItemStack(trapdoor, getInt("more-trapdoors-amount", 12)));
-				recipe.setGroup("wooden_trapdoor");
-				recipe.shape("111", "111");
-				recipe.setIngredient('1', plank);
-				Bukkit.addRecipe(recipe);
+				result.setAmount(getInt("more-stairs-amount", 8));
+				Bukkit.addRecipe(copyRecipe(shaped, result));
 			}
-		}
 
-		if (getBoolean("more-stairs", true)) {
-			setupStairs();
+			if (trapdoors && result.getType().toString().endsWith("_TRAPDOOR")
+					&& result.getType() != Material.IRON_TRAPDOOR && recipe instanceof ShapedRecipe shaped) {
+				iterator.remove();
+
+				result.setAmount(getInt("more-trapdoors-amount", 12));
+				Bukkit.addRecipe(copyRecipe(shaped, result));
+			}
 		}
 	}
 
-	// This game has a lot of stairs
-	private void setupStairs() {
-		handleStairs(Material.CUT_COPPER, Material.CUT_COPPER_STAIRS);
-		handleStairs(Material.EXPOSED_CUT_COPPER, Material.EXPOSED_CUT_COPPER_STAIRS);
-		handleStairs(Material.WEATHERED_CUT_COPPER, Material.WEATHERED_CUT_COPPER_STAIRS);
-		handleStairs(Material.OXIDIZED_CUT_COPPER, Material.OXIDIZED_CUT_COPPER_STAIRS);
-		handleStairs(Material.WAXED_CUT_COPPER, Material.WAXED_CUT_COPPER_STAIRS);
-		handleStairs(Material.WAXED_EXPOSED_CUT_COPPER, Material.WAXED_EXPOSED_CUT_COPPER_STAIRS);
-		handleStairs(Material.WAXED_WEATHERED_CUT_COPPER, Material.WAXED_WEATHERED_CUT_COPPER_STAIRS);
-		handleStairs(Material.WAXED_OXIDIZED_CUT_COPPER, Material.WAXED_OXIDIZED_CUT_COPPER_STAIRS);
-		handleStairs(Material.COBBLESTONE, Material.COBBLESTONE_STAIRS);
-		handleStairs(Material.COBBLED_DEEPSLATE, Material.COBBLED_DEEPSLATE_STAIRS);
-		handleStairs(Material.DEEPSLATE_BRICKS, Material.DEEPSLATE_BRICK_STAIRS);
-		handleStairs(Material.POLISHED_DEEPSLATE, Material.POLISHED_DEEPSLATE_STAIRS);
-		handleStairs(Material.DEEPSLATE_TILES, Material.DEEPSLATE_TILE_STAIRS);
-		handleStairs(Material.BLACKSTONE, Material.BLACKSTONE_STAIRS);
-		handleStairs(Material.POLISHED_BLACKSTONE, Material.POLISHED_BLACKSTONE_STAIRS);
-		handleStairs(Material.POLISHED_BLACKSTONE_BRICKS, Material.POLISHED_BLACKSTONE_BRICK_STAIRS);
-		handleStairs(Material.PURPUR_BLOCK, Material.PURPUR_STAIRS);
-		handleStairs(Material.PRISMARINE, Material.PRISMARINE_STAIRS);
-		handleStairs(Material.PRISMARINE_BRICKS, Material.PRISMARINE_BRICK_STAIRS);
-		handleStairs(Material.DARK_PRISMARINE, Material.DARK_PRISMARINE_STAIRS);
-		handleStairs(Material.STONE, Material.STONE_STAIRS);
-		handleStairs(Material.MOSSY_COBBLESTONE, Material.MOSSY_COBBLESTONE_STAIRS);
-		handleStairs(Material.DIORITE, Material.DIORITE_STAIRS);
-		handleStairs(Material.GRANITE, Material.GRANITE_STAIRS);
-		handleStairs(Material.ANDESITE, Material.ANDESITE_STAIRS);
-		handleStairs(Material.POLISHED_DIORITE, Material.POLISHED_DIORITE_STAIRS);
-		handleStairs(Material.POLISHED_GRANITE, Material.POLISHED_GRANITE_STAIRS);
-		handleStairs(Material.POLISHED_ANDESITE, Material.POLISHED_ANDESITE_STAIRS);
-		handleStairs(Material.SANDSTONE, Material.SANDSTONE_STAIRS);
-		handleStairs(Material.SMOOTH_SANDSTONE, Material.SMOOTH_SANDSTONE_STAIRS);
-		handleStairs(Material.RED_SANDSTONE, Material.RED_SANDSTONE_STAIRS);
-		handleStairs(Material.SMOOTH_RED_SANDSTONE, Material.SMOOTH_RED_SANDSTONE_STAIRS);
-		handleStairs(Material.STONE_BRICKS, Material.STONE_BRICK_STAIRS);
-		handleStairs(Material.MOSSY_STONE_BRICKS, Material.MOSSY_STONE_BRICK_STAIRS);
-		handleStairs(Material.END_STONE_BRICKS, Material.END_STONE_BRICK_STAIRS);
-		handleStairs(Material.QUARTZ_BLOCK, Material.QUARTZ_STAIRS);
-		handleStairs(Material.SMOOTH_QUARTZ, Material.SMOOTH_QUARTZ_STAIRS);
-		handleStairs(Material.BRICKS, Material.BRICK_STAIRS);
-		handleStairs(Material.NETHER_BRICKS, Material.NETHER_BRICK_STAIRS);
-		handleStairs(Material.RED_NETHER_BRICKS, Material.RED_NETHER_BRICK_STAIRS);
-		handleStairs(Material.OAK_PLANKS, Material.OAK_STAIRS);
-		handleStairs(Material.BIRCH_PLANKS, Material.BIRCH_STAIRS);
-		handleStairs(Material.SPRUCE_PLANKS, Material.SPRUCE_STAIRS);
-		handleStairs(Material.JUNGLE_PLANKS, Material.JUNGLE_STAIRS);
-		handleStairs(Material.ACACIA_PLANKS, Material.ACACIA_STAIRS);
-		handleStairs(Material.DARK_OAK_PLANKS, Material.DARK_OAK_STAIRS);
-		handleStairs(Material.CRIMSON_PLANKS, Material.CRIMSON_STAIRS);
-		handleStairs(Material.WARPED_PLANKS, Material.WARPED_STAIRS);
-	}
+	private ShapedRecipe copyRecipe(ShapedRecipe original, ItemStack result) {
+		ShapedRecipe newRecipe = new ShapedRecipe(
+				new NamespacedKey(getOwningPlugin(), result.getType().toString().toLowerCase() + "_extra"), result);
+		newRecipe.shape(original.getShape());
+		original.getChoiceMap().forEach(newRecipe::setIngredient);
+		newRecipe.setGroup(original.getGroup());
 
-	// Stairs
-	private void handleStairs(Material source, Material stair) {
-		String group = null;
-
-		for (Recipe oldRecipe : Bukkit.getRecipesFor(new ItemStack(stair))) {
-			if (oldRecipe instanceof Keyed keyed && oldRecipe.getResult().getAmount() > 1) {
-				Bukkit.removeRecipe(keyed.getKey());
-
-				if (oldRecipe instanceof ShapedRecipe shaped && !shaped.getGroup().isBlank()) {
-					group = shaped.getGroup();
-				}
-			}
-		}
-
-		ShapedRecipe recipe = new ShapedRecipe(
-				new NamespacedKey(getOwningPlugin(), source.toString().toLowerCase() + "_stairs"),
-				new ItemStack(stair, getInt("more-stairs-amount", 12)));
-
-		if (group != null)
-			recipe.setGroup(group);
-
-		recipe.shape("100", "110", "111");
-		recipe.setIngredient('1', source);
-		Bukkit.addRecipe(recipe);
+		return newRecipe;
 	}
 
 	// Join recipes

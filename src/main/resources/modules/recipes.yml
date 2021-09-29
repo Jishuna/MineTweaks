@@ -11,7 +11,7 @@ more-stairs-amount: 8
 # Crafting trapdoors will yield more than 3 trapdoors.
 more-trapdoors: true
 # How many trapdoors will be crafted at once.
-more-stairs-amount: 12
+more-trapdoors-amount: 12
 
 # Allows players to smelt rotten flesh into leather.
 rotten-flesh-to-leather: false

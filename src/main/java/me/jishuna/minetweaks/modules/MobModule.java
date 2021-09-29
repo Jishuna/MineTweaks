@@ -6,6 +6,8 @@ import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.entity.Breedable;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Snowman;
@@ -17,6 +19,8 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import io.netty.util.internal.ThreadLocalRandom;
 import me.jishuna.minetweaks.api.module.TweakModule;
@@ -30,7 +34,8 @@ public class MobModule extends TweakModule {
 		addSubModule("firework-creepers");
 		addSubModule("disable-endermen-griefing");
 		addSubModule("no-trampling-farmland");
-		
+		addSubModule("poison-potato-baby-mobs");
+
 		addEventHandler(EntityChangeBlockEvent.class, this::onBlockChange);
 		addEventHandler(EntityExplodeEvent.class, this::onEntityExplode);
 		addEventHandler(EntityInteractEvent.class, this::onEntityTrample);
@@ -38,21 +43,28 @@ public class MobModule extends TweakModule {
 	}
 
 	private void onInteract(PlayerInteractEntityEvent event) {
+		ItemStack item;
+
+		if (event.getHand() == EquipmentSlot.HAND) {
+			item = event.getPlayer().getEquipment().getItemInMainHand();
+		} else {
+			item = event.getPlayer().getEquipment().getItemInOffHand();
+		}
+
 		if (getBoolean("replace-snowman-head", true) && event.getRightClicked() instanceof Snowman snowman
-				&& snowman.isDerp()) {
-			ItemStack item;
+				&& snowman.isDerp() && item.getType() == Material.CARVED_PUMPKIN) {
+			event.setCancelled(true);
+			snowman.setDerp(false);
+			item.setAmount(item.getAmount() - 1);
+		}
 
-			if (event.getHand() == EquipmentSlot.HAND) {
-				item = event.getPlayer().getEquipment().getItemInMainHand();
-			} else {
-				item = event.getPlayer().getEquipment().getItemInOffHand();
-			}
-
-			if (item.getType() == Material.CARVED_PUMPKIN) {
-				event.setCancelled(true);
-				snowman.setDerp(false);
-				item.setAmount(item.getAmount() - 1);
-			}
+		if (getBoolean("poison-potato-baby-mobs", true) && event.getRightClicked() instanceof Breedable breedable
+				&& !breedable.isAdult() && item.getType() == Material.POISONOUS_POTATO) {
+			event.setCancelled(true);
+			breedable.setAgeLock(true);
+			breedable.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 100, 0));
+			event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE, 1f, 1f);
+			item.setAmount(item.getAmount() - 1);
 		}
 	}
 

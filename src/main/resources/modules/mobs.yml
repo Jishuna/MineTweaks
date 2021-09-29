@@ -4,6 +4,9 @@ enabled: true
 # Prevent endermen picking up blocks.
 disable-endermen-griefing: true
 
+# Feeding a baby animal a poisonous potato will stop it from growing into an adult.
+poison-potato-baby-mobs: true
+
 # Prevents any non-player entity from trampling farmland.
 no-trampling-farmland: true
 

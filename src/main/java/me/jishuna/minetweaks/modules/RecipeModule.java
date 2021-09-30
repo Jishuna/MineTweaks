@@ -20,6 +20,8 @@ import me.jishuna.minetweaks.api.module.TweakModule;
 
 public class RecipeModule extends TweakModule {
 
+	private List<Recipe> customRecipes;
+
 	public RecipeModule(JavaPlugin plugin) {
 		super(plugin, "recipes");
 
@@ -42,6 +44,16 @@ public class RecipeModule extends TweakModule {
 	public void reload() {
 		super.reload();
 
+		if (this.customRecipes != null) {
+			this.customRecipes.forEach(recipe -> {
+				if (recipe instanceof Keyed keyed) {
+					Bukkit.removeRecipe(keyed.getKey());
+				}
+			});
+		}
+
+		this.customRecipes = new ArrayList<>();
+
 		if (!isEnabled())
 			return;
 
@@ -52,14 +64,14 @@ public class RecipeModule extends TweakModule {
 			recipe.setIngredient('1', Material.STICK);
 			recipe.setIngredient('2', Material.STRING);
 			recipe.setIngredient('3', Material.DROPPER);
-			Bukkit.addRecipe(recipe);
+			addRecipe(recipe);
 		}
 
 		if (getBoolean("uncompress-quartz", true)) {
 			ShapelessRecipe recipe = new ShapelessRecipe(new NamespacedKey(getOwningPlugin(), "uncompress_quartz"),
 					new ItemStack(Material.QUARTZ, 4));
 			recipe.addIngredient(Material.QUARTZ_BLOCK);
-			Bukkit.addRecipe(recipe);
+			addRecipe(recipe);
 		}
 
 		if (getBoolean("red-sand-iron", true)) {
@@ -67,7 +79,7 @@ public class RecipeModule extends TweakModule {
 					new ItemStack(Material.RED_SAND));
 			recipe.addIngredient(Material.SAND);
 			recipe.addIngredient(Material.IRON_NUGGET);
-			Bukkit.addRecipe(recipe);
+			addRecipe(recipe);
 		}
 
 		if (getBoolean("red-sand-dye", false)) {
@@ -75,7 +87,7 @@ public class RecipeModule extends TweakModule {
 					new ItemStack(Material.RED_SAND));
 			recipe.addIngredient(Material.SAND);
 			recipe.addIngredient(Material.RED_DYE);
-			Bukkit.addRecipe(recipe);
+			addRecipe(recipe);
 		}
 
 		if (getBoolean("hide-bundle", true)) {
@@ -84,7 +96,7 @@ public class RecipeModule extends TweakModule {
 			recipe.shape("121", "202", "222");
 			recipe.setIngredient('1', Material.STRING);
 			recipe.setIngredient('2', Material.RABBIT_HIDE);
-			Bukkit.addRecipe(recipe);
+			addRecipe(recipe);
 		}
 
 		if (getBoolean("leather-bundle", false)) {
@@ -93,14 +105,14 @@ public class RecipeModule extends TweakModule {
 			recipe.shape("121", "202", "222");
 			recipe.setIngredient('1', Material.STRING);
 			recipe.setIngredient('2', Material.LEATHER);
-			Bukkit.addRecipe(recipe);
+			addRecipe(recipe);
 		}
 
 		if (getBoolean("rotten-flesh-to-leather", false)) {
 			FurnaceRecipe recipe = new FurnaceRecipe(new NamespacedKey(getOwningPlugin(), "rotten_flesh_leather"),
 					new ItemStack(Material.LEATHER), Material.ROTTEN_FLESH, 0.1f,
 					getInt("rotten-flesh-cook-time", 200));
-			Bukkit.addRecipe(recipe);
+			addRecipe(recipe);
 		}
 
 		Iterator<Recipe> iterator = Bukkit.recipeIterator();
@@ -116,7 +128,7 @@ public class RecipeModule extends TweakModule {
 				iterator.remove();
 
 				result.setAmount(getInt("more-stairs-amount", 8));
-				Bukkit.addRecipe(copyRecipe(shaped, result));
+				addRecipe(copyRecipe(shaped, result));
 			}
 
 			if (trapdoors && result.getType().toString().endsWith("_TRAPDOOR")
@@ -124,9 +136,14 @@ public class RecipeModule extends TweakModule {
 				iterator.remove();
 
 				result.setAmount(getInt("more-trapdoors-amount", 12));
-				Bukkit.addRecipe(copyRecipe(shaped, result));
+				addRecipe(copyRecipe(shaped, result));
 			}
 		}
+	}
+
+	private void addRecipe(Recipe recipe) {
+		Bukkit.addRecipe(recipe);
+		this.customRecipes.add(recipe);
 	}
 
 	private ShapedRecipe copyRecipe(ShapedRecipe original, ItemStack result) {

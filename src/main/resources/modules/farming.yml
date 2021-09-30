@@ -23,3 +23,21 @@ harvest-seed-mappings:
   carrots: 'carrot'
   potatoes: 'potato'
   beetroots: 'beetroot_seeds'
+  
+display-name: "Farming"
+submodules:
+  right-click-harvest:
+    name: "Right Click Harvesting"
+    description: "Allows players to harvest fully grown crops by right clicking."
+  bonemeal-sugarcane:
+    name: "Sugar Cane Bonemealing"
+    description: "Allows players to bonemeal sugar cane."
+  bonemeal-cactus:
+    name: "Cactus Bonemealing"
+    description: "Allows players to bonemeal cactus."
+  bonemeal-sand:
+    name: "Sand Bonemealing"
+    description: "Allows players to bonemeal sand for dead bushes."
+  bonemeal-redsand:
+    name: "Red Sand Bonemealing"
+    description: "Allows players to bonemeal red sand for dead bushes."

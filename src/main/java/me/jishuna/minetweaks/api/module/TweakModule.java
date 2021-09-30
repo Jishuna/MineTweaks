@@ -2,9 +2,9 @@ package me.jishuna.minetweaks.api.module;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.Consumer;
 
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -20,15 +20,14 @@ import me.jishuna.minetweaks.api.events.EventWrapper;
 public class TweakModule {
 	private final String name;
 	private final JavaPlugin owningPlugin;
-	
+
 	private boolean enabled;
 	private YamlConfiguration config;
-	private YamlConfiguration lang;
 
 	private final Multimap<Class<? extends Event>, EventWrapper<? extends Event>> handlerMap = ArrayListMultimap
 			.create();
 
-	private final Map<String, Submodule> submodules = new HashMap<>();
+	private final Map<String, Submodule> submodules = new TreeMap<>();
 
 	public TweakModule(JavaPlugin plugin, String name) {
 		this.name = name;
@@ -38,7 +37,6 @@ public class TweakModule {
 
 	public void reload() {
 		this.config = FileUtils.loadResource(this.owningPlugin, "modules/" + this.name + ".yml").orElseGet(() -> null);
-		this.lang = FileUtils.loadResource(this.owningPlugin, "messages.yml").orElseGet(() -> null); 
 		this.enabled = this.config == null ? false : this.config.getBoolean("enabled", true);
 	}
 
@@ -51,7 +49,8 @@ public class TweakModule {
 	}
 
 	public void addSubModule(String key) {
-		Submodule module = new Submodule(key, this.lang.getString(this.name + "." + key + ".name"), this.lang.getString(this.name + "." + key + ".description"));	
+		Submodule module = new Submodule(key, this.config.getString("submodules." + key + ".name"),
+				this.config.getString("submodules." + key + ".description"));
 		this.submodules.put(module.getKey(), module);
 	}
 
@@ -66,9 +65,9 @@ public class TweakModule {
 	public String getName() {
 		return name;
 	}
-	
+
 	public String getFriendlyName() {
-		return this.lang.getString(this.name + ".name");
+		return this.config.getString("display-name");
 	}
 
 	public JavaPlugin getOwningPlugin() {

@@ -40,3 +40,36 @@ placement-mappings:
   pumpkin_seeds: 'pumpkin_stem'
   melon_seeds: 'melon_stem'
   redstone: 'redstone_wire'
+  
+display-name: "Dispensers"
+submodules:
+  allow-place-blocks:
+    name: "Dispenser Block Placing"
+    description: "Allows dispensers to place blocks in front of them."
+  bonemeal-sugarcane:
+    name: "Dispenser Sugar Cane Bonemealing"
+    description: "Allows dispensers to bonemeal sugar cane."
+  bonemeal-sand:
+    name: "Dispenser Sand Bonemealing"
+    description: "Allows dispensers to bonemeal sand for dead bushes."
+  bonemeal-redsand:
+    name: "Dispenser Red Sand Bonemealing"
+    description: "Allows dispensers to bonemeal red sand for dead bushes."
+  fill-cauldron-water:
+    name: "Dispenser Water Cauldron Filling"
+    description: "Allows dispensers to fill cauldrons with water."
+  fill-cauldron-lava:
+    name: "Dispenser Lava Cauldron Filling"
+    description: "Allows dispensers to fill cauldrons with lava."
+  fill-cauldron-snow:
+    name: "Dispenser Snow Cauldron Filling"
+    description: "Allows dispensers to fill cauldrons with powder snow."
+  empty-cauldron-water:
+    name: "Dispenser Water Cauldron Emptying"
+    description: "Allows dispensers to empty cauldrons filled with water."
+  empty-cauldron-lava:
+    name: "Dispenser Lava Cauldron Emptying"
+    description: "Allows dispensers to empty cauldrons filled with lava."
+  empty-cauldron-snow:
+    name: "Dispenser Snow Cauldron Emptying"
+    description: "Allows dispensers to empty cauldrons filled with powder snow."

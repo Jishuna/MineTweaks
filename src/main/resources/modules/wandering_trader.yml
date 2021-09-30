@@ -34,3 +34,9 @@ custom-trades:
   - BAKED_POTATO,8,EMERALD,1
   - CARROT,16,EMERALD,1
   - BUNDLE,1,EMERALD,1
+  
+display-name: "Wandering Trader"
+submodules:
+  announce-spawn:
+    name: "Announce Spawn"
+    description: "Announces the location to all players when a wandering trader spawns."

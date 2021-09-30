@@ -7,3 +7,9 @@ show-health-scoreboard: true
 health-display: '&c❤'
 # The display slot for the health scoreboard, valid options are: BELOW_NAME, PLAYER_LIST, or SIDEBAR.
 health-display-type: PLAYER_LIST
+
+display-name: "Scoreboard"
+submodules:
+  show-health-scoreboard:
+    name: "Scoreboard Health"
+    description: "Shows player health on the scoreboard."

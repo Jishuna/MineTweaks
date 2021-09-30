@@ -16,3 +16,20 @@ replace-snowman-head: true
 # Creepers explode into fireworks instead of breaking blocks.
 firework-creepers: false
 
+display-name: "Mobs"
+submodules:
+  replace-snowman-head:
+    name: "Snowman Head Restoration"
+    description: "Allows players to restore a snow man's pumpkin by right clicking with a pumpkin."
+  poison-potato-baby-mobs:
+    name: "Poisonous Potato Baby Mobs"
+    description: "Allows players to prevent baby animals from growing up by feeding them a poisonous potato."
+  firework-creepers:
+    name: "Firework Creepers"
+    description: "Makes creepers explode into fireworks, disables block damage."
+  disable-endermen-griefing:
+    name: "Disable Enderman Griefing"
+    description: "Stops endermen from picking up blocks."
+  no-trampling-farmland:
+    name: "No Mob Farmland Trampling"
+    description: "Stops non-players from trampling farmland."

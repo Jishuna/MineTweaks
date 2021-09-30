@@ -27,5 +27,38 @@ red-sand-dye: false
 dispensers-from-droppers: true
 # Allows players to craft the bundle item from 1.18 using rabbit hide and string.
 hide-bundle: true
-# Allows players to craft the bundle item from 1.18 using rleather and string.
-leather-bundle: true
+# Allows players to craft the bundle item from 1.18 using leather and string.
+leather-bundle: false
+
+display-name: "Recipes"
+submodules:
+  unlock-on-join:
+    name: "Unlock All Recipes"
+    description: "Unlocks all recipes for a player when they join."
+  dispensers-from-droppers:
+    name: "Dispensers from Droppers"
+    description: "Allows crafting dispensers with droppers, sticks, and string."
+  uncompress-quartz:
+    name: "Uncompress Quartz"
+    description: "Allows converting quartz blocks back to quartz."
+  red-sand-iron:
+    name: "Red Sand from Iron"
+    description: "Allows crafting red sand with sand and iron nuggets."
+  red-sand-dye:
+    name: "Red Sand from Dye"
+    description: "Allows crafting red sand with sand and red dye."
+  hide-bundle:
+    name: "Hide Bundles"
+    description: "Allows crafting bundles with rabbit hide and string."
+  leather-bundle:
+    name: "Leather Bundles"
+    description: "Allows crafting bundles with leather and string."
+  rotten-flesh-to-leather:
+    name: "Rotten Flesh to Leather"
+    description: "Allows smelting rotten flesh to get leather."
+  more-trapdoors:
+    name: "More Trapdoors"
+    description: "Increases the number of trapdoors crafted at once."
+  more-stairs:
+    name: "More Stairs"
+    description: "Increases the number of stairs crafted at once."

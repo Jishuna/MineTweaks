@@ -5,3 +5,12 @@ enabled: true
 armorstand-arms: true
 # Allows placing items in the off-hand of an armor stand when holding them in your off-hand, and removing items from the off-hand of an armor stand when both your hands are empty.
 armorstand-offhand: true
+
+display-name: "Armor Stands"
+submodules:
+  armorstand-arms:
+    name: "Armor Stand Arms"
+    description: "Gives all armor stands arms when they are placed."
+  armorstand-offhand:
+    name: "Armor Stand Offhand Items"
+    description: "Allows placing items in an armor stand's offhand when holding them in your offhand."

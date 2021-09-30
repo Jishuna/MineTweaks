@@ -2,9 +2,11 @@ package me.jishuna.minetweaks;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.jishuna.commonlib.language.MessageConfig;
+import me.jishuna.commonlib.utils.FileUtils;
 import me.jishuna.minetweaks.api.events.EventManager;
 import me.jishuna.minetweaks.api.module.ModuleManager;
-import me.jishuna.minetweaks.commands.TempCommand;
+import me.jishuna.minetweaks.commands.MineTweaksCommandHandler;
 import me.jishuna.minetweaks.modules.ArmorstandModule;
 import me.jishuna.minetweaks.modules.DispenserModule;
 import me.jishuna.minetweaks.modules.FarmingModule;
@@ -19,14 +21,16 @@ public class MineTweaks extends JavaPlugin {
 	
 	private ModuleManager moduleManager = new ModuleManager();
 	private EventManager eventManager;
+	private MessageConfig messageConfig;
 
 	@Override
 	public void onEnable() {
 		registerBaseModules();
+		loadConfiguration();
 		
 		this.eventManager = new EventManager(this);
 		
-		getCommand("minetweaks").setExecutor(new TempCommand(this));
+		getCommand("minetweaks").setExecutor(new MineTweaksCommandHandler(this));
 	}
 
 	private void registerBaseModules() {
@@ -47,6 +51,22 @@ public class MineTweaks extends JavaPlugin {
 
 	public EventManager getEventManager() {
 		return eventManager;
+	}
+	
+	public MessageConfig getMessageConfig() {
+		return messageConfig;
+	}
+	
+	public void loadConfiguration() {
+		if (!this.getDataFolder().exists())
+			this.getDataFolder().mkdirs();
+
+		FileUtils.loadResourceFile(this, "messages.yml")
+				.ifPresent(file -> this.messageConfig = new MessageConfig(file));
+	}
+
+	public String getMessage(String key) {
+		return this.messageConfig.getString(key);
 	}
 
 }

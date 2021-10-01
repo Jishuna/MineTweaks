@@ -30,34 +30,34 @@ public class ModuleCommand extends SimpleCommandHandler {
 			return true;
 		}
 
-		if (args.length >= 2) {
-			String name = args[0];
-			for (TweakModule module : plugin.getModuleManager().getModules()) {
-				if (!module.getName().equalsIgnoreCase(name))
-					continue;
-
-				boolean enabled = module.isEnabled();
-
-				sender.sendMessage(
-						getBooleanColor(enabled).toString() + ChatColor.BOLD + module.getFriendlyName() + ":");
-
-				if (enabled) {
-					for (Submodule submodule : module.getSubModules()) {
-						boolean subEnabled = module.getBoolean(submodule.getKey(), false);
-						sender.sendMessage(ChatColor.GRAY + " - " + getBooleanColor(subEnabled) + submodule.getName()
-								+ ": " + ChatColor.GRAY + submodule.getDescription());
-					}
-				}
-				sender.sendMessage("");
-				return true;
-			}
+		if (args.length < 2) {
 			List<String> modules = this.plugin.getModuleManager().getModules().stream().map(TweakModule::getName)
 					.collect(Collectors.toList());
-			sendUsage(sender, name, modules);
+			sendUsage(sender, "none", modules);
+			return true;
+		}
+		String name = args[0];
+		for (TweakModule module : plugin.getModuleManager().getModules()) {
+			if (!module.getName().equalsIgnoreCase(name))
+				continue;
+
+			boolean enabled = module.isEnabled();
+
+			sender.sendMessage(getBooleanColor(enabled).toString() + ChatColor.BOLD + module.getFriendlyName() + ":");
+
+			if (enabled) {
+				for (Submodule submodule : module.getSubModules()) {
+					boolean subEnabled = module.getBoolean(submodule.getKey(), false);
+					sender.sendMessage(ChatColor.GRAY + " - " + getBooleanColor(subEnabled) + submodule.getName() + ": "
+							+ ChatColor.GRAY + submodule.getDescription());
+				}
+			}
+			sender.sendMessage("");
+			return true;
 		}
 		List<String> modules = this.plugin.getModuleManager().getModules().stream().map(TweakModule::getName)
 				.collect(Collectors.toList());
-		sendUsage(sender, "none", modules);
+		sendUsage(sender, name, modules);
 		return true;
 	}
 

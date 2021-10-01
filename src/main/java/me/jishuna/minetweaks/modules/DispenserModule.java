@@ -24,7 +24,7 @@ public class DispenserModule extends TweakModule {
 
 	public DispenserModule(JavaPlugin plugin) {
 		super(plugin, "dispensers");
-		
+
 		addSubModule("allow-place-blocks");
 		addSubModule("bonemeal-sugarcane");
 		addSubModule("bonemeal-sand");

@@ -13,6 +13,7 @@ import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -72,5 +73,6 @@ public class EventManager {
 		registerListener(EntityExplodeEvent.class, event -> processEvent(event, EntityExplodeEvent.class));
 		registerListener(EntityChangeBlockEvent.class, event -> processEvent(event, EntityChangeBlockEvent.class));
 		registerListener(PotionSplashEvent.class, event -> processEvent(event, PotionSplashEvent.class));
+		registerListener(PrepareAnvilEvent.class, event -> processEvent(event, PrepareAnvilEvent.class));
 	}
 }

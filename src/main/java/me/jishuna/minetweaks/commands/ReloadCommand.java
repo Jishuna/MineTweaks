@@ -6,7 +6,6 @@ import org.bukkit.command.CommandSender;
 import me.jishuna.commonlib.commands.SimpleCommandHandler;
 import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.module.TweakModule;
-import net.md_5.bungee.api.ChatColor;
 
 public class ReloadCommand extends SimpleCommandHandler {
 
@@ -23,13 +22,13 @@ public class ReloadCommand extends SimpleCommandHandler {
 			return true;
 		}
 
-		sender.sendMessage(ChatColor.GREEN + "Reloading Messages File.");
+		sender.sendMessage(this.plugin.getMessage("reload-messages"));
 		this.plugin.getMessageConfig().refresh();
 
-		sender.sendMessage(ChatColor.GREEN + "Reloading Modules.");
+		sender.sendMessage(this.plugin.getMessage("reload-modules"));
 		this.plugin.getModuleManager().getModules().forEach(TweakModule::reload);
 
-		sender.sendMessage(ChatColor.GREEN + "Reload Complete!");
+		sender.sendMessage(this.plugin.getMessage("reload-complete"));
 		return true;
 	}
 

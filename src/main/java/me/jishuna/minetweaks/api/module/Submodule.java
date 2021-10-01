@@ -1,15 +1,20 @@
 package me.jishuna.minetweaks.api.module;
 
-public class Submodule {
-	
-	private final String key;
-	private final String name;
-	private final String description;
+import org.bukkit.configuration.file.YamlConfiguration;
 
-	public Submodule(String key, String name, String description) {
+public class Submodule {
+
+	private final String key;
+	private String name;
+	private String description;
+
+	public Submodule(String key) {
 		this.key = key;
-		this.name = name;
-		this.description = description;
+	}
+
+	public void loadInformation(YamlConfiguration config) {
+		this.name = config.getString("submodules." + this.key + ".name");
+		this.description = config.getString("submodules." + this.key + ".description");
 	}
 
 	public String getKey() {

@@ -14,10 +14,12 @@ import org.bukkit.event.Event.Result;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityCombustEvent;
+import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
 
@@ -33,11 +35,13 @@ public class MiscModule extends TweakModule {
 		addSubModule("anvil-cobble-to-sand");
 		addSubModule("dyeable-names");
 		addSubModule("slimeball-sticky-pistons");
+		addSubModule("color-anvil-names");
 
 		addEventHandler(PlayerInteractEntityEvent.class, this::onInteractEntity);
 		addEventHandler(EntityChangeBlockEvent.class, this::onBlockLand);
 		addEventHandler(EntityCombustEvent.class, this::onCombust);
 		addEventHandler(PlayerInteractEvent.class, this::onInteract);
+		addEventHandler(PrepareAnvilEvent.class, this::onAnvil);
 	}
 
 	private void onInteract(PlayerInteractEvent event) {
@@ -118,6 +122,21 @@ public class MiscModule extends TweakModule {
 			event.setCancelled(true);
 			livingEntity.setCustomName(color + ChatColor.stripColor(livingEntity.getCustomName()));
 			item.setAmount(item.getAmount() - 1);
+		}
+	}
+
+	private void onAnvil(PrepareAnvilEvent event) {
+		if (getBoolean("color-anvil-names", true)) {
+			ItemStack result = event.getResult();
+			if (result == null || !result.hasItemMeta())
+				return;
+
+			ItemMeta meta = result.getItemMeta();
+			if (!meta.hasDisplayName())
+				return;
+			meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', meta.getDisplayName()));
+			result.setItemMeta(meta);
+			event.setResult(result);
 		}
 	}
 

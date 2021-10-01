@@ -37,7 +37,9 @@ public class TweakModule {
 
 	public void reload() {
 		this.config = FileUtils.loadResource(this.owningPlugin, "modules/" + this.name + ".yml").orElseGet(() -> null);
-		this.enabled = this.config == null ? false : this.config.getBoolean("enabled", true);
+		this.enabled = this.config != null && this.config.getBoolean("enabled", true);
+
+		this.submodules.values().forEach(submodule -> submodule.loadInformation(this.config));
 	}
 
 	public <T extends Event> void addEventHandler(Class<T> type, Consumer<T> consumer) {
@@ -49,9 +51,10 @@ public class TweakModule {
 	}
 
 	public void addSubModule(String key) {
-		Submodule module = new Submodule(key, this.config.getString("submodules." + key + ".name"),
-				this.config.getString("submodules." + key + ".description"));
+		Submodule module = new Submodule(key);
 		this.submodules.put(module.getKey(), module);
+		
+		module.loadInformation(this.config);
 	}
 
 	public Collection<Submodule> getSubModules() {
@@ -76,7 +79,7 @@ public class TweakModule {
 
 	// config methods
 	public boolean getBoolean(String key, boolean def) {
-		return !this.enabled ? false : this.config.getBoolean(key, def);
+		return this.enabled && this.config.getBoolean(key, def);
 	}
 
 	public YamlConfiguration getConfig() {

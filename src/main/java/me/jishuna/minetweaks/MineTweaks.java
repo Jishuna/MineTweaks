@@ -8,6 +8,7 @@ import me.jishuna.minetweaks.api.events.EventManager;
 import me.jishuna.minetweaks.api.module.ModuleManager;
 import me.jishuna.minetweaks.commands.MineTweaksCommandHandler;
 import me.jishuna.minetweaks.modules.ArmorstandModule;
+import me.jishuna.minetweaks.modules.BlockModule;
 import me.jishuna.minetweaks.modules.DispenserModule;
 import me.jishuna.minetweaks.modules.FarmingModule;
 import me.jishuna.minetweaks.modules.ItemframeModule;
@@ -38,6 +39,7 @@ public class MineTweaks extends JavaPlugin {
 		this.moduleManager.registerModule(new ItemframeModule(this));
 		this.moduleManager.registerModule(new FarmingModule(this));
 		this.moduleManager.registerModule(new DispenserModule(this));
+		this.moduleManager.registerModule(new BlockModule(this));
 		this.moduleManager.registerModule(new MiscModule(this));
 		this.moduleManager.registerModule(new MobModule(this));
 		this.moduleManager.registerModule(new RecipeModule(this));

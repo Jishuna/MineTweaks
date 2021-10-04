@@ -146,7 +146,7 @@ public class FarmingModule extends TweakModule {
 			return true;
 		}
 
-		if (age > blockData.getMaximumAge() && data.getHeight() < maxHeight) {
+		if (age > blockData.getMaximumAge() && data.getHeight() < maxHeight && top.getY() < top.getWorld().getMaxHeight() - 1) {
 			block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 0.5, 0.5), 15, 0.3d,
 					0.3d, 0.3d);
 			top.getRelative(BlockFace.UP).setType(top.getType());

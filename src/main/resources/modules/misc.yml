@@ -7,29 +7,17 @@ dyeable-names: true
 # Allows players to color item names in an anvil using the & color codes.
 color-anvil-names: true
 
-# Allows falling anvils to crush cobblestone blocks into sand.
-anvil-cobble-to-sand: true
-
 # Remove the fire effect from player's screens if they have fire resistance.
 remove-screen-fire: true
-
-# Allows players to convert pistons to sticky pistons by right clicking with a slimeball.
-slimeball-sticky-pistons: true
 
 display-name: "Miscellaneous"
 submodules:
   remove-screen-fire:
     name: "Remove Screen Fire"
     description: "Removes the fire effect from player's screens when they have fire resistance."
-  anvil-cobble-to-sand:
-    name: "Anvil Cobblestone Compressing"
-    description: "Allows anvils to convert cobblestone to sand when landing on it."
   dyeable-names:
     name: "Dyeable Name Tags"
     description: "Allows players to dye the name of named mobs using any type of dye."
-  slimeball-sticky-pistons:
-    name: "Slimeball Piston Conversion"
-    description: "Allows players to convert pistons into sticky pistons by right clicking with a slimeball."
   color-anvil-names:
     name: "Colored Item Names"
     description: "Allows players to color item names in an anvil using the & color codes."

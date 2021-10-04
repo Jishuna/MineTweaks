@@ -1,0 +1,23 @@
+#Enable or disable this entire module.
+enabled: true
+
+# Allows falling anvils to crush cobblestone blocks into sand.
+anvil-cobble-to-sand: true
+
+# Allows players to convert pistons to sticky pistons by right clicking with a slimeball.
+slimeball-sticky-pistons: true
+
+# Allows players to dry sponges by clicking them with a flint and steel.
+fire-dry-sponge: true
+
+display-name: "Miscellaneous"
+submodules:
+  anvil-cobble-to-sand:
+    name: "Anvil Cobblestone Compressing"
+    description: "Allows anvils to convert cobblestone to sand when landing on it."
+  slimeball-sticky-pistons:
+    name: "Slimeball Piston Conversion"
+    description: "Allows players to convert pistons into sticky pistons by right clicking with a slimeball."
+  fire-dry-sponge:
+    name: "Flint And Steel Sponge Drying"
+    description: "Allows players to dry sponges by clicking them with a flint and steel."

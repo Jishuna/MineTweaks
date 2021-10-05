@@ -7,10 +7,13 @@ import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Breedable;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Snowman;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
@@ -35,11 +38,21 @@ public class MobModule extends TweakModule {
 		addSubModule("disable-endermen-griefing");
 		addSubModule("no-trampling-farmland");
 		addSubModule("poison-potato-baby-mobs");
+		addSubModule("bedrock-wither-health");
 
 		addEventHandler(EntityChangeBlockEvent.class, this::onBlockChange);
 		addEventHandler(EntityExplodeEvent.class, this::onEntityExplode);
 		addEventHandler(EntityInteractEvent.class, this::onEntityTrample);
 		addEventHandler(PlayerInteractEntityEvent.class, this::onInteract);
+		addEventHandler(CreatureSpawnEvent.class, this::onSpawn);
+	}
+
+	private void onSpawn(CreatureSpawnEvent event) {
+		if (event.getEntityType() == EntityType.WITHER && getBoolean("bedrock-wither-health", false)) {
+			AttributeInstance instance = event.getEntity().getAttribute(Attribute.GENERIC_MAX_HEALTH);
+			instance.setBaseValue(600);
+			event.getEntity().setHealth(600);
+		}
 	}
 
 	private void onInteract(PlayerInteractEntityEvent event) {
@@ -51,14 +64,14 @@ public class MobModule extends TweakModule {
 			item = event.getPlayer().getEquipment().getItemInOffHand();
 		}
 
-		if (getBoolean("replace-snowman-head", true) && event.getRightClicked() instanceof Snowman snowman
+		if (getBoolean("replace-snowman-head", true) && event.getRightClicked()instanceof Snowman snowman
 				&& snowman.isDerp() && item.getType() == Material.CARVED_PUMPKIN) {
 			event.setCancelled(true);
 			snowman.setDerp(false);
 			item.setAmount(item.getAmount() - 1);
 		}
 
-		if (getBoolean("poison-potato-baby-mobs", true) && event.getRightClicked() instanceof Breedable breedable
+		if (getBoolean("poison-potato-baby-mobs", true) && event.getRightClicked()instanceof Breedable breedable
 				&& !breedable.isAdult() && item.getType() == Material.POISONOUS_POTATO) {
 			event.setCancelled(true);
 			breedable.setAgeLock(true);

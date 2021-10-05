@@ -90,9 +90,9 @@ public class WanderingTraderModule extends TweakModule {
 				String locationString = "X: " + location.getBlockX() + ", Y: " + location.getBlockY() + ", Z: "
 						+ location.getBlockZ();
 
-				String message = this.message.replace("%location%", locationString).replace("%world%",
+				String msg = this.message.replace("%location%", locationString).replace("%world%",
 						location.getWorld().getName());
-				Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(message));
+				Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(msg));
 			}
 		}
 	}

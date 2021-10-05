@@ -75,18 +75,22 @@ public class RecipeModule extends TweakModule {
 		}
 
 		if (getBoolean("red-sand-iron", true)) {
-			ShapelessRecipe recipe = new ShapelessRecipe(new NamespacedKey(getOwningPlugin(), "redden_sand"),
+			ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(getOwningPlugin(), "redden_sand"),
 					new ItemStack(Material.RED_SAND));
-			recipe.addIngredient(Material.SAND);
-			recipe.addIngredient(Material.IRON_NUGGET);
+			recipe.setGroup("redden_sand");
+			recipe.shape("111", "101", "111");
+			recipe.setIngredient('1', Material.SAND);
+			recipe.setIngredient('0', Material.IRON_NUGGET);
 			addRecipe(recipe);
 		}
 
 		if (getBoolean("red-sand-dye", false)) {
-			ShapelessRecipe recipe = new ShapelessRecipe(new NamespacedKey(getOwningPlugin(), "redden_sand_dye"),
+			ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(getOwningPlugin(), "redden_sand_dye"),
 					new ItemStack(Material.RED_SAND));
-			recipe.addIngredient(Material.SAND);
-			recipe.addIngredient(Material.RED_DYE);
+			recipe.setGroup("redden_sand");
+			recipe.shape("111", "101", "111");
+			recipe.setIngredient('1', Material.SAND);
+			recipe.setIngredient('0', Material.RED_DYE);
 			addRecipe(recipe);
 		}
 

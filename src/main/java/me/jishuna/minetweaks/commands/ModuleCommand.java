@@ -33,15 +33,19 @@ public class ModuleCommand extends SimpleCommandHandler {
 		if (args.length < 2) {
 			List<String> modules = this.plugin.getModuleManager().getModules().stream().map(TweakModule::getName)
 					.collect(Collectors.toList());
+			modules.add("all");
 			sendUsage(sender, "none", modules);
 			return true;
 		}
+
 		String name = args[0];
+		boolean found = false;
 		for (TweakModule module : plugin.getModuleManager().getModules()) {
-			if (!module.getName().equalsIgnoreCase(name))
+			if (!module.getName().equalsIgnoreCase(name) && !name.equalsIgnoreCase("all"))
 				continue;
 
 			boolean enabled = module.isEnabled();
+			found = true;
 
 			sender.sendMessage(getBooleanColor(enabled).toString() + ChatColor.BOLD + module.getFriendlyName() + ":");
 
@@ -53,11 +57,14 @@ public class ModuleCommand extends SimpleCommandHandler {
 				}
 			}
 			sender.sendMessage("");
-			return true;
 		}
-		List<String> modules = this.plugin.getModuleManager().getModules().stream().map(TweakModule::getName)
-				.collect(Collectors.toList());
-		sendUsage(sender, name, modules);
+
+		if (!found) {
+			List<String> modules = this.plugin.getModuleManager().getModules().stream().map(TweakModule::getName)
+					.collect(Collectors.toList());
+			modules.add("all");
+			sendUsage(sender, name, modules);
+		}
 		return true;
 	}
 
@@ -66,6 +73,7 @@ public class ModuleCommand extends SimpleCommandHandler {
 		if (args.length == 2) {
 			List<String> modules = this.plugin.getModuleManager().getModules().stream().map(TweakModule::getName)
 					.collect(Collectors.toList());
+			modules.add("all");
 			List<String> suggestions = new ArrayList<>();
 
 			StringUtil.copyPartialMatches(args[0], modules, suggestions);

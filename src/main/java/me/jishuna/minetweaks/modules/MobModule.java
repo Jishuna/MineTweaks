@@ -3,6 +3,7 @@ package me.jishuna.minetweaks.modules;
 import java.util.Random;
 
 import org.bukkit.Color;
+import org.bukkit.DyeColor;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Material;
@@ -12,6 +13,7 @@ import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Breedable;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
+import org.bukkit.entity.Shulker;
 import org.bukkit.entity.Snowman;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
@@ -27,6 +29,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import io.netty.util.internal.ThreadLocalRandom;
 import me.jishuna.minetweaks.api.module.TweakModule;
+import me.jishuna.minetweaks.api.util.ColorUtils;
 
 public class MobModule extends TweakModule {
 
@@ -39,6 +42,7 @@ public class MobModule extends TweakModule {
 		addSubModule("no-trampling-farmland");
 		addSubModule("poison-potato-baby-mobs");
 		addSubModule("bedrock-wither-health");
+		addSubModule("dye-shulkers");
 
 		addEventHandler(EntityChangeBlockEvent.class, this::onBlockChange);
 		addEventHandler(EntityExplodeEvent.class, this::onEntityExplode);
@@ -78,6 +82,17 @@ public class MobModule extends TweakModule {
 			breedable.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 100, 0));
 			event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE, 1f, 1f);
 			item.setAmount(item.getAmount() - 1);
+		}
+
+		if (getBoolean("dye-shulkers", true) && event.getRightClicked()instanceof Shulker shulker
+				&& item.getType().toString().endsWith("_DYE")) {
+			DyeColor color = ColorUtils.dyeToDyeColor(item.getType());
+
+			if (color != shulker.getColor()) {
+				event.setCancelled(true);
+				shulker.setColor(color);
+				item.setAmount(item.getAmount() - 1);
+			}
 		}
 	}
 

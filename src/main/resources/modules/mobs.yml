@@ -16,6 +16,9 @@ replace-snowman-head: true
 # Creepers explode into fireworks instead of breaking blocks.
 firework-creepers: false
 
+# Allows players to dye shulkers the same way you can dye sheep.
+dye-shulkers: true
+
 # Sets the wither's health to 600 (instead of 300) to match bedrock edition.
 bedrock-wither-health: false
 
@@ -39,3 +42,6 @@ submodules:
   bedrock-wither-health:
     name: "Bedrock Wither Health"
     description: "Sets the wither's health to 600 (instead of 300) to match bedrock edition."
+  dye-shulkers:
+    name: "Shulker Dying"
+    description: "Allows players to dye shulkers the same way you can dye sheep."

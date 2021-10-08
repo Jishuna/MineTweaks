@@ -22,6 +22,9 @@ dye-shulkers: true
 # Sets the wither's health to 600 (instead of 300) to match bedrock edition.
 bedrock-wither-health: false
 
+# Makes the wither spawn 3 wither skeletons when it reaches half health to match bedrock edition.
+wither-spawns-skeletons: true
+
 display-name: "Mobs"
 submodules:
   replace-snowman-head:
@@ -42,6 +45,9 @@ submodules:
   bedrock-wither-health:
     name: "Bedrock Wither Health"
     description: "Sets the wither's health to 600 (instead of 300) to match bedrock edition."
+  wither-spawns-skeletons:
+    name: "Wither Spawns Wither Skeletons"
+    description: "Makes the wither spawn 3 wither skeletons when it reaches half health to match bedrock edition."
   dye-shulkers:
     name: "Shulker Dying"
     description: "Allows players to dye shulkers the same way you can dye sheep."

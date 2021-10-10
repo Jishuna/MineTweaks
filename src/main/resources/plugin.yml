@@ -7,3 +7,14 @@ api-version: 1.17
 commands:
   minetweaks:
     description: 'Base plugin command'
+    aliases: [mt]
+permissions:
+  minetweaks.command:
+    default: true
+  minetweaks.command.module:
+    default: true
+  minetweaks.command.info:
+    default: true
+  minetweaks.command.reload:
+    default: op
+    

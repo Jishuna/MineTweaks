@@ -26,6 +26,7 @@ public class WanderingTraderModule extends TweakModule {
 	public WanderingTraderModule(JavaPlugin plugin) {
 		super(plugin, "wandering_trader");
 		
+		addSubModule("replace-trades");
 		addSubModule("announce-spawn");
 
 		addEventHandler(CreatureSpawnEvent.class, this::onSpawn);
@@ -67,7 +68,7 @@ public class WanderingTraderModule extends TweakModule {
 	}
 
 	private void onSpawn(CreatureSpawnEvent event) {
-		if (isEnabled() && event.getEntity()instanceof WanderingTrader trader) {
+		if (getBoolean("replace-trades", true) && event.getEntity()instanceof WanderingTrader trader) {
 			List<MerchantRecipe> newRecipes = new ArrayList<>();
 			Random random = ThreadLocalRandom.current();
 

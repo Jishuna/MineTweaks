@@ -20,21 +20,19 @@ public class ModuleCommand extends SimpleCommandHandler {
 	private final MineTweaks plugin;
 
 	public ModuleCommand(MineTweaks plugin) {
+		super("minetweaks.command.module");
 		this.plugin = plugin;
 	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
-		if (!sender.hasPermission("minetweaks.command.module")) {
+		if (!sender.hasPermission(getPermission())) {
 			sender.sendMessage(this.plugin.getMessage("no-permission"));
 			return true;
 		}
 
 		if (args.length < 2) {
-			List<String> modules = this.plugin.getModuleManager().getModules().stream().map(TweakModule::getName)
-					.collect(Collectors.toList());
-			modules.add("all");
-			sendUsage(sender, "none", modules);
+			sendUsage(sender, "none");
 			return true;
 		}
 
@@ -60,10 +58,7 @@ public class ModuleCommand extends SimpleCommandHandler {
 		}
 
 		if (!found) {
-			List<String> modules = this.plugin.getModuleManager().getModules().stream().map(TweakModule::getName)
-					.collect(Collectors.toList());
-			modules.add("all");
-			sendUsage(sender, name, modules);
+			sendUsage(sender, name);
 		}
 		return true;
 	}
@@ -84,10 +79,14 @@ public class ModuleCommand extends SimpleCommandHandler {
 
 	}
 
-	private void sendUsage(CommandSender sender, String arg, List<String> args) {
+	private void sendUsage(CommandSender sender, String arg) {
+		List<String> modules = this.plugin.getModuleManager().getModules().stream().map(TweakModule::getName)
+				.collect(Collectors.toList());
+		modules.add("all");
+
 		String msg = this.plugin.getMessage("command-usage");
 		msg = msg.replace("%arg%", arg);
-		msg = msg.replace("%args%", String.join(", ", args));
+		msg = msg.replace("%args%", String.join(", ", modules));
 
 		sender.sendMessage(msg);
 	}

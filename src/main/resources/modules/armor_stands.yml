@@ -6,6 +6,11 @@ armorstand-arms: true
 # Allows placing items in the off-hand of an armor stand when holding them in your off-hand, and removing items from the off-hand of an armor stand when both your hands are empty.
 armorstand-offhand: true
 
+# Allows splash invisibilty potions to make armor stands invisible.
+invisibility-potion-armor-stands: true
+# Allows splash water bottles to make armor stands visible again.
+water-bottle-armor-stands: true
+
 display-name: "Armor Stands"
 submodules:
   armorstand-arms:
@@ -14,3 +19,9 @@ submodules:
   armorstand-offhand:
     name: "Armor Stand Offhand Items"
     description: "Allows placing items in an armor stand's offhand when holding them in your offhand."
+  water-bottle-armor-stands:
+    name: "Water Removes Armor Stand Invisibility"
+    description: "Splash water bottles will return invisible armor stands to visible."
+  invisibility-potion-armor-stands:
+    name: "Invisibility Potion Armor Stands"
+    description: "Splash invisibility potions will make armor stands invisible."

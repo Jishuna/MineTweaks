@@ -12,12 +12,13 @@ public class ReloadCommand extends SimpleCommandHandler {
 	private final MineTweaks plugin;
 
 	public ReloadCommand(MineTweaks plugin) {
+		super("minetweaks.command.reload");
 		this.plugin = plugin;
 	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
-		if (!sender.hasPermission("minetweaks.command.reload")) {
+		if (!sender.hasPermission(getPermission())) {
 			sender.sendMessage(this.plugin.getMessage("no-permission"));
 			return true;
 		}

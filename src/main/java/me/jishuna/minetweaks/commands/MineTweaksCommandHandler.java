@@ -6,12 +6,13 @@ import me.jishuna.minetweaks.MineTweaks;
 
 public class MineTweaksCommandHandler extends ArgumentCommandHandler {
 	public MineTweaksCommandHandler(MineTweaks plugin) {
-		super(plugin.getMessageConfig());
+		super(plugin.getMessageConfig(), "minetweaks.command");
 
-		SimpleCommandHandler temp = new ModuleCommand(plugin);
+		SimpleCommandHandler info = new InfoCommand(plugin);
 
-		setDefault(temp);
-		addArgumentExecutor("module", temp);
+		setDefault(info);
+		addArgumentExecutor("info", info);
+		addArgumentExecutor("module", new ModuleCommand(plugin));
 		addArgumentExecutor("reload", new ReloadCommand(plugin));
 	}
 }

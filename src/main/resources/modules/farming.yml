@@ -16,6 +16,7 @@ bonemeal-sand: true
 # Allows players to bonemeal red sand to grow dead bushes.
 bonemeal-redsand: true
 
+# Allows players to harvest crops by right clicking.
 right-click-harvest: true
 
 harvest-seed-mappings:
@@ -23,6 +24,7 @@ harvest-seed-mappings:
   carrots: 'carrot'
   potatoes: 'potato'
   beetroots: 'beetroot_seeds'
+  nether_wart: 'nether_wart'
   
 display-name: "Farming"
 submodules:

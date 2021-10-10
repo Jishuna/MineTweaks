@@ -76,7 +76,7 @@ public class RecipeModule extends TweakModule {
 
 		if (getBoolean("red-sand-iron", true)) {
 			ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(getOwningPlugin(), "redden_sand"),
-					new ItemStack(Material.RED_SAND));
+					new ItemStack(Material.RED_SAND, 8));
 			recipe.setGroup("redden_sand");
 			recipe.shape("111", "101", "111");
 			recipe.setIngredient('1', Material.SAND);
@@ -86,7 +86,7 @@ public class RecipeModule extends TweakModule {
 
 		if (getBoolean("red-sand-dye", false)) {
 			ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(getOwningPlugin(), "redden_sand_dye"),
-					new ItemStack(Material.RED_SAND));
+					new ItemStack(Material.RED_SAND, 8));
 			recipe.setGroup("redden_sand");
 			recipe.shape("111", "101", "111");
 			recipe.setIngredient('1', Material.SAND);

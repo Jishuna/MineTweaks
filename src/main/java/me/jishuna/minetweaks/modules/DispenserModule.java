@@ -100,16 +100,16 @@ public class DispenserModule extends TweakModule {
 		if (item.getType() == Material.BONE_MEAL) {
 			if (target.getType() == Material.SUGAR_CANE && getBoolean("bonemeal-sugarcane", true)) {
 				if (FarmingModule.handleTallPlant(item, target, getInt("sugarcane-bonemeal-height", 3))) {
-					removeUsedItem(event.getBlock(), item, 1);
+					removeUsedItem(event.getBlock(), item);
 				}
 			} else if (face != BlockFace.DOWN && target.getType() == Material.SAND
 					&& getBoolean("bonemeal-sand", true)) {
 				FarmingModule.handleSand(item, target);
-				removeUsedItem(event.getBlock(), item, 1);
+				removeUsedItem(event.getBlock(), item);
 			} else if (face != BlockFace.DOWN && target.getType() == Material.RED_SAND
 					&& getBoolean("bonemeal-redsand", true)) {
 				FarmingModule.handleSand(item, target);
-				removeUsedItem(event.getBlock(), item, 1);
+				removeUsedItem(event.getBlock(), item);
 			}
 		}
 
@@ -136,7 +136,7 @@ public class DispenserModule extends TweakModule {
 				return;
 
 			target.setType(material);
-			removeUsedItem(event.getBlock(), item, 0);
+			removeUsedItem(event.getBlock(), item);
 		}
 	}
 
@@ -144,22 +144,21 @@ public class DispenserModule extends TweakModule {
 			Material toAdd) {
 		target.setType(material);
 
-		item.setAmount(0);
 		event.setCancelled(true);
 
-		Container state = (Container) event.getBlock().getState();
 		Bukkit.getScheduler().runTask(getOwningPlugin(), () -> {
+			Container state = (Container) event.getBlock().getState();
 			state.getSnapshotInventory().removeItem(item);
 			state.getSnapshotInventory().addItem(new ItemStack(toAdd));
 			state.update();
 		});
 	}
 
-	private void removeUsedItem(Block block, ItemStack item, int count) {
-		item.setAmount(count);
+	private void removeUsedItem(Block block, ItemStack item) {
+		item.setAmount(1);
 
-		Container state = (Container) block.getState();
 		Bukkit.getScheduler().runTask(getOwningPlugin(), () -> {
+			Container state = (Container) block.getState();
 			state.getSnapshotInventory().removeItem(item);
 			state.update();
 		});

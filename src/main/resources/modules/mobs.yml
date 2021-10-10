@@ -49,5 +49,5 @@ submodules:
     name: "Wither Spawns Wither Skeletons"
     description: "Makes the wither spawn 3 wither skeletons when it reaches half health to match bedrock edition."
   dye-shulkers:
-    name: "Shulker Dying"
+    name: "Shulker Dyeing"
     description: "Allows players to dye shulkers the same way you can dye sheep."

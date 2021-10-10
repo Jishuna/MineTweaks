@@ -146,8 +146,13 @@ public class RecipeModule extends TweakModule {
 	}
 
 	private void addRecipe(Recipe recipe) {
-		Bukkit.addRecipe(recipe);
-		this.customRecipes.add(recipe);
+		try {
+			Bukkit.addRecipe(recipe);
+			this.customRecipes.add(recipe);
+		} catch (IllegalStateException ex) {
+			if (recipe instanceof Keyed keyed)
+				getOwningPlugin().getLogger().warning("Ignoring duplicate recipe: " + keyed.getKey());
+		}
 	}
 
 	private ShapedRecipe copyRecipe(ShapedRecipe original, ItemStack result) {

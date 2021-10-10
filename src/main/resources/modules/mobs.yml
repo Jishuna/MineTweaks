@@ -25,7 +25,7 @@ bedrock-wither-health: false
 # Makes the wither spawn 3 wither skeletons when it reaches half health to match bedrock edition.
 wither-spawns-skeletons: true
 
-# Makes mobs only spawn in light level 0 like the 1.18 snapshots.
+# Makes mobs only spawn in block light level 0 like the 1.18 snapshots.
 1_18-mob-spawning: false
 
 display-name: "Mobs"
@@ -56,4 +56,4 @@ submodules:
     description: "Allows players to dye shulkers the same way you can dye sheep."
   1_18-mob-spawning:
     name: "1.18 Mob Spawning"
-    description: "Makes mobs only spawn in light level 0 like the 1.18 snapshots."
+    description: "Makes mobs only spawn in block light level 0 like the 1.18 snapshots."

@@ -1,5 +1,6 @@
 package me.jishuna.minetweaks.modules;
 
+import java.util.EnumSet;
 import java.util.Random;
 
 import org.bukkit.Color;
@@ -19,6 +20,7 @@ import org.bukkit.entity.Snowman;
 import org.bukkit.entity.Wither;
 import org.bukkit.entity.WitherSkeleton;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
@@ -39,6 +41,10 @@ import me.jishuna.minetweaks.api.util.ColorUtils;
 
 public class MobModule extends TweakModule {
 
+	EnumSet<EntityType> monsters = EnumSet.of(EntityType.ZOMBIE, EntityType.SKELETON, EntityType.ENDERMAN,
+			EntityType.CREEPER, EntityType.WITCH, EntityType.WITHER_SKELETON, EntityType.DROWNED,
+			EntityType.ZOMBIE_VILLAGER);
+
 	public MobModule(JavaPlugin plugin) {
 		super(plugin, "mobs");
 
@@ -50,6 +56,7 @@ public class MobModule extends TweakModule {
 		addSubModule("bedrock-wither-health");
 		addSubModule("wither-spawns-skeletons");
 		addSubModule("dye-shulkers");
+		addSubModule("1_18-mob-spawning");
 
 		addEventHandler(EntityChangeBlockEvent.class, this::onBlockChange);
 		addEventHandler(EntityExplodeEvent.class, this::onEntityExplode);
@@ -60,6 +67,15 @@ public class MobModule extends TweakModule {
 	}
 
 	private void onSpawn(CreatureSpawnEvent event) {
+		if (!isEnabled())
+			return;
+
+		if (getBoolean("1_18-mob-spawning", false) && monsters.contains(event.getEntityType())
+				&& event.getSpawnReason() == SpawnReason.NATURAL
+				&& event.getEntity().getLocation().getBlock().getLightFromBlocks() > 0) {
+			event.setCancelled(true);
+		}
+
 		if (event.getEntityType() == EntityType.WITHER && getBoolean("bedrock-wither-health", false)) {
 			LivingEntity entity = event.getEntity();
 			AttributeInstance instance = entity.getAttribute(Attribute.GENERIC_MAX_HEALTH);
@@ -74,7 +90,8 @@ public class MobModule extends TweakModule {
 
 		if (event.getEntity()instanceof Wither wither && getBoolean("wither-spawns-skeletons", true)) {
 			if (wither.getPersistentDataContainer().has(PluginKeys.SKELETONS_SPAWNED.getKey(), PersistentDataType.BYTE)
-					|| wither.getHealth() - event.getFinalDamage() > (wither.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() / 2))
+					|| wither.getHealth() - event
+							.getFinalDamage() > (wither.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() / 2))
 				return;
 
 			wither.getPersistentDataContainer().set(PluginKeys.SKELETONS_SPAWNED.getKey(), PersistentDataType.BYTE,

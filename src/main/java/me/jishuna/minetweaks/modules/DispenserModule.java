@@ -10,14 +10,12 @@ import org.bukkit.block.Container;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_17_R1.block.data.CraftBlockData;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.minetweaks.api.module.TweakModule;
-import net.minecraft.core.BlockPosition;
+import me.jishuna.minetweaks.api.util.NMSUtil;
 
 public class DispenserModule extends TweakModule {
 	private EnumMap<Material, Material> placementMap;
@@ -127,9 +125,7 @@ public class DispenserModule extends TweakModule {
 			event.setCancelled(true);
 
 			// TODO NMS
-			if (!((CraftBlockData) material.createBlockData()).getState().canPlace(
-					((CraftWorld) target.getWorld()).getHandle(),
-					new BlockPosition(target.getX(), target.getY(), target.getZ())))
+			if (!NMSUtil.canPlace(material, target.getLocation()))
 				return;
 
 			if (!target.getType().isAir() && getBoolean("placement-requires-air", true))

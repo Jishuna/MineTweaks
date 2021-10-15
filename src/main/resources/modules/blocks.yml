@@ -1,6 +1,12 @@
 #Enable or disable this entire module.
 enabled: true
 
+# Allows players to build ladders downwards by clicking a higher ladder while holding a ladder.
+downwards-ladders: true
+
+# Makes notblocks with mob heads attached to them play the mobs sound.
+mob-head-noteblocks: true
+
 # Allows falling anvils to crush cobblestone blocks into sand.
 anvil-cobble-to-sand: true
 
@@ -10,8 +16,14 @@ slimeball-sticky-pistons: true
 # Allows players to dry sponges by clicking them with a flint and steel.
 fire-dry-sponge: true
 
-display-name: "Miscellaneous"
+display-name: "Blocks"
 submodules:
+  downwards-ladders:
+    name: "Downwards Ladder Building"
+    description: "Allows building ladders downwards by clicking a higher ladder while holding a ladder."
+  mob-head-noteblocks:
+    name: "Mob Head Noteblocks"
+    description: "Makes notblocks with mob heads attached to them play the mobs sound."
   anvil-cobble-to-sand:
     name: "Anvil Cobblestone Compressing"
     description: "Allows anvils to convert cobblestone to sand when landing on it."

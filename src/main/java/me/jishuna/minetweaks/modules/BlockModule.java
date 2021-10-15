@@ -3,12 +3,14 @@ package me.jishuna.minetweaks.modules;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.NotePlayEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -16,8 +18,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.commonlib.items.ItemUtils;
 import me.jishuna.minetweaks.api.module.TweakModule;
+import me.jishuna.minetweaks.api.util.NMSUtil;
 
 public class BlockModule extends TweakModule {
+
+	private static final BlockFace[] FACES = new BlockFace[] { BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH,
+			BlockFace.WEST };
 
 	public BlockModule(JavaPlugin plugin) {
 		super(plugin, "blocks");
@@ -25,9 +31,11 @@ public class BlockModule extends TweakModule {
 		addSubModule("anvil-cobble-to-sand");
 		addSubModule("slimeball-sticky-pistons");
 		addSubModule("fire-dry-sponge");
+		addSubModule("downwards-ladders");
 
 		addEventHandler(EntityChangeBlockEvent.class, this::onBlockLand);
 		addEventHandler(PlayerInteractEvent.class, this::onInteract);
+		addEventHandler(NotePlayEvent.class, this::onNotePlay);
 	}
 
 	private void onInteract(PlayerInteractEvent event) {
@@ -39,6 +47,25 @@ public class BlockModule extends TweakModule {
 
 		if (item == null)
 			return;
+
+		if (getBoolean("downwards-ladders", true) && block.getType() == Material.LADDER
+				&& item.getType() == Material.LADDER) {
+			Block target = block;
+			Directional current = (Directional) block.getBlockData();
+			current.setFacing(current.getFacing().getOppositeFace());
+
+			while (target.getY() > block.getWorld().getMinHeight() && target.getType() == Material.LADDER) {
+				target = target.getRelative(BlockFace.DOWN);
+			}
+
+			if (NMSUtil.canPlace(current, target.getRelative(current.getFacing()).getLocation())) {
+				Directional ladder = (Directional) Material.LADDER.createBlockData();
+				ladder.setFacing(current.getFacing().getOppositeFace());
+				target.setBlockData(ladder);
+
+				item.setAmount(item.getAmount() - 1);
+			}
+		}
 
 		if (getBoolean("slimeball-sticky-pistons", true) && block.getType() == Material.PISTON
 				&& item.getType() == Material.SLIME_BALL) {
@@ -75,5 +102,49 @@ public class BlockModule extends TweakModule {
 						0.3, 0.3, Material.COBBLESTONE.createBlockData());
 			}
 		}
+	}
+
+	@SuppressWarnings("deprecation")
+	private void onNotePlay(NotePlayEvent event) {
+		if (!getBoolean("mob-head-noteblocks", true))
+			return;
+
+		Block block = event.getBlock();
+		for (BlockFace face : FACES) {
+			switch (block.getRelative(face).getType()) {
+			case CREEPER_HEAD, CREEPER_WALL_HEAD:
+				event.setCancelled(true);
+				block.getWorld().playSound(block.getLocation(), Sound.ENTITY_CREEPER_PRIMED, SoundCategory.RECORDS, 1f,
+						event.getNote().getId() * 0.0833f);
+				return;
+
+			case SKELETON_SKULL, SKELETON_WALL_SKULL:
+				event.setCancelled(true);
+				block.getWorld().playSound(block.getLocation(), Sound.ENTITY_SKELETON_AMBIENT, SoundCategory.RECORDS,
+						1f, event.getNote().getId() * 0.0833f);
+				return;
+
+			case ZOMBIE_HEAD, ZOMBIE_WALL_HEAD:
+				event.setCancelled(true);
+				block.getWorld().playSound(block.getLocation(), Sound.ENTITY_ZOMBIE_AMBIENT, SoundCategory.RECORDS, 1f,
+						event.getNote().getId() * 0.0833f);
+				return;
+
+			case WITHER_SKELETON_SKULL, WITHER_SKELETON_WALL_SKULL:
+				event.setCancelled(true);
+				block.getWorld().playSound(block.getLocation(), Sound.ENTITY_WITHER_SKELETON_AMBIENT,
+						SoundCategory.RECORDS, 1f, event.getNote().getId() * 0.0833f);
+				return;
+
+			case DRAGON_HEAD, DRAGON_WALL_HEAD:
+				event.setCancelled(true);
+				block.getWorld().playSound(block.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.RECORDS,
+						1f, event.getNote().getId() * 0.0833f);
+				return;
+			default:
+				break;
+			}
+		}
+
 	}
 }

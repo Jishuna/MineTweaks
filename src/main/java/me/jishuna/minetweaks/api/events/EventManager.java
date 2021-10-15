@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockDispenseEvent;
+import org.bukkit.event.block.NotePlayEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityCombustEvent;
@@ -76,5 +77,6 @@ public class EventManager {
 		registerListener(EntityChangeBlockEvent.class, event -> processEvent(event, EntityChangeBlockEvent.class));
 		registerListener(PotionSplashEvent.class, event -> processEvent(event, PotionSplashEvent.class));
 		registerListener(PrepareAnvilEvent.class, event -> processEvent(event, PrepareAnvilEvent.class));
+		registerListener(NotePlayEvent.class, event -> processEvent(event, NotePlayEvent.class));
 	}
 }

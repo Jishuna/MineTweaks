@@ -4,7 +4,7 @@ enabled: true
 # Allows players to build ladders downwards by clicking a higher ladder while holding a ladder.
 downwards-ladders: true
 
-# Makes notblocks with mob heads attached to them play the mobs sound.
+# Makes note blocks with mob heads attached to them play the mobs sound.
 mob-head-noteblocks: true
 
 # Allows falling anvils to crush cobblestone blocks into sand.
@@ -23,7 +23,7 @@ submodules:
     description: "Allows building ladders downwards by clicking a higher ladder while holding a ladder."
   mob-head-noteblocks:
     name: "Mob Head Noteblocks"
-    description: "Makes notblocks with mob heads attached to them play the mobs sound."
+    description: "Makes note blocks with mob heads attached to them play the mobs sound."
   anvil-cobble-to-sand:
     name: "Anvil Cobblestone Compressing"
     description: "Allows anvils to convert cobblestone to sand when landing on it."

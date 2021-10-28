@@ -1,10 +1,12 @@
 package me.jishuna.minetweaks;
 
 import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SimplePie;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.commonlib.language.MessageConfig;
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.commonlib.utils.ServerUtils;
 import me.jishuna.minetweaks.api.events.EventManager;
 import me.jishuna.minetweaks.api.module.ModuleManager;
 import me.jishuna.minetweaks.commands.MineTweaksCommandHandler;
@@ -78,6 +80,7 @@ public class MineTweaks extends JavaPlugin {
 	}
 
 	private void initializeMetrics() {
-		new Metrics(this, BSTATS_ID);
+		Metrics metrics = new Metrics(this, BSTATS_ID);
+		metrics.addCustomChart(new SimplePie("online_status", () -> ServerUtils.getOnlineMode()));
 	}
 }

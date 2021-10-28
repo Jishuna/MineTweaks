@@ -32,7 +32,7 @@ public class FarmingModule extends TweakModule {
 		addSubModule("bonemeal-sugarcane");
 		addSubModule("bonemeal-sand");
 		addSubModule("bonemeal-redsand");
-		
+
 		addEventHandler(PlayerInteractEvent.class, this::onInteract);
 	}
 
@@ -106,6 +106,8 @@ public class FarmingModule extends TweakModule {
 
 	// Handles growing dead bushes on sand
 	public static void handleSand(ItemStack item, Block block) {
+		if (block.getRelative(BlockFace.UP).isLiquid())
+			return;
 		Random random = ThreadLocalRandom.current();
 		block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 1.5, 0.5), 15, 3d, 0.5d,
 				3d);
@@ -146,7 +148,8 @@ public class FarmingModule extends TweakModule {
 			return true;
 		}
 
-		if (age > blockData.getMaximumAge() && data.getHeight() < maxHeight && top.getY() < top.getWorld().getMaxHeight() - 1) {
+		if (age > blockData.getMaximumAge() && data.getHeight() < maxHeight
+				&& top.getY() < top.getWorld().getMaxHeight() - 1) {
 			block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 0.5, 0.5), 15, 0.3d,
 					0.3d, 0.3d);
 			top.getRelative(BlockFace.UP).setType(top.getType());

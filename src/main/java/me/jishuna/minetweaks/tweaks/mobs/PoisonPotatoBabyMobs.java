@@ -1,5 +1,6 @@
 package me.jishuna.minetweaks.tweaks.mobs;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Breedable;
@@ -47,7 +48,9 @@ public class PoisonPotatoBabyMobs extends Tweak {
 			breedable.setAgeLock(true);
 			breedable.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 100, 0));
 			event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE, 1f, 1f);
-			item.setAmount(item.getAmount() - 1);
+
+			if (event.getPlayer().getGameMode() != GameMode.CREATIVE)
+				item.setAmount(item.getAmount() - 1);
 		}
 
 	}

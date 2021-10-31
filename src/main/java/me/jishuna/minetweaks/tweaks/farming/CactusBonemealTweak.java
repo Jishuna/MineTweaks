@@ -40,7 +40,7 @@ public class CactusBonemealTweak extends Tweak {
 		ItemStack item = event.getItem();
 
 		if (item != null && item.getType() == Material.BONE_MEAL && block.getType() == Material.CACTUS) {
-			FarmingUtils.handleTallPlant(item, block, height);
+			FarmingUtils.handleTallPlant(item, block, height, event.getPlayer().getGameMode());
 		}
 	}
 }

@@ -1,5 +1,6 @@
 package me.jishuna.minetweaks.tweaks.mobs;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Snowman;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -42,7 +43,9 @@ public class SnowmanHeadTweak extends Tweak {
 				&& item.getType() == Material.CARVED_PUMPKIN) {
 			event.setCancelled(true);
 			snowman.setDerp(false);
-			item.setAmount(item.getAmount() - 1);
+
+			if (event.getPlayer().getGameMode() != GameMode.CREATIVE)
+				item.setAmount(item.getAmount() - 1);
 		}
 	}
 }

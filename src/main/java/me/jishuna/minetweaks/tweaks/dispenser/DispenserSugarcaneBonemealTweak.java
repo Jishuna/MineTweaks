@@ -1,5 +1,6 @@
 package me.jishuna.minetweaks.tweaks.dispenser;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -43,7 +44,7 @@ public class DispenserSugarcaneBonemealTweak extends Tweak {
 		Block target = event.getBlock().getRelative(face);
 
 		if (item.getType() == Material.BONE_MEAL && target.getType() == Material.SUGAR_CANE
-				&& FarmingUtils.handleTallPlant(item, target, height)) {
+				&& FarmingUtils.handleTallPlant(item, target, height, GameMode.SURVIVAL)) {
 			DispenserUtils.removeUsedItem(getOwningPlugin(), event.getBlock(), item);
 		}
 	}

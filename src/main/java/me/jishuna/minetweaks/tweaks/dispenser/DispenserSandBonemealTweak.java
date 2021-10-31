@@ -1,5 +1,6 @@
 package me.jishuna.minetweaks.tweaks.dispenser;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -46,10 +47,10 @@ public class DispenserSandBonemealTweak extends Tweak {
 
 		if (item.getType() == Material.BONE_MEAL) {
 			if (face != BlockFace.DOWN && target.getType() == Material.SAND && sand) {
-				FarmingUtils.handleSand(item, target);
+				FarmingUtils.handleSand(item, target, GameMode.SURVIVAL);
 				DispenserUtils.removeUsedItem(getOwningPlugin(), event.getBlock(), item);
 			} else if (face != BlockFace.DOWN && target.getType() == Material.RED_SAND && redSand) {
-				FarmingUtils.handleSand(item, target);
+				FarmingUtils.handleSand(item, target, GameMode.SURVIVAL);
 				DispenserUtils.removeUsedItem(getOwningPlugin(), event.getBlock(), item);
 			}
 		}

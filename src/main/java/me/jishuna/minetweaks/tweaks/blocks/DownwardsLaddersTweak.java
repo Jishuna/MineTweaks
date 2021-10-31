@@ -1,5 +1,6 @@
 package me.jishuna.minetweaks.tweaks.blocks;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -54,7 +55,8 @@ public class DownwardsLaddersTweak extends Tweak {
 				ladder.setFacing(current.getFacing());
 				target.setBlockData(ladder);
 
-				item.setAmount(item.getAmount() - 1);
+				if (event.getPlayer().getGameMode() != GameMode.CREATIVE)
+					item.setAmount(item.getAmount() - 1);
 			}
 		}
 	}

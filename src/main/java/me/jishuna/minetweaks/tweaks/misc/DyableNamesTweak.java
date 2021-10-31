@@ -1,5 +1,6 @@
 package me.jishuna.minetweaks.tweaks.misc;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -54,7 +55,9 @@ public class DyableNamesTweak extends Tweak {
 
 		event.setCancelled(true);
 		livingEntity.setCustomName(color + ChatColor.stripColor(livingEntity.getCustomName()));
-		item.setAmount(item.getAmount() - 1);
+		
+		if (event.getPlayer().getGameMode() != GameMode.CREATIVE)
+			item.setAmount(item.getAmount() - 1);
 	}
 
 	private ChatColor dyeToChatColor(Material type) {

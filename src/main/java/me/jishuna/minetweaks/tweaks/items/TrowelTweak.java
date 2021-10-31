@@ -3,6 +3,7 @@ package me.jishuna.minetweaks.tweaks.items;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -87,8 +88,11 @@ public class TrowelTweak extends Tweak {
 
 			if (toUse != null && toUse.getType().isBlock()) {
 				block.getRelative(BlockFace.UP).setType(toUse.getType());
-				toUse.setAmount(toUse.getAmount() - 1);
-				ItemUtils.reduceDurability(event.getPlayer(), item, event.getHand());
+
+				if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
+					toUse.setAmount(toUse.getAmount() - 1);
+					ItemUtils.reduceDurability(event.getPlayer(), item, event.getHand());
+				}
 			}
 		}
 	}

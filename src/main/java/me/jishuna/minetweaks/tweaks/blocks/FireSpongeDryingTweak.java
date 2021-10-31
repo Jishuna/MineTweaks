@@ -1,5 +1,6 @@
 package me.jishuna.minetweaks.tweaks.blocks;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.Event.Result;
@@ -39,11 +40,12 @@ public class FireSpongeDryingTweak extends Tweak {
 		if (item == null)
 			return;
 
-		if (block.getType() == Material.WET_SPONGE
-				&& item.getType() == Material.FLINT_AND_STEEL) {
+		if (block.getType() == Material.WET_SPONGE && item.getType() == Material.FLINT_AND_STEEL) {
 			block.setType(Material.SPONGE);
 			event.setUseItemInHand(Result.DENY);
-			ItemUtils.reduceDurability(event.getPlayer(), item, event.getHand());
+
+			if (event.getPlayer().getGameMode() != GameMode.CREATIVE)
+				ItemUtils.reduceDurability(event.getPlayer(), item, event.getHand());
 		}
 	}
 }

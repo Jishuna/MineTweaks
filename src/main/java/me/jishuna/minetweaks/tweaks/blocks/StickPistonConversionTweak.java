@@ -1,5 +1,6 @@
 package me.jishuna.minetweaks.tweaks.blocks;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -48,7 +49,9 @@ public class StickPistonConversionTweak extends Tweak {
 			data.setFacing(oldData.getFacing());
 			block.setBlockData(data);
 
-			item.setAmount(item.getAmount() - 1);
+			if (event.getPlayer().getGameMode() != GameMode.CREATIVE)
+				item.setAmount(item.getAmount() - 1);
+			
 			event.getPlayer().playSound(block.getLocation(), Sound.BLOCK_SLIME_BLOCK_PLACE, 1f, 1f);
 		}
 	}

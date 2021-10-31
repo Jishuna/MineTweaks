@@ -1,6 +1,7 @@
 package me.jishuna.minetweaks.tweaks.mobs;
 
 import org.bukkit.DyeColor;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Shulker;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -44,7 +45,9 @@ public class ShulkerDyeingTweak extends Tweak {
 			if (color != shulker.getColor()) {
 				event.setCancelled(true);
 				shulker.setColor(color);
-				item.setAmount(item.getAmount() - 1);
+
+				if (event.getPlayer().getGameMode() != GameMode.CREATIVE)
+					item.setAmount(item.getAmount() - 1);
 			}
 		}
 	}

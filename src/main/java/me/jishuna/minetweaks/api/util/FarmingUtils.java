@@ -3,6 +3,7 @@ package me.jishuna.minetweaks.api.util;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -13,14 +14,14 @@ import org.bukkit.inventory.ItemStack;
 
 public class FarmingUtils {
 	// Handles growing dead bushes on sand
-	public static void handleSand(ItemStack item, Block block) {
+	public static void handleSand(ItemStack item, Block block, GameMode mode) {
 		if (block.getRelative(BlockFace.UP).isLiquid())
 			return;
 		Random random = ThreadLocalRandom.current();
 		block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 1.5, 0.5), 15, 3d, 0.5d,
 				3d);
-
-		item.setAmount(item.getAmount() - 1);
+		if (mode != GameMode.CREATIVE)
+			item.setAmount(item.getAmount() - 1);
 
 		for (int i = 0; i < 15; i++) {
 			Location location = block.getLocation();
@@ -38,7 +39,7 @@ public class FarmingUtils {
 	}
 
 	// Handles bonemealing cactus and sugar cane
-	public static boolean handleTallPlant(ItemStack item, Block block, int maxHeight) {
+	public static boolean handleTallPlant(ItemStack item, Block block, int maxHeight, GameMode mode) {
 		TallPlantData data = evaluateTallPlantData(block, new TallPlantData(block), null);
 
 		Block top = data.getTopBlock();
@@ -50,7 +51,9 @@ public class FarmingUtils {
 		top.setBlockData(blockData);
 
 		if (blockData.getAge() == age) {
-			item.setAmount(item.getAmount() - 1);
+			if (mode != GameMode.CREATIVE)
+				item.setAmount(item.getAmount() - 1);
+
 			block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 0.5, 0.5), 15, 0.3d,
 					0.3d, 0.3d);
 			return true;
@@ -61,7 +64,9 @@ public class FarmingUtils {
 			block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 0.5, 0.5), 15, 0.3d,
 					0.3d, 0.3d);
 			top.getRelative(BlockFace.UP).setType(top.getType());
-			item.setAmount(item.getAmount() - 1);
+
+			if (mode != GameMode.CREATIVE)
+				item.setAmount(item.getAmount() - 1);
 			return true;
 		}
 		return false;

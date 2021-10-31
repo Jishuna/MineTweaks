@@ -43,9 +43,9 @@ public class SandBoneamealTweak extends Tweak {
 
 		if (item != null && item.getType() == Material.BONE_MEAL) {
 			if (block.getType() == Material.SAND && sand) {
-				FarmingUtils.handleSand(item, block);
+				FarmingUtils.handleSand(item, block, event.getPlayer().getGameMode());
 			} else if (block.getType() == Material.RED_SAND && redSand) {
-				FarmingUtils.handleSand(item, block);
+				FarmingUtils.handleSand(item, block, event.getPlayer().getGameMode());
 			}
 		}
 	}

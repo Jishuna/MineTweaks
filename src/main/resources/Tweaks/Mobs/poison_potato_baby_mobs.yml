@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Display name, seen in-game
+display-name: "Poisonous Potato Baby Mobs"
+
+# Description, seen in-game
+description: "Allows players to prevent baby animals from growing up by feeding them a poisonous potato."
+
+# Category
+category: "Mobs"

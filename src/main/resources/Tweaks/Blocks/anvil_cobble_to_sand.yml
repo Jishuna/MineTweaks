@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Display name, seen in-game
+display-name: "Anvil Cobblestone Compressing"
+
+# Description, seen in-game
+description: "Allows anvils to convert cobblestone to sand when landing on it."
+
+# Category
+category: "Blocks"

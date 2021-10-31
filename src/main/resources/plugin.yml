@@ -11,7 +11,7 @@ commands:
 permissions:
   minetweaks.command:
     default: true
-  minetweaks.command.module:
+  minetweaks.command.tweaks:
     default: true
   minetweaks.command.info:
     default: true

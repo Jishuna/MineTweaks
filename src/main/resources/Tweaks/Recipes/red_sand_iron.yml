@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Display name, seen in-game
+display-name: "Red Sand from Iron"
+
+# Description, seen in-game
+description: "Allows crafting red sand with sand and iron nuggets."
+
+# Category
+category: "Recipes"

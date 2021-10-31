@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Display name, seen in-game
+display-name: "Dyeable Name Tags"
+
+# Description, seen in-game
+description: "Allows players to dye the name of named mobs using any type of dye."
+
+# Category
+category: "Misc"

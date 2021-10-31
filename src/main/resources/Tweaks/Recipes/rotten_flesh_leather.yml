@@ -1,0 +1,14 @@
+# Enable or disable this tweak.
+enabled: false
+
+# The cooking time (in ticks) for rotten flesh.
+rotten-flesh-cook-time: 200
+
+# Display name, seen in-game
+display-name: "Rotten Flesh to Leather"
+
+# Description, seen in-game
+description: "Allows smelting rotten flesh to get leather."
+
+# Category
+category: "Recipes"

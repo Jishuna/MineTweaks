@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Display name, seen in-game
+display-name: "Wither Spawns Wither Skeletons"
+
+# Description, seen in-game
+description: "Makes the wither spawn 3 wither skeletons when it reaches half health to match bedrock edition."
+
+# Category
+category: "Mobs"

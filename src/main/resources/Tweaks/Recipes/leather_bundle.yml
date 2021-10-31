@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: false
+
+# Display name, seen in-game
+display-name: "Leather Bundles"
+
+# Description, seen in-game
+description: "Allows crafting bundles with leather and string."
+
+# Category
+category: "Recipes"

@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Display name, seen in-game
+display-name: "Snowman Head Restoration"
+
+# Description, seen in-game
+description: "Allows players to restore a snow man's pumpkin by right clicking with a pumpkin."
+
+# Category
+category: "Mobs"

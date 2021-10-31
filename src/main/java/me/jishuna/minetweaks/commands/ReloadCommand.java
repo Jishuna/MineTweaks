@@ -5,7 +5,8 @@ import org.bukkit.command.CommandSender;
 
 import me.jishuna.commonlib.commands.SimpleCommandHandler;
 import me.jishuna.minetweaks.MineTweaks;
-import me.jishuna.minetweaks.api.module.TweakModule;
+import me.jishuna.minetweaks.api.RecipeManager;
+import me.jishuna.minetweaks.api.tweak.Tweak;
 
 public class ReloadCommand extends SimpleCommandHandler {
 
@@ -26,8 +27,9 @@ public class ReloadCommand extends SimpleCommandHandler {
 		sender.sendMessage(this.plugin.getMessage("reload-messages"));
 		this.plugin.getMessageConfig().refresh();
 
-		sender.sendMessage(this.plugin.getMessage("reload-modules"));
-		this.plugin.getModuleManager().getModules().forEach(TweakModule::reload);
+		sender.sendMessage(this.plugin.getMessage("reload-tweaks"));
+		RecipeManager.getInstance().removeAllRecipes();
+		this.plugin.getTweakManager().getTweaks().forEach(Tweak::reload);
 
 		sender.sendMessage(this.plugin.getMessage("reload-complete"));
 		return true;

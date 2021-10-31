@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Display name, seen in-game
+display-name: "Dispenser Cauldron Filling"
+
+# Description, seen in-game
+description: "Allows dispensers to fill cauldrons with buckets."
+
+# Category
+category: "Dispensers"

@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: false
+
+# Display name, seen in-game
+display-name: "1.18 Mob Spawning"
+
+# Description, seen in-game
+description: "Makes mobs only spawn in block light level 0 like the 1.18 snapshots."
+
+# Category
+category: "Mobs"

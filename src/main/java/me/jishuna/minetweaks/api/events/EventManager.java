@@ -23,7 +23,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import me.jishuna.commonlib.events.EventConsumer;
 import me.jishuna.minetweaks.MineTweaks;
-import me.jishuna.minetweaks.api.module.TweakModule;
+import me.jishuna.minetweaks.api.tweak.Tweak;
 
 public class EventManager {
 	private final MineTweaks plugin;
@@ -56,9 +56,9 @@ public class EventManager {
 	}
 
 	public <T extends Event> void processEvent(T event, Class<T> eventClass) {
-		for (TweakModule module : this.plugin.getModuleManager().getModules()) {
-			if (module.isEnabled()) {
-				module.getEventHandlers(eventClass).forEach(consumer -> consumer.consume(event));
+		for (Tweak tweak : this.plugin.getTweakManager().getTweaksForEvent(eventClass)) {
+			if (tweak.isEnabled()) {
+				tweak.getEventHandlers(eventClass).forEach(consumer -> consumer.consume(event));
 			}
 		}
 	}

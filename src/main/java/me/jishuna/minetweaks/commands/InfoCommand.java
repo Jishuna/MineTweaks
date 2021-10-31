@@ -6,8 +6,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 
 import me.jishuna.commonlib.commands.SimpleCommandHandler;
 import me.jishuna.minetweaks.MineTweaks;
-import me.jishuna.minetweaks.api.module.Submodule;
-import me.jishuna.minetweaks.api.module.TweakModule;
+import me.jishuna.minetweaks.api.tweak.Tweak;
 import net.md_5.bungee.api.ChatColor;
 
 public class InfoCommand extends SimpleCommandHandler {
@@ -30,30 +29,15 @@ public class InfoCommand extends SimpleCommandHandler {
 		sender.sendMessage(ChatColor.GOLD + descriptionFile.getFullName() + ChatColor.GREEN + " by " + ChatColor.GOLD
 				+ String.join(", ", descriptionFile.getAuthors()));
 		sender.sendMessage(" ");
-		sender.sendMessage(ChatColor.GOLD + "Enabled Modules: " + ChatColor.GREEN + getEnabledModules());
-		sender.sendMessage(ChatColor.GOLD + "Enabled Sub Modules: " + ChatColor.GREEN + getEnabledSubModules());
+		sender.sendMessage(ChatColor.GOLD + "Enabled Tweaks: " + ChatColor.GREEN + getEnabledModules());
 		sender.sendMessage(ChatColor.GOLD + "=".repeat(40));
 
 		return true;
 	}
 
 	private String getEnabledModules() {
-		int total = plugin.getModuleManager().getModules().size();
-		long enabled = plugin.getModuleManager().getModules().stream().filter(module -> module.isEnabled()).count();
-		return enabled + "/" + total;
-	}
-
-	private String getEnabledSubModules() {
-		int total = 0;
-		int enabled = 0;
-
-		for (TweakModule module : this.plugin.getModuleManager().getModules()) {
-			for (Submodule subModule : module.getSubModules()) {
-				total++;
-				if (module.getBoolean(subModule.getKey(), false))
-					enabled++;
-			}
-		}
+		int total = plugin.getTweakManager().getTweaks().size();
+		long enabled = plugin.getTweakManager().getTweaks().stream().filter(Tweak::isEnabled).count();
 		return enabled + "/" + total;
 	}
 

@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Display name, seen in-game
+display-name: "Unlock All Recipes"
+
+# Description, seen in-game
+description: "Unlocks all recipes for a player when they join."
+
+# Category
+category: "Recipes"

@@ -1,6 +1,7 @@
 package me.jishuna.minetweaks.api;
 
 import org.bukkit.NamespacedKey;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.minetweaks.MineTweaks;
 
@@ -10,7 +11,7 @@ public enum PluginKeys {
 	private final NamespacedKey key;
 
 	private PluginKeys(String name) {
-		this.key = new NamespacedKey(MineTweaks.getPlugin(MineTweaks.class), name);
+		this.key = new NamespacedKey(JavaPlugin.getPlugin(MineTweaks.class), name);
 	}
 
 	public NamespacedKey getKey() {

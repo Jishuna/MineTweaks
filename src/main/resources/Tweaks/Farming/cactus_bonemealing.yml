@@ -1,0 +1,14 @@
+# Enable or disable this tweak.
+enabled: true
+
+# The maximum height of sugar cane when bonemealed.
+cactus-bonemeal-height: 3
+
+# Display name, seen in-game
+display-name: "Cactus Bonemealing"
+
+# Description, seen in-game
+description: "Allows players to bonemeal cactus."
+
+# Category
+category: "Farming"

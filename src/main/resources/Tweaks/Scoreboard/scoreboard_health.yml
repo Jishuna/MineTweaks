@@ -1,0 +1,16 @@
+# Enable or disable this tweak.
+enabled: true
+
+# The display name for the health scoreboard.
+health-display: '&c❤'
+# The display slot for the health scoreboard, valid options are: BELOW_NAME, PLAYER_LIST, or SIDEBAR.
+health-display-type: PLAYER_LIST
+
+# Display name, seen in-game
+display-name: "Scoreboard Health"
+
+# Description, seen in-game
+description: "Shows player health on the scoreboard."
+
+# Category
+category: "Scoreboard"

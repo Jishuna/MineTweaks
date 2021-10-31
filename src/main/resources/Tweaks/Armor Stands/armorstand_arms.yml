@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Display name, seen in-game
+display-name: "Armor Stand Arms"
+
+# Description, seen in-game
+description: "Gives all armor stands arms when they are placed."
+
+# Category
+category: "Armor Stands"

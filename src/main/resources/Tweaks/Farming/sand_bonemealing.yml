@@ -1,0 +1,16 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Whether to allow this feature to work on normal sand.
+allow-normal-sand: true
+# Whether to allow this feature to work on red sand.
+allow-red-sand: true
+
+# Display name, seen in-game
+display-name: "Sand Bonemealing"
+
+# Description, seen in-game
+description: "Allows players to bonemeal sand for dead bushes."
+
+# Category
+category: "Farming"

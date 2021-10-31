@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Display name, seen in-game
+display-name: "Hide Bundles"
+
+# Description, seen in-game
+description: "Allows crafting bundles with rabbit hide and string."
+
+# Category
+category: "Recipes"

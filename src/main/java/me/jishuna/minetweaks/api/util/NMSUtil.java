@@ -11,14 +11,13 @@ import net.minecraft.core.BlockPosition;
 public class NMSUtil {
 
 	public static boolean canPlace(Material material, Location location) {
-		return !((CraftBlockData) material.createBlockData()).getState().canPlace(
+		return ((CraftBlockData) material.createBlockData()).getState().canPlace(
 				((CraftWorld) location.getWorld()).getHandle(),
-				new BlockPosition(location.getBlockX(), location.getBlockY(), location.getBlockZ()));
+				new BlockPosition(location.getX(), location.getY(), location.getZ()));
 	}
-	
+
 	public static boolean canPlace(BlockData data, Location location) {
-		return !((CraftBlockData) data).getState().canPlace(
-				((CraftWorld) location.getWorld()).getHandle(),
-				new BlockPosition(location.getBlockX(), location.getBlockY(), location.getBlockZ()));
+		return ((CraftBlockData) data).getState().canPlace(((CraftWorld) location.getWorld()).getHandle(),
+				new BlockPosition(location.getX(), location.getY(), location.getZ()));
 	}
 }

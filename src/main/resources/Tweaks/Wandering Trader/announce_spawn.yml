@@ -1,0 +1,14 @@
+# Enable or disable this tweak.
+enabled: true
+
+# The message to send, %location% and %world% will be replaced with the traders location.
+announce-message: '&6A wandering trader has spawned at &3%location%&6 in &3%world%&6!'
+
+# Display name, seen in-game
+display-name: "Announce Spawn"
+
+# Description, seen in-game
+description: "Announces the location to all players when a wandering trader spawns."
+
+# Category
+category: "Wandering Trader"

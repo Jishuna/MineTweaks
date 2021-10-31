@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: false
+
+# Display name, seen in-game
+display-name: "Bedrock Wither Health"
+
+# Description, seen in-game
+description: "Sets the wither's health to 600 (instead of 300) to match bedrock edition."
+
+# Category
+category: "Mobs"

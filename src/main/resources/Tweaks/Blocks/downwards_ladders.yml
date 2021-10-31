@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Display name, seen in-game
+display-name: "Downwards Ladder Building"
+
+# Description, seen in-game
+description: "Allows building ladders downwards by clicking on a higher ladder while holding a ladder."
+
+# Category
+category: "Blocks"

@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Display name, seen in-game
+display-name: "Dispensers from Droppers"
+
+# Description, seen in-game
+description: "Allows crafting dispensers with a dropper, sticks, and string."
+
+# Category
+category: "Recipes"

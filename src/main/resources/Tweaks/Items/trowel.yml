@@ -1,0 +1,18 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Trowel display name.
+trowel-name: 'Trowel'
+# Trowel material, materials with durability will take 1 durability damage when used.
+trowel-material: 'IRON_SHOVEL'
+# Trowel model data, for use with custom resource packs.
+trowel-model-data: 1
+
+# Display name, seen in-game
+display-name: "Trowel"
+
+# Description, seen in-game
+description: "A tool that will place a random block from the players hotbar."
+
+# Category
+category: "Items"

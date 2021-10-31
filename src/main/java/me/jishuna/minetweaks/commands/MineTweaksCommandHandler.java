@@ -12,7 +12,7 @@ public class MineTweaksCommandHandler extends ArgumentCommandHandler {
 
 		setDefault(info);
 		addArgumentExecutor("info", info);
-		addArgumentExecutor("module", new ModuleCommand(plugin));
+		addArgumentExecutor("tweaks", new TweaksCommand(plugin));
 		addArgumentExecutor("reload", new ReloadCommand(plugin));
 	}
 }

@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Display name, seen in-game
+display-name: "Armor Stand Offhand Items"
+
+# Description, seen in-game
+description: "Allows placing items in an armor stand's offhand when holding them in your offhand."
+
+# Category
+category: "Armor Stands"

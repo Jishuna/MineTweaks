@@ -1,11 +1,11 @@
 package me.jishuna.minetweaks.api.tweak;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.bukkit.event.Event;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,7 +20,7 @@ import me.jishuna.minetweaks.api.RegisterTweak;
 public class TweakManager {
 	private static final Class<?> TYPE_CLASS = Tweak.class;
 
-	private final Map<String, Tweak> tweaks = new HashMap<>();
+	private final Map<String, Tweak> tweaks = new TreeMap<>();
 	private final Multimap<Class<? extends Event>, Tweak> eventMap = ArrayListMultimap.create();
 	private final Set<String> categories = new HashSet<>();
 

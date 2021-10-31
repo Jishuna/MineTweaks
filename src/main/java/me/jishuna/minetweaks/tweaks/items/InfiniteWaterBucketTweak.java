@@ -1,7 +1,11 @@
 package me.jishuna.minetweaks.tweaks.items;
 
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Directional;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.inventory.AnvilInventory;
@@ -26,6 +30,7 @@ public class InfiniteWaterBucketTweak extends Tweak {
 
 		addEventHandler(PlayerBucketEmptyEvent.class, this::onBucket);
 		addEventHandler(PrepareAnvilEvent.class, this::onAnvil);
+		addEventHandler(BlockDispenseEvent.class, this::onDispense);
 	}
 
 	@Override
@@ -66,6 +71,22 @@ public class InfiniteWaterBucketTweak extends Tweak {
 				event.setItemStack(item);
 				break;
 			}
+		}
+	}
+
+	private void onDispense(BlockDispenseEvent event) {
+		if (event.getBlock().getType() != Material.DISPENSER)
+			return;
+
+		ItemStack item = event.getItem();
+		Directional directional = (Directional) event.getBlock().getBlockData();
+		BlockFace face = directional.getFacing();
+		Block target = event.getBlock().getRelative(face);
+
+		if (item.getType() == Material.WATER_BUCKET && item.containsEnchantment(Enchantment.ARROW_INFINITE)) {
+			event.setCancelled(true);
+			if (target.getType().isAir())
+				target.setType(Material.WATER);
 		}
 	}
 }

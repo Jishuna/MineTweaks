@@ -16,6 +16,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
@@ -83,6 +84,7 @@ public class EventManager {
 		registerListener(PlayerBucketEmptyEvent.class, event -> processEvent(event, PlayerBucketEmptyEvent.class),
 				EventPriority.HIGHEST);
 		registerListener(CreatureSpawnEvent.class, event -> processEvent(event, CreatureSpawnEvent.class));
+		registerListener(InventoryCloseEvent.class, event -> processEvent(event, InventoryCloseEvent.class));
 		registerListener(EntityCombustEvent.class, event -> processEvent(event, EntityCombustEvent.class));
 		registerListener(PlayerJoinEvent.class, event -> processEvent(event, PlayerJoinEvent.class));
 		registerListener(EntityExplodeEvent.class, event -> processEvent(event, EntityExplodeEvent.class));

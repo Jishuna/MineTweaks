@@ -15,7 +15,9 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -64,12 +66,22 @@ public class EventManager {
 	}
 
 	private void registerBaseEvents() {
-		registerListener(PlayerInteractAtEntityEvent.class, event -> processEvent(event, PlayerInteractAtEntityEvent.class), EventPriority.HIGHEST);
-		registerListener(PlayerInteractEntityEvent.class, event -> processEvent(event, PlayerInteractEntityEvent.class), EventPriority.HIGHEST);
-		registerListener(PlayerInteractEvent.class, event -> processEvent(event, PlayerInteractEvent.class), EventPriority.HIGHEST);
-		registerListener(EntityInteractEvent.class, event -> processEvent(event, EntityInteractEvent.class), EventPriority.HIGHEST);
-		registerListener(BlockDispenseEvent.class, event -> processEvent(event, BlockDispenseEvent.class), EventPriority.HIGHEST);
-		registerListener(EntityDamageEvent.class, event -> processEvent(event, EntityDamageEvent.class), EventPriority.HIGHEST);
+		registerListener(PlayerInteractAtEntityEvent.class,
+				event -> processEvent(event, PlayerInteractAtEntityEvent.class), EventPriority.HIGHEST);
+		registerListener(PlayerInteractEntityEvent.class, event -> processEvent(event, PlayerInteractEntityEvent.class),
+				EventPriority.HIGHEST);
+		registerListener(PlayerInteractEvent.class, event -> processEvent(event, PlayerInteractEvent.class),
+				EventPriority.HIGHEST);
+		registerListener(EntityInteractEvent.class, event -> processEvent(event, EntityInteractEvent.class),
+				EventPriority.HIGHEST);
+		registerListener(BlockDispenseEvent.class, event -> processEvent(event, BlockDispenseEvent.class),
+				EventPriority.HIGHEST);
+		registerListener(EntityDamageEvent.class, event -> processEvent(event, EntityDamageEvent.class),
+				EventPriority.HIGHEST);
+		registerListener(InventoryClickEvent.class, event -> processEvent(event, InventoryClickEvent.class),
+				EventPriority.HIGHEST);
+		registerListener(PlayerBucketEmptyEvent.class, event -> processEvent(event, PlayerBucketEmptyEvent.class),
+				EventPriority.HIGHEST);
 		registerListener(CreatureSpawnEvent.class, event -> processEvent(event, CreatureSpawnEvent.class));
 		registerListener(EntityCombustEvent.class, event -> processEvent(event, EntityCombustEvent.class));
 		registerListener(PlayerJoinEvent.class, event -> processEvent(event, PlayerJoinEvent.class));

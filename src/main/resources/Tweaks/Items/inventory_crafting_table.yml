@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Display name, seen in-game
+display-name: "Use Crafting Table in Inventory"
+
+# Description, seen in-game
+description: "Allows players to use crafting tables from their inventory by middle clicking them."
+
+# Category
+category: "Items"

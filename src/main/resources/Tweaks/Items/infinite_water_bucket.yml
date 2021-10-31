@@ -1,0 +1,14 @@
+# Enable or disable this tweak.
+enabled: true
+
+# The cost to add infinity to a water bucket in an anvil.
+anvil-level-cost: 20
+
+# Display name, seen in-game
+display-name: "Infinity Water Bucket"
+
+# Description, seen in-game
+description: "Allows the creation of infinite water buckets using an infinity enchanted book."
+
+# Category
+category: "Items"

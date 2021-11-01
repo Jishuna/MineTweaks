@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Display name, seen in-game
+display-name: "Chicken Plucking"
+
+# Description, seen in-game
+description: "Allows players to pluck feathers from a chicken, dealing half a heart of damage in the process."
+
+# Category
+category: "Mobs"

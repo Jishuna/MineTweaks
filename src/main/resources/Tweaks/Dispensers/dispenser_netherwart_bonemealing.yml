@@ -1,0 +1,14 @@
+# Enable or disable this tweak.
+enabled: true
+
+# The maximum height of sugar cane when bonemealed by a dispenser.
+sugarcane-bonemeal-height: 3
+
+# Display name, seen in-game
+display-name: "Dispenser Nether Wart Bonemealing"
+
+# Description, seen in-game
+description: "Allows dispensers to bonemeal nether wart."
+
+# Category
+category: "Dispensers"

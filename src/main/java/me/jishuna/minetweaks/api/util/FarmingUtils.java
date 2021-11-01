@@ -17,11 +17,11 @@ public class FarmingUtils {
 	public static void handleSand(ItemStack item, Block block, GameMode mode) {
 		if (block.getRelative(BlockFace.UP).isLiquid())
 			return;
-		
+
 		Random random = ThreadLocalRandom.current();
 		block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 1.5, 0.5), 15, 3d, 0.5d,
 				3d);
-		
+
 		if (mode != GameMode.CREATIVE)
 			item.setAmount(item.getAmount() - 1);
 
@@ -38,6 +38,25 @@ public class FarmingUtils {
 				location.subtract(0, 1, 0);
 			}
 		}
+	}
+
+	public static boolean handlePlant(ItemStack item, Block block, GameMode mode) {
+		Ageable blockData = (Ageable) block.getBlockData();
+		int age = blockData.getAge();
+
+		age ++;
+		blockData.setAge(Math.min(age, blockData.getMaximumAge()));
+		block.setBlockData(blockData);
+
+		if (blockData.getAge() == age) {
+			if (mode != GameMode.CREATIVE)
+				item.setAmount(item.getAmount() - 1);
+
+			block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 0.5, 0.5), 15, 0.3d,
+					0.3d, 0.3d);
+			return true;
+		}
+		return false;
 	}
 
 	// Handles bonemealing cactus and sugar cane

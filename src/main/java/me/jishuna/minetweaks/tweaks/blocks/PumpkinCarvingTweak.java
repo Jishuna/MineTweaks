@@ -7,6 +7,7 @@ import java.util.TreeMap;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -19,12 +20,14 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.commonlib.items.ItemBuilder;
+import me.jishuna.commonlib.items.ItemUtils;
 import me.jishuna.commonlib.utils.BlockUtils;
 import me.jishuna.commonlib.utils.FileUtils;
 import me.jishuna.minetweaks.api.RegisterTweak;
@@ -38,7 +41,7 @@ public class PumpkinCarvingTweak extends Tweak {
 	private String[] textures;
 	private Inventory inventory;
 
-	private final Map<InventoryView, Block> carvingMap = new HashMap<>();
+	private final Map<InventoryView, CarvingData> carvingMap = new HashMap<>();
 
 	public PumpkinCarvingTweak(JavaPlugin plugin, String name) {
 		super(plugin, name);
@@ -91,7 +94,7 @@ public class PumpkinCarvingTweak extends Tweak {
 
 		if (block.getType() == Material.PUMPKIN && item.getType() == Material.SHEARS && player.isSneaking()) {
 			InventoryView view = player.openInventory(this.inventory);
-			this.carvingMap.put(view, block);
+			this.carvingMap.put(view, new CarvingData(event.getItem(), block, event.getHand()));
 		}
 	}
 
@@ -99,9 +102,9 @@ public class PumpkinCarvingTweak extends Tweak {
 		if (event.getClickedInventory() == null)
 			return;
 
-		Block target = this.carvingMap.get(event.getView());
+		CarvingData carvingData = this.carvingMap.get(event.getView());
 
-		if (target == null)
+		if (carvingData == null)
 			return;
 
 		event.setCancelled(true);
@@ -110,6 +113,7 @@ public class PumpkinCarvingTweak extends Tweak {
 		if (slot < this.textures.length) {
 			String texture = this.textures[slot];
 			Player player = (Player) event.getWhoClicked();
+			Block target = carvingData.block;
 
 			target.setType(Material.PLAYER_HEAD);
 
@@ -120,13 +124,18 @@ public class PumpkinCarvingTweak extends Tweak {
 			BlockUtils.setSkullTextureUrl(target, texture);
 
 			player.playSound(player.getLocation(), Sound.BLOCK_PUMPKIN_CARVE, SoundCategory.BLOCKS, 1f, 1f);
+			
+			if (player.getGameMode() != GameMode.CREATIVE)
+				ItemUtils.reduceDurability(player, carvingData.item, carvingData.hand);
 
 			this.carvingMap.remove(event.getView());
-			Bukkit.getScheduler().runTask(getOwningPlugin(), () -> player.closeInventory());
+			Bukkit.getScheduler().runTask(getOwningPlugin(), player::closeInventory);
 		}
 	}
 
 	private void onClose(InventoryCloseEvent event) {
 		this.carvingMap.remove(event.getView());
 	}
+	
+	public static record CarvingData(ItemStack item, Block block, EquipmentSlot hand) {}
 }

@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Display name, seen in-game
+display-name: "Swing Through Grass"
+
+# Description, seen in-game
+description: "Allows players to attack entities through tall grass and other passable blocks."
+
+# Category
+category: "Misc"

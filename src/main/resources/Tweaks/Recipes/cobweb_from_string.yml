@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Display name, seen in-game
+display-name: "Cobwebs From String"
+
+# Description, seen in-game
+description: "Allows crafting cobwebs using 5 string."
+
+# Category
+category: "Recipes"

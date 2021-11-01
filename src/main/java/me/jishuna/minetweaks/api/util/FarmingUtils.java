@@ -13,24 +13,26 @@ import org.bukkit.block.data.Ageable;
 import org.bukkit.inventory.ItemStack;
 
 public class FarmingUtils {
-	// Handles growing dead bushes on sand
+	// Handles growing dead bushes and cactus on sand
 	public static void handleSand(ItemStack item, Block block, GameMode mode) {
 		if (block.getRelative(BlockFace.UP).isLiquid())
 			return;
+		
 		Random random = ThreadLocalRandom.current();
 		block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 1.5, 0.5), 15, 3d, 0.5d,
 				3d);
+		
 		if (mode != GameMode.CREATIVE)
 			item.setAmount(item.getAmount() - 1);
 
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < 10; i++) {
 			Location location = block.getLocation();
-			location.add(random.nextGaussian() * 2, 3, random.nextGaussian() * 2);
+			location.add(random.nextGaussian() * 2.5, 3, random.nextGaussian() * 2.5);
 
 			for (int j = 0; j < 6; j++) {
 				Block current = location.getBlock();
 				if (current.getType().isAir() && current.getRelative(BlockFace.DOWN).getType() == block.getType()) {
-					current.setType(Material.DEAD_BUSH);
+					current.setType(random.nextInt(8) == 0 ? Material.CACTUS : Material.DEAD_BUSH);
 					break;
 				}
 				location.subtract(0, 1, 0);

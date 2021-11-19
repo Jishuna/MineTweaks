@@ -22,6 +22,9 @@ public class DispenserDropperRecipe extends Tweak {
 	public void reload() {
 		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Recipes/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
+			
+			if (!isEnabled())
+				return;
 
 			ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(getOwningPlugin(), "dropper_dispenser"),
 					new ItemStack(Material.DISPENSER));

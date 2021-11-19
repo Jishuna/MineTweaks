@@ -21,7 +21,10 @@ public class LeatherBundleRecipe extends Tweak {
 	@Override
 	public void reload() {
 		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Recipes/" + this.getName() + ".yml").ifPresent(config -> {
-			loadDefaults(config, true);
+			loadDefaults(config, false);
+			
+			if (!isEnabled())
+				return;
 
 			ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(getOwningPlugin(), "leather_bundle"),
 					new ItemStack(Material.BUNDLE));

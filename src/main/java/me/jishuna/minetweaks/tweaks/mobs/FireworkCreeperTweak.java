@@ -28,7 +28,7 @@ public class FireworkCreeperTweak extends Tweak {
 	@Override
 	public void reload() {
 		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Mobs/" + this.getName() + ".yml").ifPresent(config -> {
-			loadDefaults(config, true);
+			loadDefaults(config, false);
 		});
 	}
 

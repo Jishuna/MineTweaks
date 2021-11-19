@@ -13,8 +13,8 @@ import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 
 @RegisterTweak(name = "inventory_enderchest")
-public class InventoryStoneCutterTweak extends Tweak {
-	public InventoryStoneCutterTweak(JavaPlugin plugin, String name) {
+public class InventoryEnderchestTweak extends Tweak {
+	public InventoryEnderchestTweak(JavaPlugin plugin, String name) {
 		super(plugin, name);
 
 		addEventHandler(InventoryClickEvent.class, this::onClick);
@@ -23,7 +23,7 @@ public class InventoryStoneCutterTweak extends Tweak {
 	@Override
 	public void reload() {
 		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Items/" + this.getName() + ".yml").ifPresent(config -> {
-			loadDefaults(config, true);
+			loadDefaults(config, false);
 		});
 	}
 

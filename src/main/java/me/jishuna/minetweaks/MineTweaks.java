@@ -36,6 +36,8 @@ public class MineTweaks extends JavaPlugin {
 
 		initializeMetrics();
 		initializeUpdateChecker();
+
+		new TickingTweakRunnable(this.tweakManager).runTaskTimer(this, 10, 10);
 	}
 
 	public TweakManager getTweakManager() {
@@ -75,7 +77,8 @@ public class MineTweaks extends JavaPlugin {
 			if (SimpleSemVersion.fromString(version).isNewerThan(current)) {
 				ConsoleCommandSender sender = Bukkit.getConsoleSender();
 				sender.sendMessage(ChatColor.GOLD + "=".repeat(70));
-				sender.sendMessage(ChatColor.GOLD + "A new version of MineTweaks is available: " + ChatColor.DARK_AQUA + version);
+				sender.sendMessage(
+						ChatColor.GOLD + "A new version of MineTweaks is available: " + ChatColor.DARK_AQUA + version);
 				sender.sendMessage(
 						ChatColor.GOLD + "Download it at https://www.spigotmc.org/resources/minetweaks.96757/");
 				sender.sendMessage(ChatColor.GOLD + "=".repeat(70));

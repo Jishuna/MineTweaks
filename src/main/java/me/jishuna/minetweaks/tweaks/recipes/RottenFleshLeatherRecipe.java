@@ -21,7 +21,10 @@ public class RottenFleshLeatherRecipe extends Tweak {
 	@Override
 	public void reload() {
 		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Recipes/" + this.getName() + ".yml").ifPresent(config -> {
-			loadDefaults(config, true);
+			loadDefaults(config, false);
+			
+			if (!isEnabled())
+				return;
 
 			FurnaceRecipe recipe = new FurnaceRecipe(new NamespacedKey(getOwningPlugin(), "rotten_flesh_leather"),
 					new ItemStack(Material.LEATHER), Material.ROTTEN_FLESH, 0.1f,

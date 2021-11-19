@@ -23,6 +23,9 @@ public class CobwebFromStringRecipe extends Tweak {
 		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Recipes/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
 
+			if (!isEnabled())
+				return;
+
 			ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(getOwningPlugin(), "cobweb_string"),
 					new ItemStack(Material.COBWEB));
 			recipe.shape("101", "010", "101");

@@ -22,6 +22,9 @@ public class StringFromCobwebRecipe extends Tweak {
 	public void reload() {
 		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Recipes/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
+			
+			if (!isEnabled())
+				return;
 
 			ShapelessRecipe recipe = new ShapelessRecipe(new NamespacedKey(getOwningPlugin(), "string_cobweb"),
 					new ItemStack(Material.STRING, 5));

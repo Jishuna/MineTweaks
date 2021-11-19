@@ -1,0 +1,17 @@
+# Enable or disable this tweak.
+enabled: true
+
+# The text format to use, &health% %speed% and %jump% are replaced with their respective values, & color codes supported.
+display-format: '&6Health: &2%health% &8| &6Speed: &2%speed% &8| &6Jump: &2%jump%'
+
+# Require the horse to be tamed before stats are shown.
+require-tamed: true
+
+# Display name, seen in-game
+display-name: "Show Horse Stats"
+
+# Description, seen in-game
+description: "Allows players to see the speed and jump strength of a ridden horse."
+
+# Category
+category: "Mobs"

@@ -21,7 +21,10 @@ public class RedSandDyeRecipe extends Tweak {
 	@Override
 	public void reload() {
 		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Recipes/" + this.getName() + ".yml").ifPresent(config -> {
-			loadDefaults(config, true);
+			loadDefaults(config, false);
+			
+			if (!isEnabled())
+				return;
 
 			ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(getOwningPlugin(), "redden_sand_dye"),
 					new ItemStack(Material.RED_SAND, 8));

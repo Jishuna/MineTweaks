@@ -24,6 +24,9 @@ public class StairsRecipeTweak extends Tweak {
 	public void reload() {
 		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Recipes/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
+			
+			if (!isEnabled())
+				return;
 
 			Iterator<Recipe> iterator = Bukkit.recipeIterator();
 

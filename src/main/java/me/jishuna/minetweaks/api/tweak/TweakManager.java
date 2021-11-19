@@ -20,6 +20,7 @@ import me.jishuna.minetweaks.api.RegisterTweak;
 public class TweakManager {
 	private static final Class<?> TYPE_CLASS = Tweak.class;
 
+	private final Set<TickingTweak> tickingTweaks = new HashSet<>();
 	private final Map<String, Tweak> tweaks = new TreeMap<>();
 	private final Multimap<Class<? extends Event>, Tweak> eventMap = ArrayListMultimap.create();
 	private final Set<String> categories = new HashSet<>();
@@ -63,8 +64,11 @@ public class TweakManager {
 		this.tweaks.put(tweak.getName(), tweak);
 
 		tweak.getEventClasses().forEach(clazz -> this.eventMap.put(clazz, tweak));
+
+		if (tweak instanceof TickingTweak ticking)
+			this.tickingTweaks.add(ticking);
 	}
-	
+
 	public Set<String> getCategories() {
 		return this.categories;
 	}
@@ -79,6 +83,10 @@ public class TweakManager {
 
 	public Collection<Tweak> getTweaks() {
 		return this.tweaks.values();
+	}
+
+	public void tickAll() {
+		this.tickingTweaks.forEach(TickingTweak::tick);
 	}
 
 }

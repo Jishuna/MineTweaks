@@ -14,12 +14,13 @@ import me.jishuna.commonlib.utils.ServerUtils;
 import me.jishuna.minetweaks.api.events.EventManager;
 import me.jishuna.minetweaks.api.tweak.TweakManager;
 import me.jishuna.minetweaks.commands.MineTweaksCommandHandler;
+import me.jishuna.minetweaks.nms.NMSManager;
 import net.md_5.bungee.api.ChatColor;
 
 public class MineTweaks extends JavaPlugin {
 
 	private static final int BSTATS_ID = 13045;
-	private static int PLUGIN_ID = 96757;
+	private static final int PLUGIN_ID = 96757;
 
 	private TweakManager tweakManager;
 	private EventManager eventManager;
@@ -31,6 +32,8 @@ public class MineTweaks extends JavaPlugin {
 
 		this.tweakManager = new TweakManager(this);
 		this.eventManager = new EventManager(this);
+		
+		NMSManager.initAdapater(this);
 
 		getCommand("minetweaks").setExecutor(new MineTweaksCommandHandler(this));
 

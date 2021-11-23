@@ -15,7 +15,7 @@ import me.jishuna.commonlib.utils.FileUtils;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 import me.jishuna.minetweaks.api.util.DispenserUtils;
-import me.jishuna.minetweaks.api.util.NMSUtil;
+import me.jishuna.minetweaks.nms.NMSManager;
 
 @RegisterTweak(name = "dispenser_block_placing")
 public class DispenserBlockPlaceTweak extends Tweak {
@@ -69,7 +69,7 @@ public class DispenserBlockPlaceTweak extends Tweak {
 
 		event.setCancelled(true);
 
-		if (!NMSUtil.canPlace(material, target.getLocation()))
+		if (!NMSManager.getAdapter().canPlace(material, target.getLocation()))
 			return;
 
 		if (!target.getType().isAir() && requireAir)

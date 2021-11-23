@@ -13,7 +13,7 @@ import org.bukkit.util.RayTraceResult;
 import me.jishuna.commonlib.utils.FileUtils;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
-import me.jishuna.minetweaks.api.util.NMSUtil;
+import me.jishuna.minetweaks.nms.NMSManager;
 
 @RegisterTweak(name = "swing_through_grass")
 public class SwingThroughGrassTweak extends Tweak {
@@ -43,7 +43,7 @@ public class SwingThroughGrassTweak extends Tweak {
 				entity -> entity.getUniqueId() != player.getUniqueId());
 
 		if (result != null && result.getHitEntity() != null && result.getHitEntity()instanceof LivingEntity entity) {
-			NMSUtil.attack(player, entity);
+			NMSManager.getAdapter().attack(player, entity);
 			player.attack(entity);
 		}
 	}

@@ -2,7 +2,7 @@ package me.jishuna.minetweaks.nms;
 
 import org.bukkit.Bukkit;
 
-import me.jishuna.commonlib.utils.VersionUtils;
+import me.jishuna.commonlib.Version;
 import me.jishuna.minetweaks.MineTweaks;
 
 public class NMSManager {
@@ -10,7 +10,7 @@ public class NMSManager {
 	private static NMSAdapter adapter;
 
 	public static void initAdapater(MineTweaks plugin) {
-		String version = VersionUtils.getServerVersion();
+		String version = Version.getServerVersion();
 
 		try {
 			adapter = (NMSAdapter) Class.forName("me.jishuna.minetweaks.nms." + version + ".NMSAdapter")

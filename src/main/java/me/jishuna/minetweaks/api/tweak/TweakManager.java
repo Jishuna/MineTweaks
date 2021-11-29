@@ -13,7 +13,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
-import me.jishuna.commonlib.utils.ClassUtils;
+import me.jishuna.commonlib.Version;
+import me.jishuna.commonlib.utils.ReflectionUtils;
 import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 
@@ -35,7 +36,9 @@ public class TweakManager {
 		this.tweaks.clear();
 		this.eventMap.clear();
 
-		for (Class<?> clazz : ClassUtils.getAllClassesInSubpackages("me.jishuna.minetweaks.tweaks",
+		String version = Version.getServerVersion();
+
+		for (Class<?> clazz : ReflectionUtils.getAllClassesInSubpackages("me.jishuna.minetweaks.tweaks",
 				this.getClass().getClassLoader())) {
 			if (!TYPE_CLASS.isAssignableFrom(clazz))
 				continue;
@@ -45,6 +48,10 @@ public class TweakManager {
 					Tweak tweak = ((Class<? extends Tweak>) clazz)
 							.getDeclaredConstructor(JavaPlugin.class, String.class)
 							.newInstance((Object) plugin, (Object) annotation.name());
+
+					if (!tweak.isVersionValid(version))
+						continue;
+					
 					tweak.reload();
 					registerTweak(tweak);
 

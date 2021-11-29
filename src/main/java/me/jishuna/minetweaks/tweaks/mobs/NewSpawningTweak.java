@@ -7,6 +7,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.jishuna.commonlib.Version;
 import me.jishuna.commonlib.utils.FileUtils;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
@@ -21,12 +22,14 @@ public class NewSpawningTweak extends Tweak {
 		super(plugin, name);
 
 		addEventHandler(CreatureSpawnEvent.class, this::onSpawn);
+		
+		addInvalidVersions(Version.V1_18_R1);
 	}
 
 	@Override
 	public void reload() {
 		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Mobs/" + this.getName() + ".yml").ifPresent(config -> {
-			loadDefaults(config, true);
+			loadDefaults(config, false);
 		});
 	}
 

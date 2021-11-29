@@ -1,6 +1,6 @@
 group 'v1_18_R1'
 
 dependencies {
-    compileOnly group: 'org.spigotmc', name: 'spigot', version: '1.18-pre5-R0.1-SNAPSHOT'
+    compileOnly group: 'org.spigotmc', name: 'spigot', version: '1.18-rc3-R0.1-SNAPSHOT'
     compileOnly parent
 }

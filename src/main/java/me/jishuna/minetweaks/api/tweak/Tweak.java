@@ -1,6 +1,8 @@
 package me.jishuna.minetweaks.api.tweak;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -21,6 +23,8 @@ public abstract class Tweak {
 	private String description;
 	private String category;
 	private boolean enabled;
+	
+	private final Set<String> invalidVersions = new HashSet<>();
 
 	private final Multimap<Class<? extends Event>, EventWrapper<? extends Event>> handlerMap = ArrayListMultimap
 			.create();
@@ -49,6 +53,14 @@ public abstract class Tweak {
 
 	public <T extends Event> Collection<EventWrapper<? extends Event>> getEventHandlers(Class<T> type) {
 		return this.handlerMap.get(type);
+	}
+	
+	public boolean isVersionValid(String version) {
+		return !this.invalidVersions.contains(version);
+	}
+	 
+	public void addInvalidVersions(String... versions) {
+		this.invalidVersions.addAll(Arrays.asList(versions));
 	}
 
 	public boolean isEnabled() {

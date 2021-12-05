@@ -51,7 +51,7 @@ public class TweakManager {
 
 					if (!tweak.isVersionValid(version))
 						continue;
-					
+
 					tweak.reload();
 					registerTweak(tweak);
 
@@ -93,7 +93,10 @@ public class TweakManager {
 	}
 
 	public void tickAll() {
-		this.tickingTweaks.forEach(TickingTweak::tick);
+		this.tickingTweaks.forEach(tweak -> {
+			if (tweak.isEnabled())
+				tweak.tick();
+		});
 	}
 
 }

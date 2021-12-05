@@ -6,9 +6,9 @@ plugins {
 }
 
 group 'me.jishuna.minetweaks'
-version '1.4.2'
+version '1.4.3'
 
-sourceCompatibility = targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_16
 
 subprojects {
     apply plugin: 'java'

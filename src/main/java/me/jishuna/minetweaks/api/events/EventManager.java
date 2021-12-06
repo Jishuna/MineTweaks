@@ -11,6 +11,7 @@ import org.bukkit.event.block.NotePlayEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityCombustEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
@@ -78,6 +79,8 @@ public class EventManager {
 		registerListener(BlockDispenseEvent.class, event -> processEvent(event, BlockDispenseEvent.class),
 				EventPriority.HIGHEST);
 		registerListener(EntityDamageEvent.class, event -> processEvent(event, EntityDamageEvent.class),
+				EventPriority.HIGHEST);
+		registerListener(EntityDamageByEntityEvent.class, event -> processEvent(event, EntityDamageByEntityEvent.class),
 				EventPriority.HIGHEST);
 		registerListener(InventoryClickEvent.class, event -> processEvent(event, InventoryClickEvent.class),
 				EventPriority.HIGHEST);

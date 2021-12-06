@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Display name, seen in-game
+display-name: "Protect Pets"
+
+# Description, seen in-game
+description: "Prevents you from damaging your own pets."
+
+# Category
+category: "Mobs"

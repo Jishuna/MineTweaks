@@ -18,12 +18,21 @@ public class RecipeManager {
 	private final List<Recipe> customRecipes = new ArrayList<>();
 
 	public void addRecipe(JavaPlugin plugin, Recipe recipe) {
+		if (recipe instanceof Keyed keyed) {
+			Recipe current = Bukkit.getRecipe(keyed.getKey());
+
+			if (current != null) {
+				plugin.getLogger().warning("Ignoring duplicate recipe: " + keyed.getKey());
+				return;
+			}
+		}
+
 		try {
 			Bukkit.addRecipe(recipe);
 			this.customRecipes.add(recipe);
 		} catch (IllegalStateException ex) {
 			if (recipe instanceof Keyed keyed)
-				plugin.getLogger().warning("Ignoring duplicate recipe: " + keyed.getKey());
+				plugin.getLogger().severe("Tried to add duplicate recipe: " + keyed.getKey());
 		}
 	}
 
@@ -33,6 +42,7 @@ public class RecipeManager {
 				Bukkit.removeRecipe(keyed.getKey());
 			}
 		});
+		this.customRecipes.clear();
 	}
 
 	public static RecipeManager getInstance() {
@@ -40,7 +50,7 @@ public class RecipeManager {
 			instance = new RecipeManager();
 		return instance;
 	}
-	
+
 	public static ShapedRecipe copyRecipe(JavaPlugin plugin, ShapedRecipe original, ItemStack result) {
 		ShapedRecipe newRecipe = new ShapedRecipe(
 				new NamespacedKey(plugin, result.getType().toString().toLowerCase() + "_extra"), result);
@@ -50,6 +60,5 @@ public class RecipeManager {
 
 		return newRecipe;
 	}
-
 
 }

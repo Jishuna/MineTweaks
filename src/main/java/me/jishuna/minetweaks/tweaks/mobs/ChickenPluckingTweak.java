@@ -35,8 +35,9 @@ public class ChickenPluckingTweak extends Tweak {
 		if (!item.getType().isAir())
 			return;
 
-		if (event.getRightClicked()instanceof Chicken chicken) {
+		if (event.getRightClicked()instanceof Chicken chicken && !chicken.isDead()) {
 			chicken.damage(1);
+			chicken.setNoDamageTicks(0);
 			chicken.getWorld().dropItem(chicken.getLocation(), new ItemStack(Material.FEATHER));
 		}
 	}

@@ -24,7 +24,7 @@ public class StairsRecipeTweak extends Tweak {
 	public void reload() {
 		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Recipes/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
-			
+
 			if (!isEnabled())
 				return;
 
@@ -35,7 +35,8 @@ public class StairsRecipeTweak extends Tweak {
 				ItemStack result = recipe.getResult();
 
 				if (result.getType().toString().endsWith("_STAIRS") && result.getAmount() > 1
-						&& recipe instanceof ShapedRecipe shaped) {
+						&& recipe instanceof ShapedRecipe shaped
+						&& shaped.getKey().getNamespace().equals("minecraft")) {
 					iterator.remove();
 
 					result.setAmount(config.getInt("more-stairs-amount", 8));

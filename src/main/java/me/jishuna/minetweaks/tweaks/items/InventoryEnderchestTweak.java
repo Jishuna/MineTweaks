@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.CraftingInventory;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -28,7 +28,7 @@ public class InventoryEnderchestTweak extends Tweak {
 	}
 
 	private void onClick(InventoryClickEvent event) {
-		if (!(event.getInventory()instanceof CraftingInventory inventory) || event.getClick() != ClickType.MIDDLE)
+		if (event.getInventory().getType() != InventoryType.CRAFTING || event.getClick() != ClickType.SWAP_OFFHAND)
 			return;
 
 		ItemStack item = event.getCurrentItem();

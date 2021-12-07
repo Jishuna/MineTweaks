@@ -5,7 +5,7 @@ enabled: true
 display-name: "Use Crafting Table in Inventory"
 
 # Description, seen in-game
-description: "Allows players to use crafting tables from their inventory by middle clicking them."
+description: "Allows players to use crafting tables from their inventory by pressing F on them."
 
 # Category
 category: "Items"

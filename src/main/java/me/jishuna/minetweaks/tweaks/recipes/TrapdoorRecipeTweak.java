@@ -25,7 +25,7 @@ public class TrapdoorRecipeTweak extends Tweak {
 	public void reload() {
 		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Recipes/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
-			
+
 			if (!isEnabled())
 				return;
 
@@ -36,7 +36,8 @@ public class TrapdoorRecipeTweak extends Tweak {
 				ItemStack result = recipe.getResult();
 
 				if (result.getType().toString().endsWith("_TRAPDOOR") && result.getType() != Material.IRON_TRAPDOOR
-						&& recipe instanceof ShapedRecipe shaped) {
+						&& recipe instanceof ShapedRecipe shaped
+						&& shaped.getKey().getNamespace().equals("minecraft")) {
 					iterator.remove();
 
 					result.setAmount(config.getInt("more-trapdoors-amount", 12));
@@ -45,6 +46,5 @@ public class TrapdoorRecipeTweak extends Tweak {
 				}
 			}
 		});
-
 	}
 }

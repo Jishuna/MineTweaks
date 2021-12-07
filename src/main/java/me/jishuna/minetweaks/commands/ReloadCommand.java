@@ -28,9 +28,9 @@ public class ReloadCommand extends SimpleCommandHandler {
 		this.plugin.getMessageConfig().refresh();
 
 		sender.sendMessage(this.plugin.getMessage("reload-tweaks"));
-		RecipeManager.getInstance().removeAllRecipes();
+		//RecipeManager.getInstance().removeAllRecipes();
 		this.plugin.getTweakManager().getTweaks().forEach(Tweak::reload);
-
+		
 		sender.sendMessage(this.plugin.getMessage("reload-complete"));
 		return true;
 	}

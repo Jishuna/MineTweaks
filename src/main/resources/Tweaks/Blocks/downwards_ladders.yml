@@ -5,7 +5,7 @@ enabled: true
 display-name: "Downwards Ladder Building"
 
 # Description, seen in-game
-description: "Allows building ladders downwards by clicking on a higher ladder while holding a ladder."
+description: "Allows building ladders downwards by clicking on a higher ladder while holding a ladder. Suggested by: YKDZ"
 
 # Category
 category: "Blocks"

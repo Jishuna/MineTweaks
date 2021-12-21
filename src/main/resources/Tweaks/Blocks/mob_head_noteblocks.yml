@@ -5,7 +5,7 @@ enabled: true
 display-name: "Mob Head Noteblocks"
 
 # Description, seen in-game
-description: "Makes note blocks with mob heads attached to them play the mobs sound."
+description: "Makes note blocks with mob heads attached to them play the mobs sound. Suggested by: YKDZ"
 
 # Category
 category: "Blocks"

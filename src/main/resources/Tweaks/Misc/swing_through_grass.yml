@@ -5,7 +5,7 @@ enabled: true
 display-name: "Swing Through Grass"
 
 # Description, seen in-game
-description: "Allows players to attack entities through tall grass and other passable blocks."
+description: "Allows players to attack entities through tall grass and other passable blocks. Suggested by: YKDZ"
 
 # Category
 category: "Misc"

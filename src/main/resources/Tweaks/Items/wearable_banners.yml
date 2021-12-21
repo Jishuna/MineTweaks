@@ -1,0 +1,11 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Display name, seen in-game
+display-name: "Wearable Banners"
+
+# Description, seen in-game
+description: "Allows players to wear banners on their head. Suggested by: LordZimbo"
+
+# Category
+category: "Items"

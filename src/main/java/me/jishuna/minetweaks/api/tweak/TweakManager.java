@@ -13,8 +13,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
-import me.jishuna.commonlib.Version;
 import me.jishuna.commonlib.utils.ReflectionUtils;
+import me.jishuna.commonlib.utils.Version;
 import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 

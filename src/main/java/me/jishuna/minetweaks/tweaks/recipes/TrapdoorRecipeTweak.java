@@ -1,6 +1,8 @@
 package me.jishuna.minetweaks.tweaks.recipes;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -16,6 +18,7 @@ import me.jishuna.minetweaks.api.tweak.Tweak;
 
 @RegisterTweak(name = "more_trapdoors")
 public class TrapdoorRecipeTweak extends Tweak {
+	private final Set<Recipe> recipes = new HashSet<>();
 
 	public TrapdoorRecipeTweak(JavaPlugin plugin, String name) {
 		super(plugin, name);
@@ -41,10 +44,13 @@ public class TrapdoorRecipeTweak extends Tweak {
 					iterator.remove();
 
 					result.setAmount(config.getInt("more-trapdoors-amount", 12));
-					RecipeManager.getInstance().addRecipe(getOwningPlugin(),
-							RecipeManager.copyRecipe(getOwningPlugin(), shaped, result));
+
+					ShapedRecipe newRecipe = RecipeManager.copyRecipe(getOwningPlugin(), shaped, result);
+					this.recipes.add(newRecipe);
 				}
 			}
+
+			this.recipes.forEach(recipe -> RecipeManager.getInstance().addRecipe(getOwningPlugin(), recipe));
 		});
 	}
 }

@@ -1,6 +1,8 @@
 package me.jishuna.minetweaks.tweaks.recipes;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
@@ -15,6 +17,7 @@ import me.jishuna.minetweaks.api.tweak.Tweak;
 
 @RegisterTweak(name = "more_stairs")
 public class StairsRecipeTweak extends Tweak {
+	private final Set<Recipe> recipes = new HashSet<>();
 
 	public StairsRecipeTweak(JavaPlugin plugin, String name) {
 		super(plugin, name);
@@ -40,10 +43,13 @@ public class StairsRecipeTweak extends Tweak {
 					iterator.remove();
 
 					result.setAmount(config.getInt("more-stairs-amount", 8));
-					RecipeManager.getInstance().addRecipe(getOwningPlugin(),
-							RecipeManager.copyRecipe(getOwningPlugin(), shaped, result));
+					
+					ShapedRecipe newRecipe = RecipeManager.copyRecipe(getOwningPlugin(), shaped, result);
+					this.recipes.add(newRecipe);
 				}
 			}
+
+			this.recipes.forEach(recipe -> RecipeManager.getInstance().addRecipe(getOwningPlugin(), recipe));
 		});
 
 	}

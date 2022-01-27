@@ -7,8 +7,8 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.jishuna.commonlib.Version;
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.commonlib.utils.Version;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 

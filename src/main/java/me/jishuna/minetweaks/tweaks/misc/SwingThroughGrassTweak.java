@@ -44,7 +44,6 @@ public class SwingThroughGrassTweak extends Tweak {
 
 		if (result != null && result.getHitEntity() != null && result.getHitEntity()instanceof LivingEntity entity) {
 			NMSManager.getAdapter().attack(player, entity);
-			player.attack(entity);
 		}
 	}
 }

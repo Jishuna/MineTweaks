@@ -7,5 +7,8 @@ display-name: "Downwards Ladder Building"
 # Description, seen in-game
 description: "Allows building ladders downwards by clicking on a higher ladder while holding a ladder. Suggested by: YKDZ"
 
+# The maximum distance between the clicked ladder and the ladder that will be placed
+ladder-place-distance: 5
+
 # Category
 category: "Blocks"

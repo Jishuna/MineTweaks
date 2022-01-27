@@ -1,5 +1,7 @@
 package me.jishuna.minetweaks.api.util;
 
+import java.util.Map;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -18,8 +20,11 @@ public class DispenserUtils {
 		Bukkit.getScheduler().runTask(plugin, () -> {
 			Container state = (Container) event.getBlock().getState();
 			state.getSnapshotInventory().removeItem(item);
-			state.getSnapshotInventory().addItem(new ItemStack(toAdd));
+			Map<Integer, ItemStack> failed = state.getSnapshotInventory().addItem(new ItemStack(toAdd));
 			state.update();
+
+			failed.forEach((index, itemstack) -> target.getWorld().dropItem(target.getLocation().add(0.5, 0.5, 0.5),
+					itemstack));
 		});
 	}
 

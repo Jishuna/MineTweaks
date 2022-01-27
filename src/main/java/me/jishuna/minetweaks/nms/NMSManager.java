@@ -2,7 +2,7 @@ package me.jishuna.minetweaks.nms;
 
 import org.bukkit.Bukkit;
 
-import me.jishuna.commonlib.utils.Version;
+import me.jishuna.commonlib.Version;
 import me.jishuna.minetweaks.MineTweaks;
 
 public class NMSManager {

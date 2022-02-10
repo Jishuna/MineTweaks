@@ -15,6 +15,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -86,6 +87,7 @@ public class EventManager {
 				EventPriority.HIGHEST);
 		registerListener(PlayerBucketEmptyEvent.class, event -> processEvent(event, PlayerBucketEmptyEvent.class),
 				EventPriority.HIGHEST);
+		registerListener(PlayerDeathEvent.class, event -> processEvent(event, PlayerDeathEvent.class));
 		registerListener(CreatureSpawnEvent.class, event -> processEvent(event, CreatureSpawnEvent.class));
 		registerListener(InventoryCloseEvent.class, event -> processEvent(event, InventoryCloseEvent.class));
 		registerListener(EntityCombustEvent.class, event -> processEvent(event, EntityCombustEvent.class));

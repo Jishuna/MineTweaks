@@ -16,9 +16,9 @@ import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 
 @RegisterTweak(name = "slimeball_sticky_pistons")
-public class StickPistonConversionTweak extends Tweak {
+public class StickyPistonConversionTweak extends Tweak {
 
-	public StickPistonConversionTweak(JavaPlugin plugin, String name) {
+	public StickyPistonConversionTweak(JavaPlugin plugin, String name) {
 		super(plugin, name);
 
 		addEventHandler(PlayerInteractEvent.class, this::onInteract);

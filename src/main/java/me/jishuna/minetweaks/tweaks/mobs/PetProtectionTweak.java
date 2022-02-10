@@ -13,12 +13,17 @@ import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 
 @RegisterTweak(name = "pet_protection")
-public class PetProtection extends Tweak {
+public class PetProtectionTweak extends Tweak {
 
-	public PetProtection(JavaPlugin plugin, String name) {
+	public PetProtectionTweak(JavaPlugin plugin, String name) {
 		super(plugin, name);
 
 		addEventHandler(EntityDamageByEntityEvent.class, this::onDamage);
+	}
+	
+	@Override
+	public boolean isToggleable() {
+		return true;
 	}
 
 	@Override
@@ -29,7 +34,7 @@ public class PetProtection extends Tweak {
 	}
 
 	private void onDamage(EntityDamageByEntityEvent event) {
-		if (!(event.getEntity()instanceof Tameable tamable) || tamable.getOwner() == null)
+		if (!(event.getEntity() instanceof Tameable tamable) || tamable.getOwner() == null)
 			return;
 
 		Entity damager = event.getDamager();
@@ -45,7 +50,7 @@ public class PetProtection extends Tweak {
 			}
 		}
 
-		if (player == null)
+		if (player == null || isDisabled(player))
 			return;
 
 		if (tamable.getOwner().getUniqueId().equals(player.getUniqueId()))

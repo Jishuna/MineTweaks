@@ -1,0 +1,17 @@
+# Enable or disable this tweak.
+enabled: true
+
+# The number of particles to spawn.
+particle-count: 10
+
+# The block type to use for the blood effect.
+particle-material: 'RED_CONCRETE'
+
+# Display name, seen in-game
+display-name: "Blood Effect"
+
+# Description, seen in-game
+description: "Allows players to see a blood effect when attacking enemies. Suggested by: LordZimbo"
+
+# Category
+category: "Misc"

@@ -13,6 +13,10 @@ permissions:
     default: true
   minetweaks.command.tweaks:
     default: true
+  minetweaks.command.toggle:
+    default: true
+  minetweaks.command.status:
+    default: true
   minetweaks.command.info:
     default: true
   minetweaks.command.reload:

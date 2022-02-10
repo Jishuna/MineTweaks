@@ -17,6 +17,11 @@ public class SweetBerryPlantingTweak extends Tweak {
 
 		addEventHandler(PlayerInteractEvent.class, this::onInteract);
 	}
+	
+	@Override
+	public boolean isToggleable() {
+		return true;
+	}
 
 	@Override
 	public void reload() {
@@ -30,7 +35,7 @@ public class SweetBerryPlantingTweak extends Tweak {
 				|| event.getItem().getType() != Material.SWEET_BERRIES)
 			return;
 
-		if (!event.getPlayer().isSneaking())
+		if (!isDisabled(event.getPlayer()) && !event.getPlayer().isSneaking())
 			event.setUseInteractedBlock(Result.DENY);
 	}
 }

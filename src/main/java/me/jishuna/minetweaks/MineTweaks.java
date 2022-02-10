@@ -14,6 +14,7 @@ import me.jishuna.commonlib.utils.ServerUtils;
 import me.jishuna.minetweaks.api.events.EventManager;
 import me.jishuna.minetweaks.api.tweak.TweakManager;
 import me.jishuna.minetweaks.commands.MineTweaksCommandHandler;
+import me.jishuna.minetweaks.listeners.BlockPlaceListener;
 import me.jishuna.minetweaks.nms.NMSManager;
 import net.md_5.bungee.api.ChatColor;
 
@@ -32,8 +33,10 @@ public class MineTweaks extends JavaPlugin {
 
 		this.tweakManager = new TweakManager(this);
 		this.eventManager = new EventManager(this);
-		
+
 		NMSManager.initAdapater(this);
+
+		Bukkit.getPluginManager().registerEvents(new BlockPlaceListener(), this);
 
 		getCommand("minetweaks").setExecutor(new MineTweaksCommandHandler(this));
 

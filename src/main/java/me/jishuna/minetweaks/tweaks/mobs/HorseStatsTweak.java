@@ -25,6 +25,11 @@ public class HorseStatsTweak extends Tweak implements TickingTweak {
 	public HorseStatsTweak(JavaPlugin plugin, String name) {
 		super(plugin, name);
 	}
+	
+	@Override
+	public boolean isToggleable() {
+		return true;
+	}
 
 	@Override
 	public void reload() {
@@ -39,7 +44,7 @@ public class HorseStatsTweak extends Tweak implements TickingTweak {
 	@Override
 	public void tick() {
 		for (Player player : Bukkit.getOnlinePlayers()) {
-			if (!(player.getVehicle()instanceof AbstractHorse horse))
+			if (isDisabled(player) ||  !(player.getVehicle()instanceof AbstractHorse horse))
 				continue;
 
 			if (!horse.isTamed() && requireTamed)

@@ -17,7 +17,7 @@ import me.jishuna.minetweaks.api.tweak.Tweak;
 
 @RegisterTweak(name = "more_stairs")
 public class StairsRecipeTweak extends Tweak {
-	private final Set<Recipe> recipes = new HashSet<>();
+	private final Set<ShapedRecipe> recipes = new HashSet<>();
 
 	public StairsRecipeTweak(JavaPlugin plugin, String name) {
 		super(plugin, name);
@@ -41,16 +41,17 @@ public class StairsRecipeTweak extends Tweak {
 						&& recipe instanceof ShapedRecipe shaped
 						&& shaped.getKey().getNamespace().equals("minecraft")) {
 					iterator.remove();
-
-					result.setAmount(config.getInt("more-stairs-amount", 8));
-					
-					ShapedRecipe newRecipe = RecipeManager.copyRecipe(getOwningPlugin(), shaped, result);
-					this.recipes.add(newRecipe);
+					this.recipes.add(shaped);
 				}
 			}
 
-			this.recipes.forEach(recipe -> RecipeManager.getInstance().addRecipe(getOwningPlugin(), recipe));
-		});
+			this.recipes.forEach(recipe -> {
+				ItemStack result = recipe.getResult();
+				result.setAmount(config.getInt("more-stairs-amount", 8));
 
+				ShapedRecipe newRecipe = RecipeManager.copyRecipe(getOwningPlugin(), recipe, result);
+				RecipeManager.getInstance().addRecipe(getOwningPlugin(), newRecipe);
+			});
+		});
 	}
 }

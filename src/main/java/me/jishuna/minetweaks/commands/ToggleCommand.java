@@ -54,13 +54,12 @@ public class ToggleCommand extends SimpleCommandHandler {
 		PersistentDataContainer container = player.getPersistentDataContainer();
 		NamespacedKey key = new NamespacedKey(this.plugin, "toggle-" + name);
 
-		name = name.replace("_", " ");
 		if (container.has(key, PersistentDataType.BYTE)) {
 			container.remove(key);
-			sender.sendMessage(plugin.getMessage("toggle-enabled").replace("%tweak%", name));
+			sender.sendMessage(plugin.getMessage("toggle-enabled").replace("%tweak%", tweak.getDisplayName()));
 		} else {
 			container.set(key, PersistentDataType.BYTE, (byte) 1);
-			sender.sendMessage(plugin.getMessage("toggle-disabled").replace("%tweak%", name));
+			sender.sendMessage(plugin.getMessage("toggle-disabled").replace("%tweak%", tweak.getDisplayName()));
 		}
 
 		return true;

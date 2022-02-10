@@ -3,7 +3,6 @@ package me.jishuna.minetweaks.commands;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -42,15 +41,12 @@ public class StatusCommand extends SimpleCommandHandler {
 			if (!tweak.isToggleable())
 				continue;
 
-			String name = tweak.getName();
-			NamespacedKey key = new NamespacedKey(this.plugin, "toggle-" + name);
+			NamespacedKey key = new NamespacedKey(this.plugin, "toggle-" + tweak.getName());
 
-			name = StringUtils.capitalize(name.replace("_", " "));
-			
 			if (container.has(key, PersistentDataType.BYTE)) {
-				sender.sendMessage(plugin.getMessage("status-disabled").replace("%tweak%", name));
+				sender.sendMessage(plugin.getMessage("status-disabled").replace("%tweak%", tweak.getDisplayName()));
 			} else {
-				sender.sendMessage(plugin.getMessage("status-enabled").replace("%tweak%", name));
+				sender.sendMessage(plugin.getMessage("status-enabled").replace("%tweak%", tweak.getDisplayName()));
 			}
 
 		}

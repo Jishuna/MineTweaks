@@ -1,6 +1,11 @@
 package me.jishuna.minetweaks;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.Callable;
+
 import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SimpleBarChart;
 import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
@@ -12,6 +17,7 @@ import me.jishuna.commonlib.language.MessageConfig;
 import me.jishuna.commonlib.utils.FileUtils;
 import me.jishuna.commonlib.utils.ServerUtils;
 import me.jishuna.minetweaks.api.events.EventManager;
+import me.jishuna.minetweaks.api.tweak.Tweak;
 import me.jishuna.minetweaks.api.tweak.TweakManager;
 import me.jishuna.minetweaks.commands.MineTweaksCommandHandler;
 import me.jishuna.minetweaks.listeners.BlockPlaceListener;
@@ -73,6 +79,17 @@ public class MineTweaks extends JavaPlugin {
 	private void initializeMetrics() {
 		Metrics metrics = new Metrics(this, BSTATS_ID);
 		metrics.addCustomChart(new SimplePie("online_status", ServerUtils::getOnlineMode));
+//		metrics.addCustomChart(new SimpleBarChart("tweaks", new Callable<Map<String, Integer>>() {
+//			
+//			@Override
+//			public Map<String, Integer> call() throws Exception {
+//				Map<String, Integer> map = new HashMap<>();
+//				for (Tweak tweak : tweakManager.getTweaks()) {
+//					map.put(tweak.getName(), tweak.isEnabled() ? 1 : 0);
+//				}
+//				return map;
+//			}
+//		}));
 	}
 
 	private void initializeUpdateChecker() {

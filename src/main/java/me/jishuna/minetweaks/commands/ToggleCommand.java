@@ -79,10 +79,8 @@ public class ToggleCommand extends SimpleCommandHandler {
 	}
 
 	private void sendUsage(CommandSender sender, String arg) {
-		Set<String> modules = this.plugin.getTweakManager().getCategories();
-		modules.add("all");
-
 		String msg = this.plugin.getMessage("command-usage");
+		
 		msg = msg.replace("%arg%", arg);
 		msg = msg.replace("%args%", String.join(", ", this.tweaks));
 

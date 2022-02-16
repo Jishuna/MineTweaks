@@ -3,7 +3,6 @@ package me.jishuna.minetweaks.commands;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
@@ -69,7 +68,7 @@ public class ToggleCommand extends SimpleCommandHandler {
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 		if (args.length == 2) {
 			if (this.tweaks == null) {
-				this.tweaks = plugin.getTweakManager().getTweaks().stream().filter(Tweak::isToggleable)
+				this.tweaks = plugin.getTweakManager().getTweaks().stream().filter(Tweak::isToggleable).filter(Tweak::isEnabled)
 						.map(Tweak::getName).toList();
 			}
 
@@ -80,6 +79,11 @@ public class ToggleCommand extends SimpleCommandHandler {
 
 	private void sendUsage(CommandSender sender, String arg) {
 		String msg = this.plugin.getMessage("command-usage");
+		
+		if (this.tweaks == null) {
+			this.tweaks = plugin.getTweakManager().getTweaks().stream().filter(Tweak::isToggleable).filter(Tweak::isEnabled)
+					.map(Tweak::getName).toList();
+		}
 		
 		msg = msg.replace("%arg%", arg);
 		msg = msg.replace("%args%", String.join(", ", this.tweaks));

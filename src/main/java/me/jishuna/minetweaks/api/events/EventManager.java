@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.block.NotePlayEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -86,6 +87,8 @@ public class EventManager {
 		registerListener(InventoryClickEvent.class, event -> processEvent(event, InventoryClickEvent.class),
 				EventPriority.HIGHEST);
 		registerListener(PlayerBucketEmptyEvent.class, event -> processEvent(event, PlayerBucketEmptyEvent.class),
+				EventPriority.HIGHEST);
+		registerListener(BlockBreakEvent.class, event -> processEvent(event, BlockBreakEvent.class),
 				EventPriority.HIGHEST);
 		registerListener(PlayerDeathEvent.class, event -> processEvent(event, PlayerDeathEvent.class));
 		registerListener(CreatureSpawnEvent.class, event -> processEvent(event, CreatureSpawnEvent.class));

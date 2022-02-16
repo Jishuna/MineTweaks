@@ -1,0 +1,17 @@
+# Enable or disable this tweak.
+enabled: true
+
+# Display name, seen in-game
+display-name: "Fast Leaf Decay"
+
+# Description, seen in-game
+description: "Causes leaves to decay quickly when a tree is chopped down."
+
+# Decay type, either RANDOM, TOP_DOWN, or BOTTOM_UP.
+decay-type: RANDOM
+
+# The maximum distance from the starting block to check for leaves to decay.
+max-distance: 12
+
+# Category
+category: "Blocks"

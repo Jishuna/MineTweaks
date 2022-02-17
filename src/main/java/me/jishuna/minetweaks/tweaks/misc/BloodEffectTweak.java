@@ -3,6 +3,7 @@ package me.jishuna.minetweaks.tweaks.misc;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
@@ -44,8 +45,9 @@ public class BloodEffectTweak extends Tweak {
 	private void onDamage(EntityDamageByEntityEvent event) {
 		if (event.isCancelled())
 			return;
-		
-		if (!(event.getEntity() instanceof LivingEntity living) || !(event.getDamager() instanceof Player player) || isDisabled(player))
+
+		if (!(event.getEntity() instanceof LivingEntity living) || event.getEntityType() == EntityType.ARMOR_STAND
+				|| !(event.getDamager() instanceof Player player) || isDisabled(player))
 			return;
 
 		double halfHeight = living.getHeight() / 2;

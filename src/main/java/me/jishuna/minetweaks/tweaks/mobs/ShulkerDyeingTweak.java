@@ -3,28 +3,29 @@ package me.jishuna.minetweaks.tweaks.mobs;
 import org.bukkit.DyeColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Shulker;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 import me.jishuna.minetweaks.api.util.ColorUtils;
 
-@RegisterTweak(name = "shulker_dyeing")
+@RegisterTweak("shulker_dyeing")
 public class ShulkerDyeingTweak extends Tweak {
 
-	public ShulkerDyeingTweak(JavaPlugin plugin, String name) {
+	public ShulkerDyeingTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 
-		addEventHandler(PlayerInteractEntityEvent.class, this::onInteract);
+		addEventHandler(PlayerInteractEntityEvent.class, EventPriority.HIGH, this::onInteract);
 	}
 
 	@Override
 	public void reload() {
-		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Mobs/" + this.getName() + ".yml").ifPresent(config -> {
+		FileUtils.loadResource(getPlugin(), "Tweaks/Mobs/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
 		});
 	}
@@ -32,8 +33,8 @@ public class ShulkerDyeingTweak extends Tweak {
 	private void onInteract(PlayerInteractEntityEvent event) {
 		if (event.isCancelled())
 			return;
+		
 		ItemStack item;
-
 		if (event.getHand() == EquipmentSlot.HAND) {
 			item = event.getPlayer().getEquipment().getItemInMainHand();
 		} else {

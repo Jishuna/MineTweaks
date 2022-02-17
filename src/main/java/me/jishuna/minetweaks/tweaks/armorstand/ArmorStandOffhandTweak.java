@@ -1,26 +1,27 @@
 package me.jishuna.minetweaks.tweaks.armorstand;
 
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 
-@RegisterTweak(name = "armorstand_offhand")
+@RegisterTweak("armorstand_offhand")
 public class ArmorStandOffhandTweak extends Tweak {
 
-	public ArmorStandOffhandTweak(JavaPlugin plugin, String name) {
+	public ArmorStandOffhandTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 
-		addEventHandler(PlayerInteractAtEntityEvent.class, this::onEntityInteract);
+		addEventHandler(PlayerInteractAtEntityEvent.class, EventPriority.HIGH, this::onEntityInteract);
 	}
 
 	@Override
 	public void reload() {
-		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Armor Stands/" + this.getName() + ".yml").ifPresent(config -> {
+		FileUtils.loadResource(getPlugin(), "Tweaks/Armor Stands/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
 		});
 	}

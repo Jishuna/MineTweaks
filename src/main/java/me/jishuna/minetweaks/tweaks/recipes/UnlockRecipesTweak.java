@@ -9,16 +9,16 @@ import org.bukkit.Keyed;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Recipe;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 
-@RegisterTweak(name = "unlock_on_join")
+@RegisterTweak("unlock_on_join")
 public class UnlockRecipesTweak extends Tweak {
 
-	public UnlockRecipesTweak(JavaPlugin plugin, String name) {
+	public UnlockRecipesTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 
 		addEventHandler(PlayerJoinEvent.class, this::onJoin);
@@ -26,7 +26,7 @@ public class UnlockRecipesTweak extends Tweak {
 
 	@Override
 	public void reload() {
-		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Recipes/" + this.getName() + ".yml").ifPresent(config -> {
+		FileUtils.loadResource(getPlugin(), "Tweaks/Recipes/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
 		});
 

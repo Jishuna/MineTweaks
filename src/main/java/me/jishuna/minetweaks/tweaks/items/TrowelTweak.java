@@ -9,17 +9,18 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.Event.Result;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.commonlib.items.ItemBuilder;
 import me.jishuna.commonlib.items.ItemUtils;
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.PluginKeys;
 import me.jishuna.minetweaks.api.RecipeManager;
 import me.jishuna.minetweaks.api.RegisterTweak;
@@ -27,17 +28,17 @@ import me.jishuna.minetweaks.api.tweak.Tweak;
 import me.jishuna.minetweaks.api.util.CustomItemUtils;
 import net.md_5.bungee.api.ChatColor;
 
-@RegisterTweak(name = "trowel")
+@RegisterTweak("trowel")
 public class TrowelTweak extends Tweak {
-	public TrowelTweak(JavaPlugin plugin, String name) {
+	public TrowelTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 
-		addEventHandler(PlayerInteractEvent.class, this::onInteract);
+		addEventHandler(PlayerInteractEvent.class, EventPriority.HIGH, this::onInteract);
 	}
 
 	@Override
 	public void reload() {
-		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Items/" + this.getName() + ".yml").ifPresent(config -> {
+		FileUtils.loadResource(getPlugin(), "Tweaks/Items/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
 
 			if (!isEnabled())
@@ -50,11 +51,11 @@ public class TrowelTweak extends Tweak {
 							.withPersistantData(PluginKeys.ITEM_TYPE.getKey(), PersistentDataType.STRING, "trowel")
 							.build();
 
-			ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(getOwningPlugin(), "trowel_recipe"), trowel);
+			ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(getPlugin(), "trowel_recipe"), trowel);
 			recipe.shape("100", "022");
 			recipe.setIngredient('1', Material.STICK);
 			recipe.setIngredient('2', Material.IRON_INGOT);
-			RecipeManager.getInstance().addRecipe(getOwningPlugin(), recipe);
+			RecipeManager.getInstance().addRecipe(getPlugin(), recipe);
 		});
 	}
 

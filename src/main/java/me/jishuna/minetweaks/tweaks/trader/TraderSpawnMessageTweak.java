@@ -3,27 +3,28 @@ package me.jishuna.minetweaks.tweaks.trader;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.WanderingTrader;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 import net.md_5.bungee.api.ChatColor;
 
-@RegisterTweak(name = "announce_spawn")
+@RegisterTweak("announce_spawn")
 public class TraderSpawnMessageTweak extends Tweak {
 	private String message;
 
-	public TraderSpawnMessageTweak(JavaPlugin plugin, String name) {
+	public TraderSpawnMessageTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 
-		addEventHandler(CreatureSpawnEvent.class, this::onSpawn);
+		addEventHandler(CreatureSpawnEvent.class, EventPriority.HIGH, this::onSpawn);
 	}
 
 	@Override
 	public void reload() {
-		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Wandering Trader/" + this.getName() + ".yml").ifPresent(config -> {
+		FileUtils.loadResource(getPlugin(), "Tweaks/Wandering Trader/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
 
 			this.message = ChatColor.translateAlternateColorCodes('&',
@@ -33,6 +34,9 @@ public class TraderSpawnMessageTweak extends Tweak {
 	}
 
 	private void onSpawn(CreatureSpawnEvent event) {
+		if (event.isCancelled())
+			return;
+		
 		if (event.getEntity()instanceof WanderingTrader trader) {
 			Location location = event.getEntity().getLocation();
 			String locationString = "X: " + location.getBlockX() + ", Y: " + location.getBlockY() + ", Z: "

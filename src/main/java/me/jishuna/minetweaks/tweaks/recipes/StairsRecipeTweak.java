@@ -8,24 +8,24 @@ import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RecipeManager;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 
-@RegisterTweak(name = "more_stairs")
+@RegisterTweak("more_stairs")
 public class StairsRecipeTweak extends Tweak {
 	private final Set<ShapedRecipe> recipes = new HashSet<>();
 
-	public StairsRecipeTweak(JavaPlugin plugin, String name) {
+	public StairsRecipeTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 	}
 
 	@Override
 	public void reload() {
-		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Recipes/" + this.getName() + ".yml").ifPresent(config -> {
+		FileUtils.loadResource(getPlugin(), "Tweaks/Recipes/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
 
 			if (!isEnabled())
@@ -49,8 +49,8 @@ public class StairsRecipeTweak extends Tweak {
 				ItemStack result = recipe.getResult();
 				result.setAmount(config.getInt("more-stairs-amount", 8));
 
-				ShapedRecipe newRecipe = RecipeManager.copyRecipe(getOwningPlugin(), recipe, result);
-				RecipeManager.getInstance().addRecipe(getOwningPlugin(), newRecipe);
+				ShapedRecipe newRecipe = RecipeManager.copyRecipe(getPlugin(), recipe, result);
+				RecipeManager.getInstance().addRecipe(getPlugin(), newRecipe);
 			});
 		});
 	}

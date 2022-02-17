@@ -6,27 +6,28 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Directional;
 import org.bukkit.event.Event.Result;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 
-@RegisterTweak(name = "slimeball_sticky_pistons")
+@RegisterTweak("slimeball_sticky_pistons")
 public class StickyPistonConversionTweak extends Tweak {
 
-	public StickyPistonConversionTweak(JavaPlugin plugin, String name) {
+	public StickyPistonConversionTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 
-		addEventHandler(PlayerInteractEvent.class, this::onInteract);
+		addEventHandler(PlayerInteractEvent.class, EventPriority.HIGH, this::onInteract);
 	}
 
 	@Override
 	public void reload() {
-		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Blocks/" + this.getName() + ".yml").ifPresent(config -> {
+		FileUtils.loadResource(getPlugin(), "Tweaks/Blocks/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
 		});
 	}

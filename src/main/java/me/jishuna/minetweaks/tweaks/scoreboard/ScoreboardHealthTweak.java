@@ -3,23 +3,23 @@ package me.jishuna.minetweaks.tweaks.scoreboard;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Criterias;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.CleanupTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 import net.md_5.bungee.api.ChatColor;
 
-@RegisterTweak(name = "scoreboard_health")
+@RegisterTweak("scoreboard_health")
 public class ScoreboardHealthTweak extends Tweak implements CleanupTweak {
 	private String display;
 	private String type;
 
-	public ScoreboardHealthTweak(JavaPlugin plugin, String name) {
+	public ScoreboardHealthTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 
 		addEventHandler(PlayerJoinEvent.class, this::onJoin);
@@ -27,7 +27,7 @@ public class ScoreboardHealthTweak extends Tweak implements CleanupTweak {
 
 	@Override
 	public void reload() {
-		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Scoreboard/" + this.getName() + ".yml").ifPresent(config -> {
+		FileUtils.loadResource(getPlugin(), "Tweaks/Scoreboard/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
 			this.cleanup();
 

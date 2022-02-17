@@ -3,16 +3,16 @@ package me.jishuna.minetweaks.tweaks.mobs;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityInteractEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 
-@RegisterTweak(name = "no_trampling_farmland")
+@RegisterTweak("no_trampling_farmland")
 public class MobFarmlandTrampleTweak extends Tweak {
 
-	public MobFarmlandTrampleTweak(JavaPlugin plugin, String name) {
+	public MobFarmlandTrampleTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 
 		addEventHandler(EntityInteractEvent.class, this::onEntityTrample);
@@ -20,7 +20,7 @@ public class MobFarmlandTrampleTweak extends Tweak {
 
 	@Override
 	public void reload() {
-		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Mobs/" + this.getName() + ".yml").ifPresent(config -> {
+		FileUtils.loadResource(getPlugin(), "Tweaks/Mobs/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
 		});
 	}

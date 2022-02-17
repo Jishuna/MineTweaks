@@ -19,16 +19,17 @@ import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Leaves;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.common.base.Enums;
 
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 
-@RegisterTweak(name = "fast_leaf_decay")
+@RegisterTweak("fast_leaf_decay")
 public class LeafDecayTweak extends Tweak {
 	private static final BlockFace[] FACES = new BlockFace[] { BlockFace.UP, BlockFace.DOWN, BlockFace.NORTH,
 			BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST };
@@ -39,17 +40,22 @@ public class LeafDecayTweak extends Tweak {
 	private int maxDistance;
 	private DecayStyle style;
 
-	public LeafDecayTweak(JavaPlugin plugin, String name) {
+	public LeafDecayTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 
-		addEventHandler(BlockBreakEvent.class, this::onBreak);
+		addEventHandler(BlockBreakEvent.class, EventPriority.HIGH, this::onBreak);
 
 		Bukkit.getScheduler().runTaskTimer(plugin, this::handleDecay, 0, 1);
+	}
+	
+	@Override
+	public boolean isToggleable() {
+		return true;
 	}
 
 	@Override
 	public void reload() {
-		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Blocks/" + this.getName() + ".yml").ifPresent(config -> {
+		FileUtils.loadResource(getPlugin(), "Tweaks/Blocks/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
 
 			this.style = Enums.getIfPresent(DecayStyle.class, config.getString("decay-type").toUpperCase())
@@ -60,12 +66,15 @@ public class LeafDecayTweak extends Tweak {
 	}
 
 	private void onBreak(BlockBreakEvent event) {
+		if (event.isCancelled() || isDisabled(event.getPlayer()))
+			return;
+		
 		Block block = event.getBlock();
 
 		if (!Tag.LOGS.isTagged(block.getType()))
 			return;
 
-		Bukkit.getScheduler().runTaskLaterAsynchronously(getOwningPlugin(), () -> {
+		Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
 			Queue<Block> queue = buildQueue(block);
 
 			if (queue.isEmpty())

@@ -10,18 +10,18 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 
-@RegisterTweak(name = "player_head_drops")
+@RegisterTweak("player_head_drops")
 public class PlayerHeadDropTweak extends Tweak {
 	private double chance;
 	private String lore;
 
-	public PlayerHeadDropTweak(JavaPlugin plugin, String name) {
+	public PlayerHeadDropTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 
 		addEventHandler(PlayerDeathEvent.class, this::onDeath);
@@ -29,7 +29,7 @@ public class PlayerHeadDropTweak extends Tweak {
 
 	@Override
 	public void reload() {
-		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Items/" + this.getName() + ".yml").ifPresent(config -> {
+		FileUtils.loadResource(getPlugin(), "Tweaks/Items/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
 
 			this.chance = config.getDouble("drop-chance", 20);

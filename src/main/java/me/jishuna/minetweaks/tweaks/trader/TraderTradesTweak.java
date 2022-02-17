@@ -8,30 +8,31 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.WanderingTrader;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MerchantRecipe;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 
-@RegisterTweak(name = "replace_trades")
+@RegisterTweak("replace_trades")
 public class TraderTradesTweak extends Tweak {
 	private int min;
 	private int max;
 	private List<MerchantRecipe> recipes = new ArrayList<>();
 
-	public TraderTradesTweak(JavaPlugin plugin, String name) {
+	public TraderTradesTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 
-		addEventHandler(CreatureSpawnEvent.class, this::onSpawn);
+		addEventHandler(CreatureSpawnEvent.class, EventPriority.HIGH, this::onSpawn);
 	}
 
 	@Override
 	public void reload() {
-		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Wandering Trader/" + this.getName() + ".yml").ifPresent(config -> {
+		FileUtils.loadResource(getPlugin(), "Tweaks/Wandering Trader/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
 
 			this.min = config.getInt("min-trades", 5);
@@ -66,6 +67,9 @@ public class TraderTradesTweak extends Tweak {
 	}
 
 	private void onSpawn(CreatureSpawnEvent event) {
+		if (event.isCancelled())
+			return;
+		
 		if (event.getEntity()instanceof WanderingTrader trader) {
 			List<MerchantRecipe> newRecipes = new ArrayList<>();
 			Random random = ThreadLocalRandom.current();

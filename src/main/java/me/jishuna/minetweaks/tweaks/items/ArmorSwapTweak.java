@@ -3,28 +3,29 @@ package me.jishuna.minetweaks.tweaks.items;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Result;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 
-@RegisterTweak(name = "armor_swap")
+@RegisterTweak("armor_swap")
 public class ArmorSwapTweak extends Tweak {
-	public ArmorSwapTweak(JavaPlugin plugin, String name) {
+	public ArmorSwapTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 
-		addEventHandler(PlayerInteractEvent.class, this::onInteract);
+		addEventHandler(PlayerInteractEvent.class, EventPriority.HIGH, this::onInteract);
 	}
 
 	@Override
 	public void reload() {
-		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Items/" + this.getName() + ".yml").ifPresent(config -> {
+		FileUtils.loadResource(getPlugin(), "Tweaks/Items/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
 		});
 	}

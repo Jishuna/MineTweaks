@@ -4,33 +4,37 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.NotePlayEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 
-@RegisterTweak(name = "mob_head_noteblocks")
+@RegisterTweak("mob_head_noteblocks")
 public class MobHeadNoteblockTweak extends Tweak {
 	private static final BlockFace[] FACES = new BlockFace[] { BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH,
 			BlockFace.WEST };
 
-	public MobHeadNoteblockTweak(JavaPlugin plugin, String name) {
+	public MobHeadNoteblockTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 
-		addEventHandler(NotePlayEvent.class, this::onNotePlay);
+		addEventHandler(NotePlayEvent.class, EventPriority.HIGH, this::onNotePlay);
 	}
 
 	@Override
 	public void reload() {
-		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Blocks/" + this.getName() + ".yml").ifPresent(config -> {
+		FileUtils.loadResource(getPlugin(), "Tweaks/Blocks/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
 		});
 	}
 
 	@SuppressWarnings("deprecation")
 	private void onNotePlay(NotePlayEvent event) {
+		if (event.isCancelled())
+			return;
+		
 		Block block = event.getBlock();
 		for (BlockFace face : FACES) {
 			switch (block.getRelative(face).getType()) {

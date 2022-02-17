@@ -10,16 +10,16 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 
-@RegisterTweak(name = "firework_creepers")
+@RegisterTweak("firework_creepers")
 public class FireworkCreeperTweak extends Tweak {
 
-	public FireworkCreeperTweak(JavaPlugin plugin, String name) {
+	public FireworkCreeperTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 
 		addEventHandler(EntityExplodeEvent.class, this::onEntityExplode);
@@ -27,7 +27,7 @@ public class FireworkCreeperTweak extends Tweak {
 
 	@Override
 	public void reload() {
-		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Mobs/" + this.getName() + ".yml").ifPresent(config -> {
+		FileUtils.loadResource(getPlugin(), "Tweaks/Mobs/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, false);
 		});
 	}

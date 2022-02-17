@@ -4,21 +4,22 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Tameable;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.projectiles.ProjectileSource;
 
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 
-@RegisterTweak(name = "pet_protection")
+@RegisterTweak("pet_protection")
 public class PetProtectionTweak extends Tweak {
 
-	public PetProtectionTweak(JavaPlugin plugin, String name) {
+	public PetProtectionTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 
-		addEventHandler(EntityDamageByEntityEvent.class, this::onDamage);
+		addEventHandler(EntityDamageByEntityEvent.class, EventPriority.HIGH, this::onDamage);
 	}
 	
 	@Override
@@ -28,7 +29,7 @@ public class PetProtectionTweak extends Tweak {
 
 	@Override
 	public void reload() {
-		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Mobs/" + this.getName() + ".yml").ifPresent(config -> {
+		FileUtils.loadResource(getPlugin(), "Tweaks/Mobs/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
 		});
 	}

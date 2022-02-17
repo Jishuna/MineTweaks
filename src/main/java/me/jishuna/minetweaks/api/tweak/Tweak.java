@@ -1,8 +1,8 @@
 package me.jishuna.minetweaks.api.tweak;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -10,17 +10,19 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 
+import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.events.EventWrapper;
 
 public abstract class Tweak {
 	private final String name;
-	private final JavaPlugin owningPlugin;
+	private final MineTweaks plugin;
 
 	private String displayName;
 	private String description;
@@ -29,12 +31,12 @@ public abstract class Tweak {
 
 	private final Set<String> invalidVersions = new HashSet<>();
 
-	private final Multimap<Class<? extends Event>, EventWrapper<? extends Event>> handlerMap = ArrayListMultimap
+	private final Table<Class<? extends Event>, EventPriority, EventWrapper<? extends Event>> eventTable = HashBasedTable
 			.create();
 
-	public Tweak(JavaPlugin plugin, String name) {
+	public Tweak(MineTweaks plugin, String name) {
 		this.name = name;
-		this.owningPlugin = plugin;
+		this.plugin = plugin;
 	}
 
 	public abstract void reload();
@@ -47,15 +49,20 @@ public abstract class Tweak {
 	}
 
 	public Set<Class<? extends Event>> getEventClasses() {
-		return this.handlerMap.keySet();
+		return this.eventTable.rowKeySet();
 	}
-
+	
 	public <T extends Event> void addEventHandler(Class<T> type, Consumer<T> consumer) {
-		this.handlerMap.put(type, new EventWrapper<>(type, consumer));
+		addEventHandler(type, EventPriority.NORMAL, consumer);
 	}
 
-	public <T extends Event> Collection<EventWrapper<? extends Event>> getEventHandlers(Class<T> type) {
-		return this.handlerMap.get(type);
+	public <T extends Event> void addEventHandler(Class<T> type, EventPriority priority, Consumer<T> consumer) {
+		this.plugin.getEventManager().registerListener(type, priority);
+		this.eventTable.put(type, priority, new EventWrapper<>(type, consumer));
+	}
+
+	public <T extends Event> Optional<EventWrapper<? extends Event>> getEventHandler(Class<T> type, EventPriority priority) {
+		return Optional.ofNullable(this.eventTable.get(type, priority));
 	}
 
 	public boolean isVersionValid(String version) {
@@ -86,8 +93,8 @@ public abstract class Tweak {
 		return category;
 	}
 
-	public JavaPlugin getOwningPlugin() {
-		return owningPlugin;
+	public JavaPlugin getPlugin() {
+		return plugin;
 	}
 
 	public boolean isToggleable() {
@@ -95,7 +102,7 @@ public abstract class Tweak {
 	}
 
 	public boolean isDisabled(Player player) {
-		return player.getPersistentDataContainer().has(new NamespacedKey(this.owningPlugin, "toggle-" + this.name),
+		return player.getPersistentDataContainer().has(new NamespacedKey(this.plugin, "toggle-" + this.name),
 				PersistentDataType.BYTE);
 	}
 }

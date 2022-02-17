@@ -5,22 +5,23 @@ import org.bukkit.Particle;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 
-@RegisterTweak(name = "blood_effect")
+@RegisterTweak("blood_effect")
 public class BloodEffectTweak extends Tweak {
 	private BlockData data;
 	private int count;
 
-	public BloodEffectTweak(JavaPlugin plugin, String name) {
+	public BloodEffectTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 
-		addEventHandler(EntityDamageByEntityEvent.class, this::onDamage);
+		addEventHandler(EntityDamageByEntityEvent.class, EventPriority.HIGH, this::onDamage);
 	}
 
 	@Override
@@ -30,7 +31,7 @@ public class BloodEffectTweak extends Tweak {
 
 	@Override
 	public void reload() {
-		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Misc/" + this.getName() + ".yml").ifPresent(config -> {
+		FileUtils.loadResource(getPlugin(), "Tweaks/Misc/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
 
 			this.count = config.getInt("particle-count", 10);
@@ -41,6 +42,9 @@ public class BloodEffectTweak extends Tweak {
 	}
 
 	private void onDamage(EntityDamageByEntityEvent event) {
+		if (event.isCancelled())
+			return;
+		
 		if (!(event.getEntity() instanceof LivingEntity living) || !(event.getDamager() instanceof Player player) || isDisabled(player))
 			return;
 

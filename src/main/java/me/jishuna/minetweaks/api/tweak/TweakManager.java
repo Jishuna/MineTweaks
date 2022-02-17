@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import org.bukkit.event.Event;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -46,8 +45,8 @@ public class TweakManager {
 			for (RegisterTweak annotation : clazz.getAnnotationsByType(RegisterTweak.class)) {
 				try {
 					Tweak tweak = ((Class<? extends Tweak>) clazz)
-							.getDeclaredConstructor(JavaPlugin.class, String.class)
-							.newInstance((Object) plugin, (Object) annotation.name());
+							.getDeclaredConstructor(MineTweaks.class, String.class)
+							.newInstance((Object) plugin, (Object) annotation.value());
 
 					if (!tweak.isVersionValid(version))
 						continue;

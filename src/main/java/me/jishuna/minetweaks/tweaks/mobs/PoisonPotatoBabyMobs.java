@@ -4,29 +4,30 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Breedable;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 
-@RegisterTweak(name = "poison_potato_baby_mobs")
+@RegisterTweak("poison_potato_baby_mobs")
 public class PoisonPotatoBabyMobs extends Tweak {
 
-	public PoisonPotatoBabyMobs(JavaPlugin plugin, String name) {
+	public PoisonPotatoBabyMobs(MineTweaks plugin, String name) {
 		super(plugin, name);
 
-		addEventHandler(PlayerInteractEntityEvent.class, this::onInteract);
+		addEventHandler(PlayerInteractEntityEvent.class, EventPriority.HIGH, this::onInteract);
 	}
 
 	@Override
 	public void reload() {
-		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Mobs/" + this.getName() + ".yml").ifPresent(config -> {
+		FileUtils.loadResource(getPlugin(), "Tweaks/Mobs/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
 		});
 	}
@@ -34,8 +35,8 @@ public class PoisonPotatoBabyMobs extends Tweak {
 	private void onInteract(PlayerInteractEntityEvent event) {
 		if (event.isCancelled())
 			return;
+		
 		ItemStack item;
-
 		if (event.getHand() == EquipmentSlot.HAND) {
 			item = event.getPlayer().getEquipment().getItemInMainHand();
 		} else {

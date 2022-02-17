@@ -16,6 +16,7 @@ import org.bukkit.block.data.Rotatable;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Result;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -24,17 +25,17 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.commonlib.items.ItemBuilder;
 import me.jishuna.commonlib.items.ItemUtils;
 import me.jishuna.commonlib.utils.BlockUtils;
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 import net.md_5.bungee.api.ChatColor;
 
-@RegisterTweak(name = "pumpkin_carving")
+@RegisterTweak("pumpkin_carving")
 public class PumpkinCarvingTweak extends Tweak {
 	private static final ChatColor ORANGE = ChatColor.of("#ff9838");
 	private Map<String, String> textureMap = new TreeMap<>();
@@ -43,17 +44,17 @@ public class PumpkinCarvingTweak extends Tweak {
 
 	private final Map<InventoryView, CarvingData> carvingMap = new HashMap<>();
 
-	public PumpkinCarvingTweak(JavaPlugin plugin, String name) {
+	public PumpkinCarvingTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 
-		addEventHandler(PlayerInteractEvent.class, this::onInteract);
+		addEventHandler(PlayerInteractEvent.class, EventPriority.HIGH, this::onInteract);
 		addEventHandler(InventoryCloseEvent.class, this::onClose);
-		addEventHandler(InventoryClickEvent.class, this::onClick);
+		addEventHandler(InventoryClickEvent.class, EventPriority.HIGH, this::onClick);
 	}
 
 	@Override
 	public void reload() {
-		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Blocks/" + this.getName() + ".yml").ifPresent(config -> {
+		FileUtils.loadResource(getPlugin(), "Tweaks/Blocks/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
 
 			ConfigurationSection section = config.getConfigurationSection("textures");
@@ -129,7 +130,7 @@ public class PumpkinCarvingTweak extends Tweak {
 				ItemUtils.reduceDurability(player, carvingData.item, carvingData.hand);
 
 			this.carvingMap.remove(event.getView());
-			Bukkit.getScheduler().runTask(getOwningPlugin(), player::closeInventory);
+			Bukkit.getScheduler().runTask(getPlugin(), player::closeInventory);
 		}
 	}
 

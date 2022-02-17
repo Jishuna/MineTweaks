@@ -1,11 +1,6 @@
 package me.jishuna.minetweaks;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Callable;
-
 import org.bstats.bukkit.Metrics;
-import org.bstats.charts.SimpleBarChart;
 import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
@@ -17,7 +12,6 @@ import me.jishuna.commonlib.language.MessageConfig;
 import me.jishuna.commonlib.utils.FileUtils;
 import me.jishuna.commonlib.utils.ServerUtils;
 import me.jishuna.minetweaks.api.events.EventManager;
-import me.jishuna.minetweaks.api.tweak.Tweak;
 import me.jishuna.minetweaks.api.tweak.TweakManager;
 import me.jishuna.minetweaks.commands.MineTweaksCommandHandler;
 import me.jishuna.minetweaks.listeners.BlockPlaceListener;
@@ -37,8 +31,8 @@ public class MineTweaks extends JavaPlugin {
 	public void onEnable() {
 		loadConfiguration();
 
-		this.tweakManager = new TweakManager(this);
 		this.eventManager = new EventManager(this);
+		this.tweakManager = new TweakManager(this);
 
 		NMSManager.initAdapater(this);
 
@@ -49,7 +43,7 @@ public class MineTweaks extends JavaPlugin {
 		initializeMetrics();
 		initializeUpdateChecker();
 
-		new TickingTweakRunnable(this.tweakManager).runTaskTimer(this, 10, 10);
+		new TickingTweakRunnable(this.tweakManager).runTaskTimer(this, 5, 5);
 	}
 
 	public TweakManager getTweakManager() {

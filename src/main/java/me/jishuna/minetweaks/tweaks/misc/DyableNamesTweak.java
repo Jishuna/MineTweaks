@@ -3,36 +3,34 @@ package me.jishuna.minetweaks.tweaks.misc;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 import net.md_5.bungee.api.ChatColor;
 
-@RegisterTweak(name = "dyable_names")
+@RegisterTweak("dyable_names")
 public class DyableNamesTweak extends Tweak {
-	public DyableNamesTweak(JavaPlugin plugin, String name) {
+	public DyableNamesTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 
-		addEventHandler(PlayerInteractEntityEvent.class, this::onInteractEntity);
+		addEventHandler(PlayerInteractEntityEvent.class, EventPriority.HIGH, this::onInteractEntity);
 	}
 
 	@Override
 	public void reload() {
-		FileUtils.loadResource(getOwningPlugin(), "Tweaks/Misc/" + this.getName() + ".yml").ifPresent(config -> {
+		FileUtils.loadResource(getPlugin(), "Tweaks/Misc/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
 		});
 	}
 
 	private void onInteractEntity(PlayerInteractEntityEvent event) {
-		if (event.isCancelled())
-			return;
-
-		if (!event.getPlayer().isSneaking() || !(event.getRightClicked()instanceof LivingEntity livingEntity))
+		if (event.isCancelled() || !event.getPlayer().isSneaking() || !(event.getRightClicked()instanceof LivingEntity livingEntity))
 			return;
 
 		if (livingEntity.getCustomName() == null)

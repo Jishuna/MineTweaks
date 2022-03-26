@@ -18,6 +18,7 @@ import org.bukkit.Particle;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Leaves;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -30,7 +31,7 @@ import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 
 @RegisterTweak("fast_leaf_decay")
-public class LeafDecayTweak extends Tweak {
+public class FastLeafDecayTweak extends Tweak {
 	private static final BlockFace[] FACES = new BlockFace[] { BlockFace.UP, BlockFace.DOWN, BlockFace.NORTH,
 			BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST };
 
@@ -40,14 +41,14 @@ public class LeafDecayTweak extends Tweak {
 	private int maxDistance;
 	private DecayStyle style;
 
-	public LeafDecayTweak(MineTweaks plugin, String name) {
+	public FastLeafDecayTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 
 		addEventHandler(BlockBreakEvent.class, EventPriority.HIGH, this::onBreak);
 
 		Bukkit.getScheduler().runTaskTimer(plugin, this::handleDecay, 0, 1);
 	}
-	
+
 	@Override
 	public boolean isToggleable() {
 		return true;
@@ -68,7 +69,7 @@ public class LeafDecayTweak extends Tweak {
 	private void onBreak(BlockBreakEvent event) {
 		if (event.isCancelled() || isDisabled(event.getPlayer()))
 			return;
-		
+
 		Block block = event.getBlock();
 
 		if (!Tag.LOGS.isTagged(block.getType()))
@@ -116,9 +117,9 @@ public class LeafDecayTweak extends Tweak {
 			if (!Tag.LEAVES.isTagged(target.getType()) || collection.contains(target))
 				continue;
 
-			Leaves leaves = (Leaves) target.getBlockData();
+			BlockData data = target.getBlockData();
 
-			if (leaves.isPersistent() || leaves.getDistance() < 7)
+			if (!(data instanceof Leaves leaves) || leaves.isPersistent() || leaves.getDistance() < 7)
 				continue;
 
 			collection.add(target);

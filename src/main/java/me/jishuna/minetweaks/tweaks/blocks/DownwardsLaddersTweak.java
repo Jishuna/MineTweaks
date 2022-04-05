@@ -1,5 +1,6 @@
 package me.jishuna.minetweaks.tweaks.blocks;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -8,6 +9,7 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -56,6 +58,14 @@ public class DownwardsLaddersTweak extends Tweak {
 			}
 
 			if (target.getType().isAir() && NMSManager.getAdapter().canPlace(current, target.getLocation())) {
+				BlockPlaceEvent placeEvent = new BlockPlaceEvent(block, block.getState(),
+						block.getRelative(current.getFacing().getOppositeFace()), item, event.getPlayer(), true,
+						event.getHand());
+
+				Bukkit.getPluginManager().callEvent(placeEvent);
+				if (placeEvent.isCancelled())
+					return;
+
 				Directional ladder = (Directional) Material.LADDER.createBlockData();
 				ladder.setFacing(current.getFacing());
 				target.setBlockData(ladder);

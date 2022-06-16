@@ -43,7 +43,7 @@ public class SwingThroughGrassTweak extends Tweak {
 				player.getEyeLocation().getDirection(), 3.5, FluidCollisionMode.NEVER, true, 0,
 				entity -> entity.getUniqueId() != player.getUniqueId());
 
-		if (result != null && result.getHitEntity() != null && result.getHitEntity()instanceof LivingEntity entity) {
+		if (result != null && result.getHitEntity() != null && result.getHitEntity() instanceof LivingEntity entity) {
 			NMSManager.getAdapter().attack(player, entity);
 		}
 	}

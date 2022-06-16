@@ -23,7 +23,7 @@ import me.jishuna.minetweaks.api.tweak.Tweak;
 @RegisterTweak("infinite_water_bucket")
 public class InfiniteWaterBucketTweak extends Tweak {
 	private static final ItemStack BUCKET = new ItemBuilder(Material.WATER_BUCKET)
-			.withEnchantment(Enchantment.ARROW_INFINITE, 1).build();
+			.enchantment(Enchantment.ARROW_INFINITE, 1).build();
 	private int cost;
 
 	public InfiniteWaterBucketTweak(MineTweaks plugin, String name) {
@@ -57,7 +57,7 @@ public class InfiniteWaterBucketTweak extends Tweak {
 
 		EnchantmentStorageMeta meta = (EnchantmentStorageMeta) second.getItemMeta();
 		if (meta.hasStoredEnchant(Enchantment.ARROW_INFINITE)) {
-			event.setResult(ItemBuilder.modifyItem(BUCKET.clone()).withName(inventory.getRenameText()).build());
+			event.setResult(ItemBuilder.modifyItem(BUCKET.clone()).name(inventory.getRenameText()).build());
 			inventory.setRepairCost(this.cost);
 		}
 	}

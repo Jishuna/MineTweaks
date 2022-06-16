@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'me.jishuna.minetweaks'
-version '1.7.1'
+version '1.7.2'
 
 sourceCompatibility = targetCompatibility = JavaVersion.VERSION_16
 
@@ -44,6 +44,7 @@ dependencies {
     compileOnly group: 'org.spigotmc', name: 'spigot-api', version: '1.18-R0.1-SNAPSHOT'
     implementation group: 'me.jishuna.jishunacommonlib', name: 'JishunaCommonLib', version: '1.0.0'
     implementation group: 'org.bstats', name: 'bstats-bukkit', version: '2.2.1'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
 }
 
 jar {

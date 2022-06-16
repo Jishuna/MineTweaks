@@ -23,8 +23,8 @@ public class NewSpawningTweak extends Tweak {
 		super(plugin, name);
 
 		addEventHandler(CreatureSpawnEvent.class, EventPriority.HIGH, this::onSpawn);
-		
-		addInvalidVersions(Version.V1_18_R1);
+
+		addInvalidVersions(Version.V1_18_R1, Version.V1_18_R2, Version.V1_19_R1);
 	}
 
 	@Override
@@ -35,8 +35,7 @@ public class NewSpawningTweak extends Tweak {
 	}
 
 	private void onSpawn(CreatureSpawnEvent event) {
-		if (monsters.contains(event.getEntityType())
-				&& event.getSpawnReason() == SpawnReason.NATURAL
+		if (monsters.contains(event.getEntityType()) && event.getSpawnReason() == SpawnReason.NATURAL
 				&& event.getEntity().getLocation().getBlock().getLightFromBlocks() > 0) {
 			event.setCancelled(true);
 		}

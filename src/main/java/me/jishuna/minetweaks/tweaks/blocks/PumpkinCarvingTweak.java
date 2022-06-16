@@ -74,8 +74,8 @@ public class PumpkinCarvingTweak extends Tweak {
 			this.inventory = Bukkit.createInventory(null, size, config.getString("gui-name", "Pumpkin Carving"));
 
 			for (Entry<String, String> entry : this.textureMap.entrySet()) {
-				ItemStack item = new ItemBuilder(Material.PLAYER_HEAD).withSkullTextureUrl(entry.getValue())
-						.withName(ORANGE + StringUtils.capitalize(entry.getKey().replace("-", " "))).build();
+				ItemStack item = new ItemBuilder(Material.PLAYER_HEAD).skullTexture(entry.getValue())
+						.name(ORANGE + StringUtils.capitalize(entry.getKey().replace("-", " "))).build();
 				this.inventory.addItem(item);
 			}
 		});
@@ -125,7 +125,7 @@ public class PumpkinCarvingTweak extends Tweak {
 			BlockUtils.setSkullTextureUrl(target, texture);
 
 			player.playSound(player.getLocation(), Sound.BLOCK_PUMPKIN_CARVE, SoundCategory.BLOCKS, 1f, 1f);
-			
+
 			if (player.getGameMode() != GameMode.CREATIVE)
 				ItemUtils.reduceDurability(player, carvingData.item, carvingData.hand);
 
@@ -137,6 +137,7 @@ public class PumpkinCarvingTweak extends Tweak {
 	private void onClose(InventoryCloseEvent event) {
 		this.carvingMap.remove(event.getView());
 	}
-	
-	public static record CarvingData(ItemStack item, Block block, EquipmentSlot hand) {}
+
+	public static record CarvingData(ItemStack item, Block block, EquipmentSlot hand) {
+	}
 }

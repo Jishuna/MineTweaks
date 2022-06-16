@@ -22,6 +22,11 @@ public class ArmorSwapTweak extends Tweak {
 
 		addEventHandler(PlayerInteractEvent.class, EventPriority.HIGH, this::onInteract);
 	}
+	
+	@Override
+	public boolean isToggleable() {
+		return true;
+	}
 
 	@Override
 	public void reload() {
@@ -31,7 +36,8 @@ public class ArmorSwapTweak extends Tweak {
 	}
 
 	private void onInteract(PlayerInteractEvent event) {
-		if (event.useItemInHand() == Result.DENY || event.getAction() != Action.RIGHT_CLICK_AIR)
+		Player player = event.getPlayer();
+		if (event.useItemInHand() == Result.DENY || event.getAction() != Action.RIGHT_CLICK_AIR || isDisabled(player))
 			return;
 
 		ItemStack item = event.getItem();
@@ -43,7 +49,6 @@ public class ArmorSwapTweak extends Tweak {
 		if (slot == null)
 			return;
 
-		Player player = event.getPlayer();
 		EntityEquipment equipment = player.getEquipment();
 
 		ItemStack current = equipment.getItem(slot);

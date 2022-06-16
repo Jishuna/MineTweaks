@@ -46,10 +46,9 @@ public class TrowelTweak extends Tweak {
 
 			ItemStack trowel = new ItemBuilder(
 					ItemUtils.getMaterial(config.getString("trowel-material", ""), Material.IRON_SHOVEL))
-							.withName(ChatColor.RESET + config.getString("trowel-name", "Trowel"))
-							.withModelData(config.getInt("trowel-model-data", 1))
-							.withPersistantData(PluginKeys.ITEM_TYPE.getKey(), PersistentDataType.STRING, "trowel")
-							.build();
+					.name(ChatColor.RESET + config.getString("trowel-name", "Trowel"))
+					.modelData(config.getInt("trowel-model-data", 1))
+					.persistentData(PluginKeys.ITEM_TYPE.getKey(), PersistentDataType.STRING, "trowel").build();
 
 			ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(getPlugin(), "trowel_recipe"), trowel);
 			recipe.shape("100", "022");

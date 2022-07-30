@@ -10,6 +10,8 @@
 target
 build
 .gradle
+gradle
+.idea
 bin
 dist
 out
@@ -19,3 +21,5 @@ Thumbs.db
 .DS_Store
 *.lock
 *.launch
+/gradlew.bat
+/gradlew

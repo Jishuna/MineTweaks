@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'me.jishuna.minetweaks'
-version '1.7.2'
+version '1.8.0'
 
 sourceCompatibility = targetCompatibility = JavaVersion.VERSION_16
 

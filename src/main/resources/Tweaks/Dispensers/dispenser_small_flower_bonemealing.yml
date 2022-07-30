@@ -1,0 +1,27 @@
+# Enable or disable this tweak.
+enabled: true
+
+# A list of small flowers that can be duplicated.
+flowers:
+  - DANDELION
+  - POPPY
+  - BLUE_ORCHID
+  - ALLIUM
+  - AZURE_BLUET
+  - RED_TULIP
+  - ORANGE_TULIP
+  - WHITE_TULIP
+  - PINK_TULIP
+  - OXEYE_DAISY
+  - CORNFLOWER
+  - LILY_OF_THE_VALLEY
+  - WITHER_ROSE
+
+# Display name, seen in-game
+display-name: "Dispenser Small Flower Bonemealing"
+
+# Description, seen in-game
+description: "Allows dispensers to bonemeal small flowers to duplicate them."
+
+# Category
+category: "Farming"

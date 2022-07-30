@@ -10,7 +10,7 @@ allow-red-sand: true
 display-name: "Dispenser Sand Bonemealing"
 
 # Description, seen in-game
-description: "Allows dispensers bonemeal sand."
+description: "Allows dispensers to bonemeal sand."
 
 # Category
 category: "Dispensers"

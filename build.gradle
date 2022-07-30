@@ -14,6 +14,14 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'com.github.johnrengelman.shadow'
     
+    repositories {
+		mavenLocal()
+		mavenCentral()
+		maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+		maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+   		maven { url = 'https://oss.sonatype.org/content/repositories/central' }
+	}
+    
     shadowJar {
         archiveFileName = "${project.name}.jar"
         destinationDirectory = file("../temp/")

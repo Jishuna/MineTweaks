@@ -9,7 +9,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import me.jishuna.commonlib.Version;
 import me.jishuna.commonlib.utils.FileUtils;
 import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
@@ -22,8 +21,6 @@ public class SignEditTweak extends Tweak {
 		super(plugin, name);
 
 		addEventHandler(PlayerInteractEvent.class, EventPriority.HIGH, this::onInteract);
-
-		addInvalidVersions(Version.V1_17_R1);
 	}
 
 	@Override

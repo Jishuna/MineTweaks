@@ -1,6 +1,0 @@
-group 'v1_17_R1'
-
-dependencies {
-    compileOnly group: 'org.spigotmc', name: 'spigot', version: '1.17-R0.1-SNAPSHOT'
-    compileOnly parent
-}

@@ -1,0 +1,14 @@
+# Enable or disable this tweak.
+enabled: true
+
+# The message to display, %honey% will be replaced with the honey level and %bees% will be replaced with the number of bees in the nest.
+display-message: '&6Honey: &e%honey%&f   -   &6Bees: &e%bees%'
+
+# Display name, seen in-game
+display-name: "Beehive Display"
+
+# Description, seen in-game
+description: "Shows players the amount of honey and bees in a hive when right clicking with an empty hand."
+
+# Category
+category: "Blocks"

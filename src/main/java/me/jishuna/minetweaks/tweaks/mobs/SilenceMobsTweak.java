@@ -1,8 +1,8 @@
 package me.jishuna.minetweaks.tweaks.mobs;
 
 import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.Tag;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -42,7 +42,7 @@ public class SilenceMobsTweak extends Tweak {
 			item = player.getEquipment().getItemInOffHand();
 		}
 
-		if (!event.getRightClicked().isSilent() && item.getType() == Material.WHITE_WOOL) {
+		if (!event.getRightClicked().isSilent() && Tag.WOOL.isTagged(item.getType())) {
 			event.setCancelled(true);
 			event.getRightClicked().setSilent(true);
 			player.playSound(player.getLocation(), Sound.BLOCK_WOOL_PLACE, 1f, 1f);

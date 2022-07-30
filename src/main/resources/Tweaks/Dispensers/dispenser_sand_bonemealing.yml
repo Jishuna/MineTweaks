@@ -7,10 +7,10 @@ allow-normal-sand: true
 allow-red-sand: true
 
 # Display name, seen in-game
-display-name: "Dispenser Cauldron Filling"
+display-name: "Dispenser Sand Bonemealing"
 
 # Description, seen in-game
-description: "Allows dispensers to fill cauldrons with buckets."
+description: "Allows dispensers bonemeal sand."
 
 # Category
 category: "Dispensers"

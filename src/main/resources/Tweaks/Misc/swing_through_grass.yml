@@ -1,6 +1,10 @@
 # Enable or disable this tweak.
 enabled: true
 
+# A list of materials that players should not be able to swing through, even if passable.
+blacklist:
+  - COBWEB
+
 # Display name, seen in-game
 display-name: "Swing Through Grass"
 

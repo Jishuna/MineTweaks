@@ -1,6 +1,12 @@
 package me.jishuna.minetweaks.tweaks.misc;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.bukkit.FluidCollisionMode;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Result;
@@ -18,6 +24,8 @@ import me.jishuna.minetweaks.nms.NMSManager;
 
 @RegisterTweak("swing_through_grass")
 public class SwingThroughGrassTweak extends Tweak {
+	private Set<Material> blacklist;
+
 	public SwingThroughGrassTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 
@@ -28,14 +36,26 @@ public class SwingThroughGrassTweak extends Tweak {
 	public void reload() {
 		FileUtils.loadResource(getPlugin(), "Tweaks/Misc/" + this.getName() + ".yml").ifPresent(config -> {
 			loadDefaults(config, true);
+
+			this.blacklist = new HashSet<>();
+
+			for (String key : config.getStringList("blacklist")) {
+				Material material = Material.matchMaterial(key.toUpperCase());
+
+				if (material != null) {
+					blacklist.add(material);
+				}
+			}
 		});
 	}
 
 	private void onInteract(PlayerInteractEvent event) {
 		if (event.useItemInHand() == Result.DENY)
 			return;
-		if (event.getHand() != EquipmentSlot.HAND || event.getAction() != Action.LEFT_CLICK_BLOCK
-				|| event.getClickedBlock() == null || !event.getClickedBlock().isPassable())
+
+		Block block = event.getClickedBlock();
+		if (event.getHand() != EquipmentSlot.HAND || event.getAction() != Action.LEFT_CLICK_BLOCK || block == null
+				|| !block.isPassable() || blacklist.contains(block.getType()))
 			return;
 
 		Player player = event.getPlayer();

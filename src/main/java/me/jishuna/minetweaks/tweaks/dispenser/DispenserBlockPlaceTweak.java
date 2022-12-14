@@ -16,7 +16,6 @@ import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
 import me.jishuna.minetweaks.api.util.DispenserUtils;
-import me.jishuna.minetweaks.nms.NMSManager;
 
 @RegisterTweak("dispenser_block_placing")
 public class DispenserBlockPlaceTweak extends Tweak {
@@ -51,7 +50,7 @@ public class DispenserBlockPlaceTweak extends Tweak {
 	}
 
 	private void onDispense(BlockDispenseEvent event) {
-		if (event.isCancelled() ||  event.getBlock().getType() != Material.DISPENSER)
+		if (event.isCancelled() || event.getBlock().getType() != Material.DISPENSER)
 			return;
 
 		ItemStack item = event.getItem();
@@ -70,7 +69,7 @@ public class DispenserBlockPlaceTweak extends Tweak {
 
 		event.setCancelled(true);
 
-		if (!NMSManager.getAdapter().canPlace(material, target.getLocation()))
+		if (!target.canPlace(material.createBlockData()))
 			return;
 
 		if (!target.getType().isAir() && requireAir)

@@ -8,6 +8,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.NotePlayEvent;
 
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.commonlib.utils.Version;
 import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
@@ -20,6 +21,7 @@ public class MobHeadNoteblockTweak extends Tweak {
 	public MobHeadNoteblockTweak(MineTweaks plugin, String name) {
 		super(plugin, name);
 
+		addInvalidVersions(Version.V1_19_R2);
 		addEventHandler(NotePlayEvent.class, EventPriority.HIGH, this::onNotePlay);
 	}
 

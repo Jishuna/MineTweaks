@@ -6,31 +6,9 @@ plugins {
 }
 
 group 'me.jishuna.minetweaks'
-version '1.8.1'
+version '1.8.2'
 
 sourceCompatibility = targetCompatibility = JavaVersion.VERSION_16
-
-subprojects {
-    apply plugin: 'java'
-    apply plugin: 'com.github.johnrengelman.shadow'
-    
-    repositories {
-		mavenLocal()
-		mavenCentral()
-		maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
-		maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
-   		maven { url = 'https://oss.sonatype.org/content/repositories/central' }
-	}
-    
-    shadowJar {
-        archiveFileName = "${project.name}.jar"
-        destinationDirectory = file("../temp/")
-    }
-    
-     build {
-        dependsOn shadowJar
-    }
-}
 
 repositories {
 	mavenLocal()
@@ -41,24 +19,14 @@ repositories {
 }
 
 dependencies {
-	implementation fileTree("temp")
-
     compileOnly group: 'org.spigotmc', name: 'spigot-api', version: '1.18-R0.1-SNAPSHOT'
     implementation group: 'me.jishuna', name: 'JishunaCommonLib', version: '1.0.0'
     implementation group: 'org.bstats', name: 'bstats-bukkit', version: '2.2.1'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
 }
 
-jar {
-    from {
-        for (File file : new File("temp").listFiles()) {
-            zipTree(file)
-        }
-    }
-}
 
 shadowJar {
-  	dependsOn(jar)
   	minimize()
   	
   	delete fileTree('./target/') {
@@ -71,13 +39,8 @@ shadowJar {
     destinationDirectory = file("./target/")                                   
 }
 
-clean {
-    delete file('./temp/')
-}
-
 build {
     dependsOn shadowJar
-    dependsOn clean
 }
 
 processResources {
@@ -88,4 +51,3 @@ processResources {
 }
 
 shadowJar.shouldRunAfter build
-build.shouldRunAfter subprojects.build

@@ -17,7 +17,6 @@ import me.jishuna.commonlib.utils.FileUtils;
 import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
-import me.jishuna.minetweaks.nms.NMSManager;
 
 @RegisterTweak("downwards_ladders")
 public class DownwardsLaddersTweak extends Tweak {
@@ -57,7 +56,7 @@ public class DownwardsLaddersTweak extends Tweak {
 				target = target.getRelative(BlockFace.DOWN);
 			}
 
-			if (target.getType().isAir() && NMSManager.getAdapter().canPlace(current, target.getLocation())) {
+			if (target.getType().isAir() && target.canPlace(current)) {
 				BlockPlaceEvent placeEvent = new BlockPlaceEvent(block, block.getState(),
 						block.getRelative(current.getFacing().getOppositeFace()), item, event.getPlayer(), true,
 						event.getHand());

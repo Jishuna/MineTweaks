@@ -6,7 +6,6 @@ import java.util.Set;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Result;
@@ -20,7 +19,6 @@ import me.jishuna.commonlib.utils.FileUtils;
 import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.api.RegisterTweak;
 import me.jishuna.minetweaks.api.tweak.Tweak;
-import me.jishuna.minetweaks.nms.NMSManager;
 
 @RegisterTweak("swing_through_grass")
 public class SwingThroughGrassTweak extends Tweak {
@@ -64,7 +62,7 @@ public class SwingThroughGrassTweak extends Tweak {
 				entity -> entity.getUniqueId() != player.getUniqueId());
 
 		if (result != null && result.getHitEntity() != null && result.getHitEntity() instanceof LivingEntity entity) {
-			NMSManager.getAdapter().attack(player, entity);
+			player.attack(entity);
 		}
 	}
 }

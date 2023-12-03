@@ -32,7 +32,8 @@ public class PoisonPotatoBabyMobsTweak extends Tweak {
         PlayerInteractEntityEvent event = (PlayerInteractEntityEvent) context.getEvent();
         ItemStack item = event.getPlayer().getEquipment().getItem(event.getHand());
 
-        if (event.getRightClicked() instanceof Breedable breedable && !breedable.isAdult() && item.getType() == Material.POISONOUS_POTATO) {
+        if (event.getRightClicked() instanceof Breedable breedable && !breedable.isAdult() && !breedable.getAgeLock() &&
+                item.getType() == Material.POISONOUS_POTATO) {
             event.setCancelled(true);
             breedable.setAgeLock(true);
             if (this.poison) {

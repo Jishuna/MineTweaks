@@ -1,0 +1,18 @@
+rootProject.name = 'minetweaks'
+gradle.rootProject {
+    it.version = '1.0.0'
+    it.group = 'me.jishuna'
+}
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+        maven { url = 'https://oss.sonatype.org/content/repositories/central' }
+        maven { url = 'https://repo.codemc.io/repository/maven-snapshots/' }
+        maven { url = 'https://repo.epicebic.xyz/public' }
+        maven { url = "https://repo.papermc.io/repository/maven-public/" }
+    }
+}
+
+include 'minetweaks-core'

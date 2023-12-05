@@ -2,6 +2,7 @@ package me.jishuna.minetweaks.listener;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityPlaceEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -20,7 +21,7 @@ public class PlayerListeners implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         this.registry
-                .process(EventContext
+                .processEvent(EventContext
                         .create(event)
                         .player(event.getPlayer())
                         .build());
@@ -29,7 +30,16 @@ public class PlayerListeners implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         this.registry
-                .process(EventContext
+                .processEvent(EventContext
+                        .create(event)
+                        .player(event.getPlayer())
+                        .build());
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent event) {
+        this.registry
+                .processEvent(EventContext
                         .create(event)
                         .player(event.getPlayer())
                         .build());
@@ -38,7 +48,7 @@ public class PlayerListeners implements Listener {
     @EventHandler
     public void onEntityInteract(PlayerInteractEntityEvent event) {
         this.registry
-                .process(EventContext
+                .processEvent(EventContext
                         .create(event)
                         .player(event.getPlayer())
                         .entity(event.getRightClicked())
@@ -48,7 +58,7 @@ public class PlayerListeners implements Listener {
     @EventHandler
     public void onEntityPlace(EntityPlaceEvent event) {
         this.registry
-                .process(EventContext
+                .processEvent(EventContext
                         .create(event)
                         .player(event.getPlayer())
                         .entity(event.getEntity())
@@ -58,7 +68,7 @@ public class PlayerListeners implements Listener {
     @EventHandler
     public void onBucketEmpty(PlayerBucketEmptyEvent event) {
         this.registry
-                .process(EventContext
+                .processEvent(EventContext
                         .create(event)
                         .player(event.getPlayer())
                         .build());

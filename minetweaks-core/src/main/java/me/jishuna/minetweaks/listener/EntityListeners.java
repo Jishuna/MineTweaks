@@ -16,7 +16,7 @@ public class EntityListeners implements Listener {
     @EventHandler
     public void onEntityChangeBlock(EntityChangeBlockEvent event) {
         this.registry
-                .process(EventContext
+                .processEvent(EventContext
                         .create(event)
                         .entity(event.getEntity())
                         .build());

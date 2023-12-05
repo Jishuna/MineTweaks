@@ -4,14 +4,14 @@ import com.google.common.collect.ImmutableList;
 import java.util.Iterator;
 import java.util.List;
 
-public class TweakList implements Iterable<Tweak> {
+public class TweakList<T extends Tweak> implements Iterable<T> {
 
-    private List<Tweak> tweaks = ImmutableList.of();
+    private List<T> tweaks = ImmutableList.of();
 
-    public void addOrReplace(Tweak tweak) {
-        ImmutableList.Builder<Tweak> builder = new ImmutableList.Builder<>();
+    public void addOrReplace(T tweak) {
+        ImmutableList.Builder<T> builder = new ImmutableList.Builder<>();
 
-        for (Tweak existing : this.tweaks) {
+        for (T existing : this.tweaks) {
             if (!existing.getName().equals(tweak.getName())) {
                 builder.add(existing);
             }
@@ -21,10 +21,10 @@ public class TweakList implements Iterable<Tweak> {
         this.tweaks = builder.build();
     }
 
-    public void remove(Tweak tweak) {
-        ImmutableList.Builder<Tweak> builder = new ImmutableList.Builder<>();
+    public void remove(T tweak) {
+        ImmutableList.Builder<T> builder = new ImmutableList.Builder<>();
 
-        for (Tweak existing : this.tweaks) {
+        for (T existing : this.tweaks) {
             if (!existing.getName().equals(tweak.getName())) {
                 builder.add(existing);
             }
@@ -34,11 +34,11 @@ public class TweakList implements Iterable<Tweak> {
     }
 
     @Override
-    public Iterator<Tweak> iterator() {
+    public Iterator<T> iterator() {
         return this.tweaks.iterator();
     }
 
-    public List<Tweak> getTweaks() {
+    public List<T> getTweaks() {
         return this.tweaks;
     }
 }

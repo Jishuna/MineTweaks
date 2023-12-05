@@ -16,7 +16,7 @@ public class MiscListeners implements Listener {
     @EventHandler
     public void onPrepareAnvil(PrepareAnvilEvent event) {
         this.registry
-                .process(EventContext
+                .processEvent(EventContext
                         .create(event)
                         .build());
     }

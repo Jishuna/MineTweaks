@@ -12,7 +12,6 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
-import me.jishuna.minetweaks.EventContext;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.Tweak;
 
@@ -31,10 +30,6 @@ public class CustomCraftingRecipesTweak extends Tweak {
     public void load() {
         super.load();
         this.recipes.forEach(Bukkit::addRecipe);
-    }
-
-    @Override
-    public void handleEvent(EventContext<?> context) {
     }
 
     private static List<Recipe> getDefaultRecipes() {

@@ -12,6 +12,7 @@ dependencyResolutionManagement {
         maven { url = 'https://repo.codemc.io/repository/maven-snapshots/' }
         maven { url = 'https://repo.epicebic.xyz/public' }
         maven { url = "https://repo.papermc.io/repository/maven-public/" }
+        maven { url = "https://repo.dmulloy2.net/repository/public/" }
     }
 }
 

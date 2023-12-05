@@ -3,6 +3,7 @@ package me.jishuna.minetweaks.tweak;
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import org.bukkit.event.Event;
 import me.jishuna.jishlib.JishLib;
 import me.jishuna.jishlib.config.ConfigApi;
@@ -31,7 +32,8 @@ public abstract class Tweak {
                 .load();
     }
 
-    public abstract void handleEvent(EventContext<?> context);
+    public void handleEvent(EventContext<?> context) {
+    }
 
     public List<Class<? extends Event>> getListenedEvents() {
         return this.listenedEvents;
@@ -43,5 +45,21 @@ public abstract class Tweak {
 
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.name);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Tweak other)) {
+            return false;
+        }
+        return Objects.equals(this.name, other.name);
     }
 }

@@ -4,7 +4,3 @@ gui.painting.painting-name: <white>{0}
 gui.painting.painting-lore: ["<white>Size: <gray>{0}x{1}", " ", "<gray>Click to select"]
 gui.painting.no-space.name: <red>Not enough space for this painting.
 gui.painting.no-space.lore: []
-
-beehive-display.message: <gold>Honey: <yellow>{0}/{1}       <gold>Bees: <yellow>{2}/{3}
-
-horse-stats.message: <gold>Health: <green>{0} <dark_green>({1}%)   <gold>Speed: <green>{2} <dark_green>({3}%)   <gold>Jump: <green>{4} <dark_green>({5}%)

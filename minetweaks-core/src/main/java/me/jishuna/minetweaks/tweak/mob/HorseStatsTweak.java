@@ -1,7 +1,9 @@
 package me.jishuna.minetweaks.tweak.mob;
 
 import java.text.DecimalFormat;
+import java.text.MessageFormat;
 import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
@@ -9,7 +11,7 @@ import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Player;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
-import me.jishuna.jishlib.message.MessageAPI;
+import me.jishuna.jishlib.util.StringUtils;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.TickingTweak;
 
@@ -19,6 +21,10 @@ public class HorseStatsTweak extends TickingTweak {
     @ConfigEntry("require-tamed")
     @Comment("Whether only tamed horses should display their stats")
     private final boolean requireTamed = true;
+
+    @ConfigEntry("message")
+    @Comment("Allows changing the format of the message sent to players")
+    private final String message = StringUtils.miniMessageToLegacy("<gold>Health: <green>{0} <dark_green>({1}%)   <gold>Speed: <green>{2} <dark_green>({3}%)   <gold>Jump: <green>{4} <dark_green>({5}%)");
 
     public HorseStatsTweak() {
         this.name = "horse-stats";
@@ -41,8 +47,8 @@ public class HorseStatsTweak extends TickingTweak {
             double jump = horse.getJumpStrength();
             String jumpPercent = FORMAT.format((jump - 0.4) / 0.6 * 100);
 
-            String message = MessageAPI.get("horse-stats.message", health, healthPercent, speed, speedPercent, jump, jumpPercent);
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
+            BaseComponent[] component = TextComponent.fromLegacyText(MessageFormat.format(this.message, health, healthPercent, speed, speedPercent, jump, jumpPercent));
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, component);
         }
     }
 }

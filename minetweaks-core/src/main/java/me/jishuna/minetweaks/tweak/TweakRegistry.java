@@ -14,7 +14,10 @@ import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.tweak.armorstand.ArmorStandArmsTweak;
 import me.jishuna.minetweaks.tweak.block.BeehiveDisplayTweak;
 import me.jishuna.minetweaks.tweak.block.FastLeafDecayTweak;
+import me.jishuna.minetweaks.tweak.block.OpenThroughItemFramesTweak;
+import me.jishuna.minetweaks.tweak.block.OpenThroughSignsTweak;
 import me.jishuna.minetweaks.tweak.block.PaintingSelectorTweak;
+import me.jishuna.minetweaks.tweak.block.QuickShulkerBoxCreationTweak;
 import me.jishuna.minetweaks.tweak.block.StickyPistonConversionTweak;
 import me.jishuna.minetweaks.tweak.crafting.CustomCraftingRecipesTweak;
 import me.jishuna.minetweaks.tweak.crafting.UnlockAllRecipesTweak;
@@ -42,6 +45,9 @@ public class TweakRegistry extends Registry<String, Tweak> {
         register(new PoisonPotatoBabyMobsTweak());
         register(new HorseStatsTweak());
         register(new FastLeafDecayTweak());
+        register(new QuickShulkerBoxCreationTweak());
+        register(new OpenThroughSignsTweak());
+        register(new OpenThroughItemFramesTweak());
     }
 
     public void register(Tweak tweak) {

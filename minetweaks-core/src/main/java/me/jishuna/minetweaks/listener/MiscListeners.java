@@ -2,6 +2,7 @@ package me.jishuna.minetweaks.listener;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import me.jishuna.minetweaks.EventContext;
 import me.jishuna.minetweaks.tweak.TweakRegistry;
@@ -15,6 +16,14 @@ public class MiscListeners implements Listener {
 
     @EventHandler
     public void onPrepareAnvil(PrepareAnvilEvent event) {
+        this.registry
+                .processEvent(EventContext
+                        .create(event)
+                        .build());
+    }
+
+    @EventHandler
+    public void onBlockDispense(BlockDispenseEvent event) {
         this.registry
                 .processEvent(EventContext
                         .create(event)

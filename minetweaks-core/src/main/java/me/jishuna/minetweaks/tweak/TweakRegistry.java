@@ -21,6 +21,9 @@ import me.jishuna.minetweaks.tweak.block.QuickShulkerBoxCreationTweak;
 import me.jishuna.minetweaks.tweak.block.StickyPistonConversionTweak;
 import me.jishuna.minetweaks.tweak.crafting.CustomCraftingRecipesTweak;
 import me.jishuna.minetweaks.tweak.crafting.UnlockAllRecipesTweak;
+import me.jishuna.minetweaks.tweak.dispenser.DispenserPlaceBlocksTweak;
+import me.jishuna.minetweaks.tweak.farming.CactusBonemealTweak;
+import me.jishuna.minetweaks.tweak.farming.SugarcaneBonemealTweak;
 import me.jishuna.minetweaks.tweak.item.InfiniteWaterBucketTweak;
 import me.jishuna.minetweaks.tweak.mob.EndermanGriefingTweak;
 import me.jishuna.minetweaks.tweak.mob.HorseStatsTweak;
@@ -48,6 +51,9 @@ public class TweakRegistry extends Registry<String, Tweak> {
         register(new QuickShulkerBoxCreationTweak());
         register(new OpenThroughSignsTweak());
         register(new OpenThroughItemFramesTweak());
+        register(new CactusBonemealTweak());
+        register(new SugarcaneBonemealTweak());
+        register(new DispenserPlaceBlocksTweak());
     }
 
     public void register(Tweak tweak) {

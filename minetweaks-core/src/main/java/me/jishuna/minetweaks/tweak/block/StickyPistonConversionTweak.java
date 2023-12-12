@@ -1,6 +1,5 @@
 package me.jishuna.minetweaks.tweak.block;
 
-import java.util.Collections;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -11,7 +10,6 @@ import org.bukkit.event.Event.Result;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import me.jishuna.minetweaks.EventContext;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.Tweak;
 
@@ -20,14 +18,12 @@ public class StickyPistonConversionTweak extends Tweak {
     public StickyPistonConversionTweak() {
         this.name = "sticky-piston-conversion";
         this.category = Category.BLOCK;
-        this.listenedEvents = Collections.singletonList(PlayerInteractEvent.class);
+
+        registerEventConsumer(PlayerInteractEvent.class, this::onPlayerInteract);
     }
 
-    @Override
-    public void handleEvent(EventContext<?> context) {
-        PlayerInteractEvent event = (PlayerInteractEvent) context.getEvent();
-        Player player = context.getPlayer();
-
+    private void onPlayerInteract(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
         if (event.useInteractedBlock() == Result.DENY || event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getItem() == null) {
             return;
         }

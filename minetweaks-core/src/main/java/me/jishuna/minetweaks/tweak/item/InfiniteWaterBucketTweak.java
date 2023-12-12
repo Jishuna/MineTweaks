@@ -1,6 +1,5 @@
 package me.jishuna.minetweaks.tweak.item;
 
-import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
@@ -13,7 +12,6 @@ import me.jishuna.jishlib.JishLib;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
 import me.jishuna.jishlib.item.ItemBuilder;
-import me.jishuna.minetweaks.EventContext;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.Tweak;
 
@@ -26,19 +24,12 @@ public class InfiniteWaterBucketTweak extends Tweak {
     public InfiniteWaterBucketTweak() {
         this.name = "infinite-water-bucket";
         this.category = Category.ITEM;
-        this.listenedEvents = List.of(PrepareAnvilEvent.class, PlayerBucketEmptyEvent.class);
+
+        registerEventConsumer(PrepareAnvilEvent.class, this::onPrepareAnvil);
+        registerEventConsumer(PlayerBucketEmptyEvent.class, this::onBucketEmpty);
     }
 
-    @Override
-    public void handleEvent(EventContext<?> context) {
-        if (context.getEvent() instanceof PrepareAnvilEvent event) {
-            handleAnvilEvent(event);
-        } else if (context.getEvent() instanceof PlayerBucketEmptyEvent event) {
-            handleBucketEvent(event);
-        }
-    }
-
-    private void handleAnvilEvent(PrepareAnvilEvent event) {
+    private void onPrepareAnvil(PrepareAnvilEvent event) {
         AnvilInventory inventory = event.getInventory();
         ItemStack first = inventory.getItem(0);
         ItemStack second = inventory.getItem(1);
@@ -55,7 +46,7 @@ public class InfiniteWaterBucketTweak extends Tweak {
         }
     }
 
-    private void handleBucketEvent(PlayerBucketEmptyEvent event) {
+    private void onBucketEmpty(PlayerBucketEmptyEvent event) {
         EntityEquipment equipment = event.getPlayer().getEquipment();
         ItemStack item = equipment.getItem(event.getHand());
         if (item.getType() != Material.WATER_BUCKET) {

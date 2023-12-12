@@ -1,7 +1,6 @@
 package me.jishuna.minetweaks.tweak.block;
 
 import java.text.MessageFormat;
-import java.util.Collections;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -15,7 +14,6 @@ import org.bukkit.inventory.ItemStack;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
 import me.jishuna.jishlib.util.StringUtils;
-import me.jishuna.minetweaks.EventContext;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.Tweak;
 
@@ -28,12 +26,11 @@ public class BeehiveDisplayTweak extends Tweak {
     public BeehiveDisplayTweak() {
         this.name = "beehive-display";
         this.category = Category.BLOCK;
-        this.listenedEvents = Collections.singletonList(PlayerInteractEvent.class);
+
+        registerEventConsumer(PlayerInteractEvent.class, this::onPlayerInteract);
     }
 
-    @Override
-    public void handleEvent(EventContext<?> context) {
-        PlayerInteractEvent event = (PlayerInteractEvent) context.getEvent();
+    private void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getHand() != EquipmentSlot.HAND || event.useInteractedBlock() == Result.DENY || event.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
         }
@@ -47,7 +44,7 @@ public class BeehiveDisplayTweak extends Tweak {
 
         if (block.getBlockData() instanceof Beehive hiveData && block.getState() instanceof org.bukkit.block.Beehive hiveState) {
             BaseComponent[] component = TextComponent.fromLegacyText(MessageFormat.format(this.message, hiveData.getHoneyLevel(), hiveData.getMaximumHoneyLevel(), hiveState.getEntityCount(), hiveState.getMaxEntities()));
-            context.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, component);
+            event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, component);
         }
     }
 }

@@ -1,6 +1,5 @@
 package me.jishuna.minetweaks.tweak.dispenser;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -13,7 +12,6 @@ import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.inventory.ItemStack;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
-import me.jishuna.minetweaks.EventContext;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.Tweak;
 
@@ -40,12 +38,11 @@ public class DispenserPlaceBlocksTweak extends Tweak {
     public DispenserPlaceBlocksTweak() {
         this.name = "dispenser-place-blocks";
         this.category = Category.DISPENSER;
-        this.listenedEvents = Collections.singletonList(BlockDispenseEvent.class);
+
+        registerEventConsumer(BlockDispenseEvent.class, this::onBlockDispense);
     }
 
-    @Override
-    public void handleEvent(EventContext<?> context) {
-        BlockDispenseEvent event = (BlockDispenseEvent) context.getEvent();
+    private void onBlockDispense(BlockDispenseEvent event) {
         if (event.getBlock().getType() != Material.DISPENSER) {
             return;
         }

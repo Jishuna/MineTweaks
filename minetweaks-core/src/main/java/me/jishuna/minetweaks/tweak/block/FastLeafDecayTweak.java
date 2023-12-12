@@ -1,7 +1,6 @@
 package me.jishuna.minetweaks.tweak.block;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
@@ -11,7 +10,6 @@ import me.jishuna.jishlib.BlockVector;
 import me.jishuna.jishlib.JishLib;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
-import me.jishuna.minetweaks.EventContext;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.Tweak;
 
@@ -24,12 +22,11 @@ public class FastLeafDecayTweak extends Tweak {
     public FastLeafDecayTweak() {
         this.name = "fast-leaf-decay";
         this.category = Category.BLOCK;
-        this.listenedEvents = Collections.singletonList(BlockBreakEvent.class);
+
+        registerEventConsumer(BlockBreakEvent.class, this::onBlockBreak);
     }
 
-    @Override
-    public void handleEvent(EventContext<?> context) {
-        BlockBreakEvent event = (BlockBreakEvent) context.getEvent();
+    private void onBlockBreak(BlockBreakEvent event) {
         Block block = event.getBlock();
         if (!Tag.LOGS_THAT_BURN.isTagged(block.getType())) {
             return;

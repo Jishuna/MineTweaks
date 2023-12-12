@@ -3,13 +3,14 @@ package me.jishuna.minetweaks.tweak;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.bukkit.event.Event;
 import me.jishuna.jishlib.datastructure.Registry;
-import me.jishuna.minetweaks.EventContext;
 import me.jishuna.minetweaks.MineTweaks;
 import me.jishuna.minetweaks.tweak.armorstand.ArmorStandArmsTweak;
 import me.jishuna.minetweaks.tweak.block.BeehiveDisplayTweak;
@@ -25,14 +26,15 @@ import me.jishuna.minetweaks.tweak.dispenser.DispenserPlaceBlocksTweak;
 import me.jishuna.minetweaks.tweak.farming.CactusBonemealTweak;
 import me.jishuna.minetweaks.tweak.farming.SugarcaneBonemealTweak;
 import me.jishuna.minetweaks.tweak.item.InfiniteWaterBucketTweak;
+import me.jishuna.minetweaks.tweak.item.TorchArrowTweak;
 import me.jishuna.minetweaks.tweak.mob.EndermanGriefingTweak;
 import me.jishuna.minetweaks.tweak.mob.HorseStatsTweak;
 import me.jishuna.minetweaks.tweak.mob.PoisonPotatoBabyMobsTweak;
 import me.jishuna.minetweaks.tweak.mob.UnsaddlePigTweak;
 
 public class TweakRegistry extends Registry<String, Tweak> {
-    private final Map<Class<? extends Event>, TweakList<Tweak>> tweaksByEvent = new HashMap<>();
-    private final Map<PacketType, TweakList<PacketTweak>> tweaksByPacket = new HashMap<>();
+    private final Map<Class<? extends Event>, List<Tweak>> tweaksByEvent = new HashMap<>();
+    private final Map<PacketType, List<PacketTweak>> tweaksByPacket = new HashMap<>();
     private final Set<TickingTweak> tickingTweaks = new HashSet<>();
 
     public TweakRegistry() {
@@ -54,6 +56,7 @@ public class TweakRegistry extends Registry<String, Tweak> {
         register(new CactusBonemealTweak());
         register(new SugarcaneBonemealTweak());
         register(new DispenserPlaceBlocksTweak());
+        register(new TorchArrowTweak());
     }
 
     public void register(Tweak tweak) {
@@ -73,22 +76,18 @@ public class TweakRegistry extends Registry<String, Tweak> {
         }
     }
 
-    public void processEvent(EventContext<?> context) {
-        TweakList<Tweak> list = this.tweaksByEvent.get(context.getEvent().getClass());
-        if (list == null) {
-            return;
+    public void processEvent(Event event) {
+        List<Tweak> tweaks = this.tweaksByEvent.get(event.getClass());
+        if (tweaks != null) {
+            tweaks.forEach(tweak -> tweak.handleEvent(event));
         }
-
-        list.forEach(tweak -> tweak.handleEvent(context));
     }
 
     public void processPacket(PacketEvent event, PacketContainer packet) {
-        TweakList<PacketTweak> list = this.tweaksByPacket.get(packet.getType());
-        if (list == null) {
-            return;
+        List<PacketTweak> tweaks = this.tweaksByPacket.get(packet.getType());
+        if (tweaks != null) {
+            tweaks.forEach(tweak -> tweak.handlePacket(event, packet));
         }
-
-        list.forEach(tweak -> tweak.handlePacket(event, packet));
     }
 
     public void tick() {
@@ -96,14 +95,9 @@ public class TweakRegistry extends Registry<String, Tweak> {
     }
 
     private void setupEvents(Tweak tweak) {
-        for (Class<? extends Event> clazz : tweak.getListenedEvents()) {
-            if (tweak.isEnabled()) {
-                this.tweaksByEvent.computeIfAbsent(clazz, k -> new TweakList<>()).addOrReplace(tweak);
-            } else {
-                TweakList<Tweak> list = this.tweaksByEvent.get(clazz);
-                if (list != null) {
-                    list.remove(tweak);
-                }
+        if (tweak.isEnabled()) {
+            for (Class<? extends Event> clazz : tweak.getEventClasses()) {
+                this.tweaksByEvent.computeIfAbsent(clazz, k -> new ArrayList<>()).add(tweak);
             }
         }
     }
@@ -113,7 +107,6 @@ public class TweakRegistry extends Registry<String, Tweak> {
             return;
         }
 
-        this.tickingTweaks.remove(ticking);
         this.tickingTweaks.add(ticking);
     }
 
@@ -122,13 +115,10 @@ public class TweakRegistry extends Registry<String, Tweak> {
             return;
         }
 
-        for (PacketType type : packetTweak.getListenedPackets()) {
-            if (packetTweak.isEnabled()) {
-                this.tweaksByPacket.computeIfAbsent(type, k -> new TweakList<>()).addOrReplace(packetTweak);
-            } else {
-                TweakList<PacketTweak> list = this.tweaksByPacket.get(type);
-                if (list != null) {
-                    list.remove(packetTweak);
+        if (packetTweak.isEnabled()) {
+            for (PacketType type : packetTweak.getListenedPackets()) {
+                if (packetTweak.isEnabled()) {
+                    this.tweaksByPacket.computeIfAbsent(type, k -> new ArrayList<>()).add(packetTweak);
                 }
             }
         }

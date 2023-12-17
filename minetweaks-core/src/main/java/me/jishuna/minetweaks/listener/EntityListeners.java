@@ -4,6 +4,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import me.jishuna.minetweaks.tweak.TweakRegistry;
 
@@ -21,6 +22,11 @@ public class EntityListeners implements Listener {
 
     @EventHandler
     public void onEntityShootBow(EntityShootBowEvent event) {
+        this.registry.processEvent(event);
+    }
+
+    @EventHandler
+    public void onToggleGliding(EntityToggleGlideEvent event) {
         this.registry.processEvent(event);
     }
 

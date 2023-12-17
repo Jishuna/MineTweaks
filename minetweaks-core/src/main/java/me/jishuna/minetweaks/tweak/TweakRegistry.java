@@ -24,7 +24,9 @@ import me.jishuna.minetweaks.tweak.crafting.CustomCraftingRecipesTweak;
 import me.jishuna.minetweaks.tweak.crafting.UnlockAllRecipesTweak;
 import me.jishuna.minetweaks.tweak.dispenser.DispenserPlaceBlocksTweak;
 import me.jishuna.minetweaks.tweak.farming.CactusBonemealTweak;
+import me.jishuna.minetweaks.tweak.farming.RightClickHarvestTweak;
 import me.jishuna.minetweaks.tweak.farming.SugarcaneBonemealTweak;
+import me.jishuna.minetweaks.tweak.item.ElytraTakeoffTweak;
 import me.jishuna.minetweaks.tweak.item.InfiniteWaterBucketTweak;
 import me.jishuna.minetweaks.tweak.item.TorchArrowTweak;
 import me.jishuna.minetweaks.tweak.mob.EndermanGriefingTweak;
@@ -57,6 +59,8 @@ public class TweakRegistry extends Registry<String, Tweak> {
         register(new SugarcaneBonemealTweak());
         register(new DispenserPlaceBlocksTweak());
         register(new TorchArrowTweak());
+        register(new RightClickHarvestTweak());
+        register(new ElytraTakeoffTweak());
     }
 
     public void register(Tweak tweak) {

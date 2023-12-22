@@ -3,6 +3,7 @@ package me.jishuna.minetweaks.tweak.crafting;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.Bukkit;
+import org.bukkit.Keyed;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.FurnaceRecipe;
@@ -19,7 +20,7 @@ public class CustomCraftingRecipesTweak extends Tweak {
 
     @ConfigEntry("recipes")
     @Comment("A list of recipes that will be added when this tweak is enabled")
-    private final List<Recipe> recipes = getDefaultRecipes();
+    private List<Recipe> recipes = getDefaultRecipes();
 
     public CustomCraftingRecipesTweak() {
         this.name = "custom-crafting-recipes";
@@ -27,9 +28,15 @@ public class CustomCraftingRecipesTweak extends Tweak {
     }
 
     @Override
-    public void load() {
-        super.load();
-        this.recipes.forEach(Bukkit::addRecipe);
+    public void reload() {
+        super.reload();
+
+        this.recipes.forEach(recipe -> {
+            Bukkit.removeRecipe(((Keyed) recipe).getKey());
+            if (this.enabled) {
+                Bukkit.addRecipe(recipe);
+            }
+        });
     }
 
     private static List<Recipe> getDefaultRecipes() {

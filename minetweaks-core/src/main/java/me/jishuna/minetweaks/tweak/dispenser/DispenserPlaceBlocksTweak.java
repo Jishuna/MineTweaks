@@ -33,7 +33,7 @@ public class DispenserPlaceBlocksTweak extends Tweak {
 
     @ConfigEntry("blacklist")
     @Comment("Items in this list will not be placeable by dispensers")
-    private final Set<Material> blacklist = Set.of(Material.TNT, Material.OBSIDIAN, Material.CRYING_OBSIDIAN);
+    private Set<Material> blacklist = Set.of(Material.TNT, Material.OBSIDIAN, Material.CRYING_OBSIDIAN);
 
     public DispenserPlaceBlocksTweak() {
         this.name = "dispenser-place-blocks";

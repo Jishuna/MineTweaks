@@ -19,7 +19,7 @@ public class InfiniteWaterBucketTweak extends Tweak {
 
     @ConfigEntry("level-cost")
     @Comment("The number of levels required to apply infinity to a water bucket")
-    private final int cost = 20;
+    private int cost = 20;
 
     public InfiniteWaterBucketTweak() {
         this.name = "infinite-water-bucket";

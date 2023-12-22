@@ -21,7 +21,7 @@ public class BeehiveDisplayTweak extends Tweak {
 
     @ConfigEntry("message")
     @Comment("Allows changing the format of the message sent to players")
-    private final String message = StringUtils.miniMessageToLegacy("<gold>Honey: <yellow>{0}/{1}       <gold>Bees: <yellow>{2}/{3}");
+    private String message = StringUtils.miniMessageToLegacy("<gold>Honey: <yellow>{0}/{1}       <gold>Bees: <yellow>{2}/{3}");
 
     public BeehiveDisplayTweak() {
         this.name = "beehive-display";

@@ -20,11 +20,11 @@ public class HorseStatsTweak extends TickingTweak {
 
     @ConfigEntry("require-tamed")
     @Comment("Whether only tamed horses should display their stats")
-    private final boolean requireTamed = true;
+    private boolean requireTamed = true;
 
     @ConfigEntry("message")
     @Comment("Allows changing the format of the message sent to players")
-    private final String message = StringUtils.miniMessageToLegacy("<gold>Health: <green>{0} <dark_green>({1}%)   <gold>Speed: <green>{2} <dark_green>({3}%)   <gold>Jump: <green>{4} <dark_green>({5}%)");
+    private String message = StringUtils.miniMessageToLegacy("<gold>Health: <green>{0} <dark_green>({1}%)   <gold>Speed: <green>{2} <dark_green>({3}%)   <gold>Jump: <green>{4} <dark_green>({5}%)");
 
     public HorseStatsTweak() {
         this.name = "horse-stats";

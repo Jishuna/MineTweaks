@@ -17,7 +17,7 @@ public class PoisonPotatoBabyMobsTweak extends Tweak {
 
     @ConfigEntry("poison-target")
     @Comment("Toggle whether the target should be poisoned when fed the potato")
-    private final boolean poison = true;
+    private boolean poison = true;
 
     public PoisonPotatoBabyMobsTweak() {
         this.name = "poison-potato-baby-mobs";

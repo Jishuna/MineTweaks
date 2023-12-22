@@ -26,7 +26,7 @@ public abstract class Tweak {
     protected String name;
     protected Category category = Category.MISC;
 
-    public void load() {
+    public void reload() {
         ConfigApi
                 .createReloadable(new File(TWEAK_FOLDER, this.category.name().toLowerCase() + File.separator + this.name + ".yml"), this)
                 .saveDefaults()

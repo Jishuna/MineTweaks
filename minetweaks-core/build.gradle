@@ -34,7 +34,7 @@ bukkit {
     
     commands {
         minetweaks {
-            aliases = ['tweaks']
+            aliases = ['tweaks', 'mt']
             description = 'Base plugin command'
             permission = 'minetweaks.command'
         }

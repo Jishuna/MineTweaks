@@ -25,10 +25,13 @@ import me.jishuna.minetweaks.tweak.crafting.UnlockAllRecipesTweak;
 import me.jishuna.minetweaks.tweak.dispenser.DispenserPlaceBlocksTweak;
 import me.jishuna.minetweaks.tweak.farming.CactusBonemealTweak;
 import me.jishuna.minetweaks.tweak.farming.RightClickHarvestTweak;
+import me.jishuna.minetweaks.tweak.farming.SandBonemealTweak;
+import me.jishuna.minetweaks.tweak.farming.SmallFlowerBonemealTweak;
 import me.jishuna.minetweaks.tweak.farming.SugarcaneBonemealTweak;
 import me.jishuna.minetweaks.tweak.item.ElytraTakeoffTweak;
 import me.jishuna.minetweaks.tweak.item.InfiniteWaterBucketTweak;
 import me.jishuna.minetweaks.tweak.item.TorchArrowTweak;
+import me.jishuna.minetweaks.tweak.mob.CreeperGriefingTweak;
 import me.jishuna.minetweaks.tweak.mob.EndermanGriefingTweak;
 import me.jishuna.minetweaks.tweak.mob.HorseStatsTweak;
 import me.jishuna.minetweaks.tweak.mob.PoisonPotatoBabyMobsTweak;
@@ -61,23 +64,32 @@ public class TweakRegistry extends Registry<String, Tweak> {
         register(new TorchArrowTweak());
         register(new RightClickHarvestTweak());
         register(new ElytraTakeoffTweak());
+        register(new CreeperGriefingTweak());
+        register(new SmallFlowerBonemealTweak());
+        register(new SandBonemealTweak());
+
+        reload();
+    }
+
+    public void reload() {
+        this.tweaksByEvent.clear();
+        this.tweaksByPacket.clear();
+        this.tickingTweaks.clear();
+
+        getValues().forEach(tweak -> {
+            tweak.reload();
+
+            setupEvents(tweak);
+            setupTicking(tweak);
+
+            if (MineTweaks.hasPackets()) {
+                setupPackets(tweak);
+            }
+        });
     }
 
     public void register(Tweak tweak) {
         register(tweak.getName(), tweak, true);
-    }
-
-    @Override
-    public void register(String key, Tweak tweak, boolean replace) {
-        tweak.load();
-        super.register(key, tweak, true);
-
-        setupEvents(tweak);
-        setupTicking(tweak);
-
-        if (MineTweaks.hasPackets()) {
-            setupPackets(tweak);
-        }
     }
 
     public void processEvent(Event event) {
@@ -107,7 +119,7 @@ public class TweakRegistry extends Registry<String, Tweak> {
     }
 
     private void setupTicking(Tweak tweak) {
-        if (!(tweak instanceof TickingTweak ticking)) {
+        if (!(tweak instanceof TickingTweak ticking) || !tweak.isEnabled()) {
             return;
         }
 
@@ -115,16 +127,12 @@ public class TweakRegistry extends Registry<String, Tweak> {
     }
 
     private void setupPackets(Tweak tweak) {
-        if (!(tweak instanceof PacketTweak packetTweak)) {
+        if (!(tweak instanceof PacketTweak packetTweak) || !tweak.isEnabled()) {
             return;
         }
 
-        if (packetTweak.isEnabled()) {
-            for (PacketType type : packetTweak.getListenedPackets()) {
-                if (packetTweak.isEnabled()) {
-                    this.tweaksByPacket.computeIfAbsent(type, k -> new ArrayList<>()).add(packetTweak);
-                }
-            }
+        for (PacketType type : packetTweak.getListenedPackets()) {
+            this.tweaksByPacket.computeIfAbsent(type, k -> new ArrayList<>()).add(packetTweak);
         }
     }
 }

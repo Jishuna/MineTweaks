@@ -5,27 +5,22 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
-import me.jishuna.minetweaks.tweak.TweakRegistry;
+import me.jishuna.minetweaks.Registries;
 
 public class MiscListeners implements Listener {
-    private final TweakRegistry registry;
-
-    public MiscListeners(TweakRegistry registry) {
-        this.registry = registry;
-    }
 
     @EventHandler
     public void onPrepareAnvil(PrepareAnvilEvent event) {
-        this.registry.processEvent(event);
+        Registries.TWEAKS.processEvent(event);
     }
 
     @EventHandler
     public void onBlockDispense(BlockDispenseEvent event) {
-        this.registry.processEvent(event);
+        Registries.TWEAKS.processEvent(event);
     }
 
     @EventHandler
     public void onBlockDropItems(BlockDropItemEvent event) {
-        this.registry.processEvent(event);
+        Registries.TWEAKS.processEvent(event);
     }
 }

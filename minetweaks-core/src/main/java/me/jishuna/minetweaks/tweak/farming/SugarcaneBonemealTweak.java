@@ -19,15 +19,15 @@ public class SugarcaneBonemealTweak extends Tweak {
 
     @ConfigEntry("enable-for-players")
     @Comment("Lets players grow sugarcane using bonemeal")
-    private final boolean enablePlayer = true;
+    private boolean enablePlayer = true;
 
     @ConfigEntry("enable-for-dispensers")
     @Comment("Lets dispensers grow sugarcane using bonemeal")
-    private final boolean enableDispenser = true;
+    private boolean enableDispenser = true;
 
     @ConfigEntry("max-height")
     @Comment("The maximum height a sugarcane can be grown to using bonemeal")
-    private final int maxHeight = 5;
+    private int maxHeight = 5;
 
     public SugarcaneBonemealTweak() {
         this.name = "sugarcane-bonemealing";

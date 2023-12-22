@@ -21,6 +21,7 @@ import me.jishuna.jishlib.config.annotation.ConfigEntry;
 import me.jishuna.jishlib.item.ItemBuilder;
 import me.jishuna.jishlib.pdc.PDCTypes;
 import me.jishuna.jishlib.pdc.PDCUtils;
+import me.jishuna.minetweaks.Registries;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.Tweak;
 
@@ -29,11 +30,11 @@ public class TorchArrowTweak extends Tweak {
 
     @ConfigEntry("name")
     @Comment("The custom name of the torch arrow item")
-    private final String itemName = ChatColor.YELLOW + "Torch Arrow";
+    private String itemName = ChatColor.YELLOW + "Torch Arrow";
 
     @ConfigEntry("recipe")
     @Comment("The recipe to craft a torch arrow")
-    private final Recipe recipe = getDefaultRecipe();
+    private Recipe recipe = getDefaultRecipe();
 
     public TorchArrowTweak() {
         this.name = "torch-arrow";
@@ -44,14 +45,23 @@ public class TorchArrowTweak extends Tweak {
     }
 
     @Override
-    public void load() {
-        super.load();
+    public void reload() {
+        super.reload();
 
+        Bukkit.removeRecipe(KEY);
+        if (this.enabled) {
+            setup();
+        }
+    }
+
+    private void setup() {
         ItemStack item = ItemBuilder
                 .modifyItem(this.recipe.getResult())
                 .name(this.itemName)
                 .persistentData(KEY, PDCTypes.BOOLEAN, true)
                 .build();
+
+        Registries.ITEMS.register(KEY, item, true);
 
         if (this.recipe instanceof ShapedRecipe shaped) {
             ShapedRecipe finalRecipe = new ShapedRecipe(KEY, item);

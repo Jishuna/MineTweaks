@@ -17,7 +17,7 @@ public class FastLeafDecayTweak extends Tweak {
 
     @ConfigEntry("search-radius")
     @Comment("The radius to search for leaves that should decay when a log is broken")
-    private final int searchRadius = 7;
+    private int searchRadius = 7;
 
     public FastLeafDecayTweak() {
         this.name = "fast-leaf-decay";

@@ -11,16 +11,16 @@ public class MiscListeners implements Listener {
 
     @EventHandler
     public void onPrepareAnvil(PrepareAnvilEvent event) {
-        Registries.TWEAKS.processEvent(event);
+        Registries.TWEAK.processEvent(event);
     }
 
     @EventHandler
     public void onBlockDispense(BlockDispenseEvent event) {
-        Registries.TWEAKS.processEvent(event);
+        Registries.TWEAK.processEvent(event);
     }
 
     @EventHandler
     public void onBlockDropItems(BlockDropItemEvent event) {
-        Registries.TWEAKS.processEvent(event);
+        Registries.TWEAK.processEvent(event);
     }
 }

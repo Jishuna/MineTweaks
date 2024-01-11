@@ -19,8 +19,8 @@ public class MineTweaks extends JavaPlugin {
     @Override
     public void onEnable() {
         JishLib.initialize(this);
-        MessageAPI.initialize("messages.lang");
         ConfigApi.initialize();
+        MessageAPI.initialize("messages.lang");
         InventoryAPI.initialize();
 
         PluginManager manager = Bukkit.getPluginManager();
@@ -36,7 +36,7 @@ public class MineTweaks extends JavaPlugin {
 
         getCommand("minetweaks").setExecutor(new MineTweaksCommandHandler(this));
 
-        Bukkit.getScheduler().runTaskTimer(this, Registries.TWEAKS::tick, 5, 5);
+        Bukkit.getScheduler().runTaskTimer(this, Registries.TWEAK::tick, 5, 5);
     }
 
     public static boolean hasPackets() {

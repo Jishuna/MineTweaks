@@ -16,7 +16,7 @@ public class PacketListener extends PacketAdapter {
 
     @Override
     public void onPacketSending(PacketEvent event) {
-        Registries.TWEAKS.processPacket(event, event.getPacket());
+        Registries.TWEAK.processPacket(event, event.getPacket());
     }
 
     public static void register(MineTweaks plugin) {

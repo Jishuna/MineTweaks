@@ -1,6 +1,8 @@
 package me.jishuna.minetweaks.tweak.block;
 
 import java.text.MessageFormat;
+import java.util.List;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -15,17 +17,19 @@ import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
 import me.jishuna.jishlib.util.StringUtils;
 import me.jishuna.minetweaks.tweak.Category;
+import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
+@RegisterTweak
 public class BeehiveDisplayTweak extends Tweak {
 
     @ConfigEntry("message")
     @Comment("Allows changing the format of the message sent to players")
-    private String message = StringUtils.miniMessageToLegacy("<gold>Honey: <yellow>{0}/{1}       <gold>Bees: <yellow>{2}/{3}");
+    private String message = StringUtils.miniMessageToLegacy("<gold>Honey: <yellow>{0}/{1}   <gold>Bees: <yellow>{2}/{3}");
 
     public BeehiveDisplayTweak() {
-        this.name = "beehive-display";
-        this.category = Category.BLOCK;
+        super("beehive-display", Category.BLOCK);
+        this.description = List.of(ChatColor.GRAY + "Right clicking on a beehive or bee nest with an empty hand will show information about the amount of honey and number of bees within the hive.");
 
         registerEventConsumer(PlayerInteractEvent.class, this::onPlayerInteract);
     }

@@ -1,7 +1,9 @@
 package me.jishuna.minetweaks.tweak.mob;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Creeper;
@@ -9,8 +11,10 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
 import me.jishuna.minetweaks.tweak.Category;
+import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
+@RegisterTweak
 public class CreeperGriefingTweak extends Tweak {
 
     @ConfigEntry("disable-block-damage")
@@ -29,8 +33,8 @@ public class CreeperGriefingTweak extends Tweak {
     private Set<Material> protectedMaterials = Set.of(Material.CHEST, Material.TRAPPED_CHEST, Material.BARREL);
 
     public CreeperGriefingTweak() {
-        this.name = "nerf-creeper-griefing";
-        this.category = Category.MOB;
+        super("nerf-creeper-griefing", Category.MOB);
+        this.description = List.of(ChatColor.GRAY + "Allows reducing or disabling the damage caused by creepers when they explode.");
 
         registerEventConsumer(EntityExplodeEvent.class, this::onEntityExplode);
     }

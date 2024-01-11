@@ -1,5 +1,7 @@
 package me.jishuna.minetweaks.tweak.farming;
 
+import java.util.List;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -9,8 +11,10 @@ import org.bukkit.inventory.ItemStack;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
 import me.jishuna.minetweaks.tweak.Category;
+import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
+@RegisterTweak
 public class CactusBonemealTweak extends Tweak {
 
     @ConfigEntry("max-height")
@@ -18,8 +22,8 @@ public class CactusBonemealTweak extends Tweak {
     private int maxHeight = 5;
 
     public CactusBonemealTweak() {
-        this.name = "cactus-bonemealing";
-        this.category = Category.FARMING;
+        super("cactus-bonemealing", Category.FARMING);
+        this.description = List.of(ChatColor.GRAY + "Allows players to grow cactus using bonemeal.");
 
         registerEventConsumer(PlayerInteractEvent.class, this::onPlayerInteract);
     }

@@ -7,7 +7,9 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitRunnable;
 import me.jishuna.jishlib.BlockVector;
+import me.jishuna.minetweaks.tweak.RegisterTweak;
 
+@RegisterTweak
 public class BlockDecayRunnable extends BukkitRunnable {
     private final ThreadLocalRandom random = ThreadLocalRandom.current();
     private final List<BlockVector> blocks;

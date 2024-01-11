@@ -27,7 +27,7 @@ public class GiveItemCommand extends SimpleCommandHandler {
         }
 
         NamespacedKey key = NamespacedKey.fromString(args[0]);
-        ItemStack item = Registries.ITEMS.get(key);
+        ItemStack item = Registries.ITEM.get(key);
 
         if (item == null) {
             sender.sendMessage("item");
@@ -56,7 +56,7 @@ public class GiveItemCommand extends SimpleCommandHandler {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length == 1) {
-            return StringUtil.copyPartialMatches(args[0], Registries.ITEMS.getKeys().stream().map(Object::toString).toList(), new ArrayList<>());
+            return StringUtil.copyPartialMatches(args[0], Registries.ITEM.getKeys().stream().map(Object::toString).toList(), new ArrayList<>());
         }
         return Collections.emptyList();
     }

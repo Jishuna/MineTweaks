@@ -10,5 +10,6 @@ public class MineTweaksCommandHandler extends ArgumentCommandHandler {
 
         addArgumentExecutor("reload", new ReloadCommand());
         addArgumentExecutor("giveitem", new GiveItemCommand());
+        addArgumentExecutor("list", new ListTweaksCommand());
     }
 }

@@ -1,8 +1,10 @@
 package me.jishuna.minetweaks.tweak.dispenser;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -13,8 +15,10 @@ import org.bukkit.inventory.ItemStack;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
 import me.jishuna.minetweaks.tweak.Category;
+import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
+@RegisterTweak
 public class DispenserPlaceBlocksTweak extends Tweak {
     private static final Map<Material, Material> placementItems = new HashMap<>();
 
@@ -36,8 +40,8 @@ public class DispenserPlaceBlocksTweak extends Tweak {
     private Set<Material> blacklist = Set.of(Material.TNT, Material.OBSIDIAN, Material.CRYING_OBSIDIAN);
 
     public DispenserPlaceBlocksTweak() {
-        this.name = "dispenser-place-blocks";
-        this.category = Category.DISPENSER;
+        super("dispenser-block-placement", Category.DISPENSER);
+        this.description = List.of(ChatColor.GRAY + "Allows dispensers to place blocks in front of them when powered.");
 
         registerEventConsumer(BlockDispenseEvent.class, this::onBlockDispense);
     }

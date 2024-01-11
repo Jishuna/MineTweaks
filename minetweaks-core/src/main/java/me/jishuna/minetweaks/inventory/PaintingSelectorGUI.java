@@ -1,4 +1,4 @@
-package me.jishuna.minetweaks.gui;
+package me.jishuna.minetweaks.inventory;
 
 import java.util.Arrays;
 import java.util.List;

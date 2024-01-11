@@ -1,5 +1,7 @@
 package me.jishuna.minetweaks.tweak.block;
 
+import java.util.List;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -11,13 +13,15 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import me.jishuna.minetweaks.tweak.Category;
+import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
+@RegisterTweak
 public class QuickShulkerBoxCreationTweak extends Tweak {
 
     public QuickShulkerBoxCreationTweak() {
-        this.name = "quick-shulker-box-creation";
-        this.category = Category.BLOCK;
+        super("quick-shulker-box-creation", Category.BLOCK);
+        this.description = List.of(ChatColor.GRAY + "Allows players to quickly convert chests into shulker boxes by right clicking them while holding a shulker shell in each hand.");
 
         registerEventConsumer(PlayerInteractEvent.class, this::onPlayerInteract);
     }

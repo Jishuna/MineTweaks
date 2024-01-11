@@ -13,7 +13,7 @@ public class ReloadCommand extends SimpleCommandHandler {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        Registries.TWEAKS.reload();
+        Registries.TWEAK.reload();
         return true;
     }
 }

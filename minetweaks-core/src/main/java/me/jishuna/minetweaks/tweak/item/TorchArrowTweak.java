@@ -1,5 +1,6 @@
 package me.jishuna.minetweaks.tweak.item;
 
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -23,8 +24,10 @@ import me.jishuna.jishlib.pdc.PDCTypes;
 import me.jishuna.jishlib.pdc.PDCUtils;
 import me.jishuna.minetweaks.Registries;
 import me.jishuna.minetweaks.tweak.Category;
+import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
+@RegisterTweak
 public class TorchArrowTweak extends Tweak {
     private static final NamespacedKey KEY = NamespacedKey.fromString("minetweaks:torch_arrow");
 
@@ -37,8 +40,10 @@ public class TorchArrowTweak extends Tweak {
     private Recipe recipe = getDefaultRecipe();
 
     public TorchArrowTweak() {
-        this.name = "torch-arrow";
-        this.category = Category.ITEM;
+        super("torch-arrows", Category.ITEM);
+        this.description = List
+                .of(ChatColor.GRAY + "Allows the crafting of torch arrows with a torch and an arrow.",
+                        ChatColor.GRAY + "Torch arrows will place torches wherever they land.");
 
         registerEventConsumer(EntityShootBowEvent.class, this::onBowShoot);
         registerEventConsumer(ProjectileHitEvent.class, this::onProjectileHit);
@@ -61,7 +66,7 @@ public class TorchArrowTweak extends Tweak {
                 .persistentData(KEY, PDCTypes.BOOLEAN, true)
                 .build();
 
-        Registries.ITEMS.register(KEY, item, true);
+        Registries.ITEM.register(KEY, item, true);
 
         if (this.recipe instanceof ShapedRecipe shaped) {
             ShapedRecipe finalRecipe = new ShapedRecipe(KEY, item);

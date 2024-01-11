@@ -13,26 +13,26 @@ public class EntityListeners implements Listener {
 
     @EventHandler
     public void onEntityChangeBlock(EntityChangeBlockEvent event) {
-        Registries.TWEAKS.processEvent(event);
+        Registries.TWEAK.processEvent(event);
     }
 
     @EventHandler
     public void onEntityShootBow(EntityShootBowEvent event) {
-        Registries.TWEAKS.processEvent(event);
+        Registries.TWEAK.processEvent(event);
     }
 
     @EventHandler
     public void onToggleGliding(EntityToggleGlideEvent event) {
-        Registries.TWEAKS.processEvent(event);
+        Registries.TWEAK.processEvent(event);
     }
 
     @EventHandler
     public void onProjectileHit(ProjectileHitEvent event) {
-        Registries.TWEAKS.processEvent(event);
+        Registries.TWEAK.processEvent(event);
     }
 
     @EventHandler
     public void onEntityExplode(EntityExplodeEvent event) {
-        Registries.TWEAKS.processEvent(event);
+        Registries.TWEAK.processEvent(event);
     }
 }

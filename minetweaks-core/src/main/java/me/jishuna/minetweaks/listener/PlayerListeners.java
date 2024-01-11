@@ -13,31 +13,31 @@ import me.jishuna.minetweaks.Registries;
 public class PlayerListeners implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        Registries.TWEAKS.processEvent(event);
+        Registries.TWEAK.processEvent(event);
     }
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-        Registries.TWEAKS.processEvent(event);
+        Registries.TWEAK.processEvent(event);
     }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
-        Registries.TWEAKS.processEvent(event);
+        Registries.TWEAK.processEvent(event);
     }
 
     @EventHandler
     public void onEntityInteract(PlayerInteractEntityEvent event) {
-        Registries.TWEAKS.processEvent(event);
+        Registries.TWEAK.processEvent(event);
     }
 
     @EventHandler
     public void onEntityPlace(EntityPlaceEvent event) {
-        Registries.TWEAKS.processEvent(event);
+        Registries.TWEAK.processEvent(event);
     }
 
     @EventHandler
     public void onBucketEmpty(PlayerBucketEmptyEvent event) {
-        Registries.TWEAKS.processEvent(event);
+        Registries.TWEAK.processEvent(event);
     }
 }

@@ -1,18 +1,22 @@
 package me.jishuna.minetweaks.tweak.mob;
 
+import java.util.List;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Pig;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import me.jishuna.minetweaks.tweak.Category;
+import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
+@RegisterTweak
 public class UnsaddlePigTweak extends Tweak {
 
     public UnsaddlePigTweak() {
-        this.name = "unsaddle-pigs";
-        this.category = Category.MOB;
+        super("unsaddle-pigs", Category.MOB);
+        this.description = List.of(ChatColor.GRAY + "Allows players to remove saddles from pigs by right clicking them with an empty hand while sneaking.");
 
         registerEventConsumer(PlayerInteractEntityEvent.class, this::onEntityInteract);
     }

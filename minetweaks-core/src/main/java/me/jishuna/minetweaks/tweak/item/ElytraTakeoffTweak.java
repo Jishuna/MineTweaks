@@ -1,8 +1,10 @@
 package me.jishuna.minetweaks.tweak.item;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -13,14 +15,16 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import me.jishuna.minetweaks.tweak.Category;
+import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
+@RegisterTweak
 public class ElytraTakeoffTweak extends Tweak {
     private final Map<UUID, Long> forceGliding = new HashMap<>();
 
     public ElytraTakeoffTweak() {
-        this.name = "elytra-takeoff";
-        this.category = Category.ITEM;
+        super("elytra-takeoff", Category.ITEM);
+        this.description = List.of(ChatColor.GRAY + "Allows players to easily take off with an elytra by right clicking with a firework while on the ground.");
 
         registerEventConsumer(PlayerInteractEvent.class, this::onPlayerInteract);
         registerEventConsumer(EntityToggleGlideEvent.class, this::onToggleGliding);

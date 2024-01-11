@@ -1,20 +1,24 @@
 package me.jishuna.minetweaks.tweak.crafting;
 
 import com.google.common.collect.Streams;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Keyed;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import me.jishuna.jishlib.JishLib;
 import me.jishuna.minetweaks.tweak.Category;
+import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
+@RegisterTweak
 public class UnlockAllRecipesTweak extends Tweak {
 
     public UnlockAllRecipesTweak() {
-        this.name = "unlock-all-recipes";
-        this.category = Category.CRAFTING;
+        super("unlock-all-recipes", Category.CRAFTING);
+        this.description = List.of(ChatColor.GRAY + "Unlocks all recipes for players when they join the server.");
 
         registerEventConsumer(PlayerJoinEvent.class, this::onPlayerJoin);
     }

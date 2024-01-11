@@ -2,6 +2,7 @@ package me.jishuna.minetweaks.tweak.crafting;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Keyed;
 import org.bukkit.Material;
@@ -14,8 +15,10 @@ import org.bukkit.inventory.ShapelessRecipe;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
 import me.jishuna.minetweaks.tweak.Category;
+import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
+@RegisterTweak
 public class CustomCraftingRecipesTweak extends Tweak {
 
     @ConfigEntry("recipes")
@@ -23,8 +26,8 @@ public class CustomCraftingRecipesTweak extends Tweak {
     private List<Recipe> recipes = getDefaultRecipes();
 
     public CustomCraftingRecipesTweak() {
-        this.name = "custom-crafting-recipes";
-        this.category = Category.CRAFTING;
+        super("custom-crafting-recipes", Category.CRAFTING);
+        this.description = List.of(ChatColor.GRAY + "Adds various custom crafting recipes to the game.");
     }
 
     @Override

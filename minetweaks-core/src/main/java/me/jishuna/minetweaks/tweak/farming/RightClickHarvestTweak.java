@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
@@ -20,8 +21,10 @@ import me.jishuna.jishlib.JishLib;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
 import me.jishuna.minetweaks.tweak.Category;
+import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
+@RegisterTweak
 public class RightClickHarvestTweak extends Tweak {
     private final List<Vector> positions = new ArrayList<>();
 
@@ -30,8 +33,8 @@ public class RightClickHarvestTweak extends Tweak {
     private final Set<Material> harvestable = Set.of(Material.WHEAT, Material.CARROTS, Material.POTATOES, Material.BEETROOTS, Material.NETHER_WART);
 
     public RightClickHarvestTweak() {
-        this.name = "right-click-harvest";
-        this.category = Category.FARMING;
+        super("right-click-harvesting", Category.FARMING);
+        this.description = List.of(ChatColor.GRAY + "Allows players to quickly harvest fully-grown crops by right clicking.");
 
         registerEventConsumer(PlayerInteractEvent.class, this::onPlayerInteract);
         registerEventConsumer(BlockDropItemEvent.class, this::onBlockDropItems);

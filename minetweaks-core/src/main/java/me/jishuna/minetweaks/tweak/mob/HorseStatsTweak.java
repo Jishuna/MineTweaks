@@ -2,6 +2,8 @@ package me.jishuna.minetweaks.tweak.mob;
 
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
+import java.util.List;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -13,8 +15,10 @@ import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
 import me.jishuna.jishlib.util.StringUtils;
 import me.jishuna.minetweaks.tweak.Category;
+import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.TickingTweak;
 
+@RegisterTweak
 public class HorseStatsTweak extends TickingTweak {
     private static final DecimalFormat FORMAT = new DecimalFormat("##.#");
 
@@ -27,8 +31,8 @@ public class HorseStatsTweak extends TickingTweak {
     private String message = StringUtils.miniMessageToLegacy("<gold>Health: <green>{0} <dark_green>({1}%)   <gold>Speed: <green>{2} <dark_green>({3}%)   <gold>Jump: <green>{4} <dark_green>({5}%)");
 
     public HorseStatsTweak() {
-        this.name = "horse-stats";
-        this.category = Category.MOB;
+        super("horse-stat-display", Category.MOB);
+        this.description = List.of(ChatColor.GRAY + "Shows information about the speed, jump height, and health of the horse you are riding.");
     }
 
     @Override

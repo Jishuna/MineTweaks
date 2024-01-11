@@ -1,5 +1,7 @@
 package me.jishuna.minetweaks.tweak.farming;
 
+import java.util.List;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -13,8 +15,10 @@ import org.bukkit.inventory.ItemStack;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
 import me.jishuna.minetweaks.tweak.Category;
+import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
+@RegisterTweak
 public class SugarcaneBonemealTweak extends Tweak {
 
     @ConfigEntry("enable-for-players")
@@ -30,14 +34,18 @@ public class SugarcaneBonemealTweak extends Tweak {
     private int maxHeight = 5;
 
     public SugarcaneBonemealTweak() {
-        this.name = "sugarcane-bonemealing";
-        this.category = Category.FARMING;
+        super("sugarcane-bonemealing", Category.FARMING);
+        this.description = List.of(ChatColor.GRAY + "Allows players and dispensers to grow cactus using bonemeal.");
 
         registerEventConsumer(PlayerInteractEvent.class, this::onPlayerInteract);
         registerEventConsumer(BlockDispenseEvent.class, this::onBlockDispense);
     }
 
     private void onPlayerInteract(PlayerInteractEvent event) {
+        if (!this.enablePlayer) {
+            return;
+        }
+
         ItemStack item = event.getItem();
         Block block = event.getClickedBlock();
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK || item == null || item.getType() != Material.BONE_MEAL || block.getType() != Material.SUGAR_CANE) {
@@ -50,7 +58,7 @@ public class SugarcaneBonemealTweak extends Tweak {
     }
 
     private void onBlockDispense(BlockDispenseEvent event) {
-        if (event.getBlock().getType() != Material.DISPENSER) {
+        if (!this.enableDispenser || event.getBlock().getType() != Material.DISPENSER) {
             return;
         }
 

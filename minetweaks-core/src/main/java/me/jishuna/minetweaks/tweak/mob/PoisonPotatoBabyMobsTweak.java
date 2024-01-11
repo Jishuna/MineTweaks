@@ -1,5 +1,7 @@
 package me.jishuna.minetweaks.tweak.mob;
 
+import java.util.List;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -11,8 +13,10 @@ import org.bukkit.potion.PotionEffectType;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
 import me.jishuna.minetweaks.tweak.Category;
+import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
+@RegisterTweak
 public class PoisonPotatoBabyMobsTweak extends Tweak {
 
     @ConfigEntry("poison-target")
@@ -20,8 +24,8 @@ public class PoisonPotatoBabyMobsTweak extends Tweak {
     private boolean poison = true;
 
     public PoisonPotatoBabyMobsTweak() {
-        this.name = "poison-potato-baby-mobs";
-        this.category = Category.MOB;
+        super("poison-potato-baby-mobs", Category.MOB);
+        this.description = List.of(ChatColor.GRAY + "Allows players to feed poisonous potatoes to baby mobs to stop them from becoming an adult permanently.");
 
         registerEventConsumer(PlayerInteractEntityEvent.class, this::onEntityInteract);
     }

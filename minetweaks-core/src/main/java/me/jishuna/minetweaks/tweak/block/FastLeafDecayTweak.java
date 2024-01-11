@@ -2,6 +2,7 @@ package me.jishuna.minetweaks.tweak.block;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Leaves;
@@ -11,8 +12,10 @@ import me.jishuna.jishlib.JishLib;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
 import me.jishuna.minetweaks.tweak.Category;
+import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
+@RegisterTweak
 public class FastLeafDecayTweak extends Tweak {
 
     @ConfigEntry("search-radius")
@@ -20,8 +23,8 @@ public class FastLeafDecayTweak extends Tweak {
     private int searchRadius = 7;
 
     public FastLeafDecayTweak() {
-        this.name = "fast-leaf-decay";
-        this.category = Category.BLOCK;
+        super("fast-leaf-decay", Category.BLOCK);
+        this.description = List.of(ChatColor.GRAY + "Makes leaves decay much faster when the logs supporting them are broken.");
 
         registerEventConsumer(BlockBreakEvent.class, this::onBlockBreak);
     }

@@ -4,3 +4,7 @@ gui.painting.painting-name: <white>{0}
 gui.painting.painting-lore: ["<white>Size: <gray>{0}x{1}", " ", "<gray>Click to select"]
 gui.painting.no-space.name: <red>Not enough space for this painting.
 gui.painting.no-space.lore: []
+
+tweak.name: <white>{0} <gray>- {1}
+tweak.enabled: <green><bold>Enabled
+tweak.disabled: <red><bold>Disabled

@@ -1,7 +1,10 @@
 package me.jishuna.minetweaks.tweak.item;
 
+import java.util.List;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.inventory.AnvilInventory;
@@ -13,8 +16,10 @@ import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
 import me.jishuna.jishlib.item.ItemBuilder;
 import me.jishuna.minetweaks.tweak.Category;
+import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
+@RegisterTweak
 public class InfiniteWaterBucketTweak extends Tweak {
 
     @ConfigEntry("level-cost")
@@ -22,8 +27,8 @@ public class InfiniteWaterBucketTweak extends Tweak {
     private int cost = 20;
 
     public InfiniteWaterBucketTweak() {
-        this.name = "infinite-water-bucket";
-        this.category = Category.ITEM;
+        super("infinite-water-bucket", Category.ITEM);
+        this.description = List.of(ChatColor.GRAY + "Allows the creation of infinite water buckets by combining a water bucket with an infinity enchanted book in an anvil.");
 
         registerEventConsumer(PrepareAnvilEvent.class, this::onPrepareAnvil);
         registerEventConsumer(PlayerBucketEmptyEvent.class, this::onBucketEmpty);
@@ -42,7 +47,12 @@ public class InfiniteWaterBucketTweak extends Tweak {
         EnchantmentStorageMeta meta = (EnchantmentStorageMeta) second.getItemMeta();
         if (meta.hasStoredEnchant(Enchantment.ARROW_INFINITE)) {
             event.setResult(ItemBuilder.modifyClone(first).name(inventory.getRenameText()).enchantment(Enchantment.ARROW_INFINITE, 1).build());
-            inventory.setRepairCost(this.cost);
+
+            JishLib.run(() -> {
+                inventory.setRepairCost(this.cost);
+                inventory.setRepairCostAmount(1);
+                inventory.getViewers().forEach(en -> ((Player) en).updateInventory());
+            });
         }
     }
 

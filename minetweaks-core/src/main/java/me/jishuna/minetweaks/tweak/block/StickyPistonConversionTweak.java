@@ -1,5 +1,7 @@
 package me.jishuna.minetweaks.tweak.block;
 
+import java.util.List;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -11,13 +13,15 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import me.jishuna.minetweaks.tweak.Category;
+import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
+@RegisterTweak
 public class StickyPistonConversionTweak extends Tweak {
 
     public StickyPistonConversionTweak() {
-        this.name = "sticky-piston-conversion";
-        this.category = Category.BLOCK;
+        super("sticky-piston-conversion", Category.BLOCK);
+        this.description = List.of(ChatColor.GRAY + "Allows players to quickly convert pistons into sticky pistons by right clicking them while holding a slimeball.");
 
         registerEventConsumer(PlayerInteractEvent.class, this::onPlayerInteract);
     }

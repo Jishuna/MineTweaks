@@ -1,6 +1,7 @@
 package me.jishuna.minetweaks.tweak.farming;
 
 import java.util.List;
+import java.util.Map;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -15,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
 import me.jishuna.jishlib.datastructure.WeightedRandom;
+import me.jishuna.minetweaks.Utils;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
@@ -31,16 +33,26 @@ public class SandBonemealTweak extends Tweak {
     private boolean enableDispenser = true;
 
     @ConfigEntry("growth-weights")
-    @Comment("Controls the possible plants grown as well as their weight")
+    @Comment("Controls the possible plants grown as well as their weights")
     @Comment("Entries with a higher weight will be more common")
     private WeightedRandom<Material> growthChances = getDefaultChances();
 
     public SandBonemealTweak() {
         super("sand-bonemealing", Category.FARMING);
-        this.description = List.of(ChatColor.GRAY + "Allows players and dispensers to use bonemeal on sand to grow dead bushes and cactus.");
+        this.description = List
+                .of(ChatColor.GRAY + "Allows players and dispensers to use bonemeal on sand to grow dead bushes and cactus.", "",
+                        ChatColor.GRAY + "Enabled For Players: %player%",
+                        ChatColor.GRAY + "Enabled For Dispensers: %dispenser%");
 
         registerEventConsumer(PlayerInteractEvent.class, this::onPlayerInteract);
         registerEventConsumer(BlockDispenseEvent.class, this::onBlockDispense);
+    }
+
+    @Override
+    public Map<String, Object> getPlaceholders() {
+        return Map
+                .of("%player%", Utils.getDisplayString(this.enablePlayer),
+                        "%dispenser%", Utils.getDisplayString(this.enableDispenser));
     }
 
     private void onPlayerInteract(PlayerInteractEvent event) {
@@ -87,4 +99,5 @@ public class SandBonemealTweak extends Tweak {
 
         return random;
     }
+
 }

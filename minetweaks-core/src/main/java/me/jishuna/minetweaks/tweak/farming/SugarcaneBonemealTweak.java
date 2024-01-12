@@ -1,6 +1,7 @@
 package me.jishuna.minetweaks.tweak.farming;
 
 import java.util.List;
+import java.util.Map;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -14,6 +15,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
+import me.jishuna.minetweaks.Utils;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
@@ -35,10 +37,22 @@ public class SugarcaneBonemealTweak extends Tweak {
 
     public SugarcaneBonemealTweak() {
         super("sugarcane-bonemealing", Category.FARMING);
-        this.description = List.of(ChatColor.GRAY + "Allows players and dispensers to grow cactus using bonemeal.");
+        this.description = List
+                .of(ChatColor.GRAY + "Allows players and dispensers to grow cactus using bonemeal.", "",
+                        ChatColor.GRAY + "Enabled For Players: %player%",
+                        ChatColor.GRAY + "Enabled For Dispensers: %dispenser%",
+                        ChatColor.GRAY + "Max Growth Height: %max-height%");
 
         registerEventConsumer(PlayerInteractEvent.class, this::onPlayerInteract);
         registerEventConsumer(BlockDispenseEvent.class, this::onBlockDispense);
+    }
+
+    @Override
+    public Map<String, Object> getPlaceholders() {
+        return Map
+                .of("%player%", Utils.getDisplayString(this.enablePlayer),
+                        "%dispenser%", Utils.getDisplayString(this.enableDispenser),
+                        "%max-height%", ChatColor.GREEN.toString() + this.maxHeight);
     }
 
     private void onPlayerInteract(PlayerInteractEvent event) {

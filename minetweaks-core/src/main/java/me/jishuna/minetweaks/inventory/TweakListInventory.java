@@ -19,8 +19,7 @@ public class TweakListInventory extends PagedCustomInventory<Tweak, Inventory> {
     public TweakListInventory() {
         super(Bukkit.createInventory(null, 54, "Tweaks"), getSortedTweaks(), 45);
 
-        addClickConsumer(event -> event.setCancelled(true));
-
+        cancelAllClicks();
         refreshOptions();
     }
 

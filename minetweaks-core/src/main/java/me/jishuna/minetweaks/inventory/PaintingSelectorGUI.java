@@ -28,7 +28,7 @@ public class PaintingSelectorGUI extends PagedCustomInventory<Art, Inventory> {
         super(Bukkit.createInventory(null, 54, MessageAPI.get("gui.painting.name")), ALL_ART, 45);
         this.painting = painting;
 
-        addClickConsumer(event -> event.setCancelled(true));
+        cancelAllClicks();
         refreshOptions();
     }
 

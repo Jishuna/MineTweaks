@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -14,7 +15,7 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.event.Event;
 import org.bukkit.util.ChatPaginator;
 import me.jishuna.jishlib.JishLib;
-import me.jishuna.jishlib.config.ConfigApi;
+import me.jishuna.jishlib.config.ConfigAPI;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
 import me.jishuna.jishlib.util.StringUtils;
@@ -39,7 +40,7 @@ public abstract class Tweak {
     private final String name;
     private final Category category;
 
-    public Tweak(String name, Category category) {
+    protected Tweak(String name, Category category) {
         this.name = name;
         this.category = category;
 
@@ -47,15 +48,17 @@ public abstract class Tweak {
     }
 
     public void reload() {
-        ConfigApi
+        ConfigAPI
                 .createReloadable(new File(TWEAK_FOLDER, this.category.name().toLowerCase() + File.separator + this.name + ".yml"), this)
                 .saveDefaults()
                 .load();
 
+        Map<String, Object> placeholders = getPlaceholders();
         this.description = this.description
                 .stream()
                 .map(line -> ChatPaginator.wordWrap(line, 40))
                 .flatMap(Arrays::stream)
+                .map(string -> replacePlaceholders(string, placeholders))
                 .toList();
     }
 
@@ -91,6 +94,10 @@ public abstract class Tweak {
         return this.description;
     }
 
+    public Map<String, Object> getPlaceholders() {
+        return Collections.emptyMap();
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(this.name);
@@ -105,5 +112,13 @@ public abstract class Tweak {
             return false;
         }
         return Objects.equals(this.name, other.name);
+    }
+
+    private String replacePlaceholders(String input, Map<String, Object> placeholders) {
+        for (Entry<String, Object> entry : placeholders.entrySet()) {
+            input = input.replace(entry.getKey(), entry.getValue().toString());
+        }
+
+        return input;
     }
 }

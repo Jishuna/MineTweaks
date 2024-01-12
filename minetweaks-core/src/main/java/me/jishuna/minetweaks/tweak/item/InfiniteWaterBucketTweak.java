@@ -1,6 +1,7 @@
 package me.jishuna.minetweaks.tweak.item;
 
 import java.util.List;
+import java.util.Map;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -28,10 +29,17 @@ public class InfiniteWaterBucketTweak extends Tweak {
 
     public InfiniteWaterBucketTweak() {
         super("infinite-water-bucket", Category.ITEM);
-        this.description = List.of(ChatColor.GRAY + "Allows the creation of infinite water buckets by combining a water bucket with an infinity enchanted book in an anvil.");
+        this.description = List
+                .of(ChatColor.GRAY + "Allows the creation of infinite water buckets by combining a water bucket with an infinity enchanted book in an anvil.", "",
+                        ChatColor.GRAY + "Level Cost: %cost%");
 
         registerEventConsumer(PrepareAnvilEvent.class, this::onPrepareAnvil);
         registerEventConsumer(PlayerBucketEmptyEvent.class, this::onBucketEmpty);
+    }
+
+    @Override
+    public Map<String, Object> getPlaceholders() {
+        return Map.of("%cost%", ChatColor.GREEN.toString() + this.cost);
     }
 
     private void onPrepareAnvil(PrepareAnvilEvent event) {

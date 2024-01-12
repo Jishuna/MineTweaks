@@ -11,16 +11,21 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 import org.bukkit.event.Event;
+import org.bukkit.plugin.Plugin;
 import me.jishuna.jishlib.ClassScanner;
 import me.jishuna.jishlib.datastructure.Registry;
 import me.jishuna.minetweaks.MineTweaks;
+import me.jishuna.minetweaks.listener.EventManager;
 
 public class TweakRegistry extends Registry<String, Tweak> {
     private final Map<Class<? extends Event>, List<Tweak>> tweaksByEvent = new HashMap<>();
     private final Map<PacketType, List<PacketTweak>> tweaksByPacket = new HashMap<>();
     private final Set<TickingTweak> tickingTweaks = new HashSet<>();
+    private final EventManager eventManager;
 
-    public TweakRegistry() {
+    public TweakRegistry(Plugin plugin) {
+        this.eventManager = new EventManager(plugin);
+
         new ClassScanner<>(this.getClass().getClassLoader(), Tweak.class, RegisterTweak.class)
                 .forEach((Consumer<Tweak>) this::register);
 
@@ -68,6 +73,8 @@ public class TweakRegistry extends Registry<String, Tweak> {
 
     private void setupEvents(Tweak tweak) {
         if (tweak.isEnabled()) {
+            this.eventManager.registerEvents(tweak);
+            
             for (Class<? extends Event> clazz : tweak.getEventClasses()) {
                 this.tweaksByEvent.computeIfAbsent(clazz, k -> new ArrayList<>()).add(tweak);
             }

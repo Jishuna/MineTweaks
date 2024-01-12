@@ -6,12 +6,12 @@ import me.jishuna.jishlib.datastructure.Registry;
 import me.jishuna.minetweaks.tweak.TweakRegistry;
 
 public class Registries {
-    public static final TweakRegistry TWEAK;
-    public static final Registry<NamespacedKey, ItemStack> ITEM;
+    public static TweakRegistry TWEAK;
+    public static Registry<NamespacedKey, ItemStack> ITEM;
 
-    static {
+    public static void initialize(MineTweaks plugin) {
         ITEM = new Registry<>();
-        TWEAK = new TweakRegistry();
+        TWEAK = new TweakRegistry(plugin);
     }
 
     private Registries() {

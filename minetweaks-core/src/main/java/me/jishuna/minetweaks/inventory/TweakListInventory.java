@@ -20,7 +20,17 @@ public class TweakListInventory extends PagedCustomInventory<Tweak, Inventory> {
         super(Bukkit.createInventory(null, 54, "Tweaks"), getSortedTweaks(), 45);
 
         cancelAllClicks();
+
+        populate();
         refreshOptions();
+    }
+
+    private void populate() {
+        setButton(45, InventoryConstants.PREVIOUS_PAGE, (event, session) -> changePage(-1));
+        setButton(53, InventoryConstants.NEXT_PAGE, (event, session) -> changePage(1));
+        setButton(49, InventoryConstants.CLOSE_INVENTORY);
+
+        setItem(InventoryConstants.FILLER, 46, 47, 48, 50, 51, 52);
     }
 
     @Override

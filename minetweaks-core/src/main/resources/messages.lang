@@ -5,9 +5,18 @@ gui.painting.painting-lore: ["<white>Size: <gray>{0}x{1}", " ", "<gray>Click to 
 gui.painting.no-space.name: <red>Not enough space for this painting.
 gui.painting.no-space.lore: []
 
-button.previous-menu.name: <white>Previous Menu
-button.previous-menu.lore: []
+button.previous-page.name: <white>Previous Page
+button.previous-page.lore: []
+button.next-page.name: <white>Next Page
+button.next-page.lore: []
+button.close.name: <red>Close Menu
+button.close.lore: []
 
 tweak.name: <white>{0} <gray>- {1}
+tweak.toggle: <green>Click to Toggle
+tweak.status.prefix: <dark_aqua>========== <gold>Personal Tweak Toggle Status <dark_aqua>==========
+tweak.status: <gold>{0}: {1}
+tweak.status.suffix: <dark_aqua>==============================================
+
 tweak.enabled: <green><bold>Enabled
 tweak.disabled: <red><bold>Disabled

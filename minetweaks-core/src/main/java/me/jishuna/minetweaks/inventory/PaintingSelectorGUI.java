@@ -29,7 +29,13 @@ public class PaintingSelectorGUI extends PagedCustomInventory<Art, Inventory> {
         this.painting = painting;
 
         cancelAllClicks();
+
+        populate();
         refreshOptions();
+    }
+
+    private void populate() {
+        setItem(InventoryConstants.FILLER, 45, 46, 47, 48, 49, 50, 51, 52, 53);
     }
 
     @Override

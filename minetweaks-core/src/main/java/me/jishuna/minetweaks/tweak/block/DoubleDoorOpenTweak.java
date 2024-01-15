@@ -10,6 +10,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.block.data.type.Door.Hinge;
 import org.bukkit.event.Event.Result;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -38,9 +39,6 @@ public class DoubleDoorOpenTweak extends Tweak {
                 .of(ChatColor.GRAY + "Makes both sides of a double door open and close together.", "",
                         ChatColor.GRAY + "Enabled For Players: %player%",
                         ChatColor.GRAY + "Enabled For Redstone: %redstone%");
-
-        registerEventConsumer(PlayerInteractEvent.class, this::onPlayerInteract);
-        registerEventConsumer(BlockRedstoneEvent.class, this::onBlockRedstone);
     }
 
     @Override
@@ -50,6 +48,7 @@ public class DoubleDoorOpenTweak extends Tweak {
                         "%redstone%", Utils.getDisplayString(this.enableRedstone));
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onPlayerInteract(PlayerInteractEvent event) {
         Block block = event.getClickedBlock();
         if (!this.enablePlayer || event.useInteractedBlock() == Result.DENY || event.getAction() != Action.RIGHT_CLICK_BLOCK
@@ -61,6 +60,7 @@ public class DoubleDoorOpenTweak extends Tweak {
         handleConnectedDoor(block, door, !door.isOpen(), false);
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onBlockRedstone(BlockRedstoneEvent event) {
         Block block = event.getBlock();
         if (!this.enableRedstone || !Tag.DOORS.isTagged(block.getType())) {

@@ -6,6 +6,7 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Leaves;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import me.jishuna.jishlib.BlockVector;
 import me.jishuna.jishlib.JishLib;
@@ -25,10 +26,9 @@ public class FastLeafDecayTweak extends Tweak {
     public FastLeafDecayTweak() {
         super("fast-leaf-decay", Category.BLOCK);
         this.description = List.of(ChatColor.GRAY + "Makes leaves decay much faster when the logs supporting them are broken.");
-
-        registerEventConsumer(BlockBreakEvent.class, this::onBlockBreak);
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onBlockBreak(BlockBreakEvent event) {
         Block block = event.getBlock();
         if (!Tag.LOGS_THAT_BURN.isTagged(block.getType())) {

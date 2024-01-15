@@ -6,6 +6,7 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.inventory.AnvilInventory;
@@ -32,9 +33,6 @@ public class InfiniteWaterBucketTweak extends Tweak {
         this.description = List
                 .of(ChatColor.GRAY + "Allows the creation of infinite water buckets by combining a water bucket with an infinity enchanted book in an anvil.", "",
                         ChatColor.GRAY + "Level Cost: %cost%");
-
-        registerEventConsumer(PrepareAnvilEvent.class, this::onPrepareAnvil);
-        registerEventConsumer(PlayerBucketEmptyEvent.class, this::onBucketEmpty);
     }
 
     @Override
@@ -42,6 +40,7 @@ public class InfiniteWaterBucketTweak extends Tweak {
         return Map.of("%cost%", ChatColor.GREEN.toString() + this.cost);
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onPrepareAnvil(PrepareAnvilEvent event) {
         AnvilInventory inventory = event.getInventory();
         ItemStack first = inventory.getItem(0);
@@ -64,6 +63,7 @@ public class InfiniteWaterBucketTweak extends Tweak {
         }
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onBucketEmpty(PlayerBucketEmptyEvent event) {
         EntityEquipment equipment = event.getPlayer().getEquipment();
         ItemStack item = equipment.getItem(event.getHand());

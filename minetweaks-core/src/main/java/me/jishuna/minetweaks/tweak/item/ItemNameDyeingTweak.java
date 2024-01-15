@@ -5,6 +5,7 @@ import java.util.Set;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
@@ -26,10 +27,9 @@ public class ItemNameDyeingTweak extends Tweak {
     public ItemNameDyeingTweak() {
         super("item-name-dyeing", Category.ITEM);
         this.description = List.of(ChatColor.GRAY + "Allows dyeing parts or all of an items name by combining it with any color of dye in an anvil.");
-
-        registerEventConsumer(PrepareAnvilEvent.class, this::onPrepareAnvil);
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onPrepareAnvil(PrepareAnvilEvent event) {
         AnvilInventory inventory = event.getInventory();
         ItemStack first = inventory.getItem(0);

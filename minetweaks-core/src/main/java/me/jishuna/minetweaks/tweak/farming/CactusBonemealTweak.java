@@ -6,6 +6,7 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -27,8 +28,6 @@ public class CactusBonemealTweak extends Tweak {
         this.description = List
                 .of(ChatColor.GRAY + "Allows players to grow cactus using bonemeal.", "",
                         ChatColor.GRAY + "Max Growth Height: %max-height%");
-
-        registerEventConsumer(PlayerInteractEvent.class, this::onPlayerInteract);
     }
 
     @Override
@@ -36,6 +35,7 @@ public class CactusBonemealTweak extends Tweak {
         return Map.of("%max-height%", ChatColor.GREEN.toString() + this.maxHeight);
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onPlayerInteract(PlayerInteractEvent event) {
         ItemStack item = event.getItem();
         Block block = event.getClickedBlock();

@@ -10,6 +10,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Container;
 import org.bukkit.block.data.Directional;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.inventory.ItemStack;
 import me.jishuna.jishlib.config.annotation.Comment;
@@ -42,10 +43,9 @@ public class DispenserPlaceBlocksTweak extends Tweak {
     public DispenserPlaceBlocksTweak() {
         super("dispenser-block-placement", Category.DISPENSER);
         this.description = List.of(ChatColor.GRAY + "Allows dispensers to place blocks in front of them when powered.");
-
-        registerEventConsumer(BlockDispenseEvent.class, this::onBlockDispense);
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onBlockDispense(BlockDispenseEvent event) {
         if (event.getBlock().getType() != Material.DISPENSER) {
             return;

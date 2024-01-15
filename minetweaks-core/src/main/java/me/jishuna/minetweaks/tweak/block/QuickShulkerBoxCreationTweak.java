@@ -9,6 +9,7 @@ import org.bukkit.block.Container;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Result;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -22,10 +23,9 @@ public class QuickShulkerBoxCreationTweak extends Tweak {
     public QuickShulkerBoxCreationTweak() {
         super("quick-shulker-box-creation", Category.BLOCK);
         this.description = List.of(ChatColor.GRAY + "Allows players to quickly convert chests into shulker boxes by right clicking them while holding a shulker shell in each hand.");
-
-        registerEventConsumer(PlayerInteractEvent.class, this::onPlayerInteract);
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onPlayerInteract(PlayerInteractEvent event) {
         if (event.useInteractedBlock() == Result.DENY || event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getClickedBlock().getType() != Material.CHEST) {
             return;

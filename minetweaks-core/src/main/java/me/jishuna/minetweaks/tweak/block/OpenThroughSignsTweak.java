@@ -8,26 +8,31 @@ import org.bukkit.block.Container;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Result;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.RegisterTweak;
+import me.jishuna.minetweaks.tweak.ToggleableTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
 @RegisterTweak
-public class OpenThroughSignsTweak extends Tweak {
+public class OpenThroughSignsTweak extends Tweak implements ToggleableTweak {
 
     public OpenThroughSignsTweak() {
-        super("open-containers-through-signs", Category.BLOCK);
+        super("open-through-signs", Category.BLOCK);
         this.description = List
                 .of(ChatColor.GRAY + "Allows opening containers that signs are attached to by right clicking them.",
                         ChatColor.GRAY + "Sneaking will allow interacting with the sign as normal.");
-
-        registerEventConsumer(PlayerInteractEvent.class, this::onPlayerInteract);
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        if (!isEnabled(player)) {
+            return;
+        }
+
         Block block = event.getClickedBlock();
         if (event.useInteractedBlock() == Result.DENY || event.getAction() != Action.RIGHT_CLICK_BLOCK ||
                 player.isSneaking() || !Tag.WALL_SIGNS.isTagged(block.getType())) {

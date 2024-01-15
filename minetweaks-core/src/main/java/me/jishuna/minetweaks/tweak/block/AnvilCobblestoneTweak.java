@@ -7,6 +7,7 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.FallingBlock;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.RegisterTweak;
@@ -20,10 +21,9 @@ public class AnvilCobblestoneTweak extends Tweak {
         this.description = List
                 .of(ChatColor.GRAY + "Allows anvils to convert cobblestone into sand when landing on top of it.",
                         ChatColor.GRAY + "This allows for renewable sand without duplication exploits.");
-
-        registerEventConsumer(EntityChangeBlockEvent.class, this::onEntityChangeBlock);
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onEntityChangeBlock(EntityChangeBlockEvent event) {
         if (!(event.getEntity() instanceof FallingBlock block)) {
             return;

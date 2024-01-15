@@ -1,9 +1,6 @@
 package me.jishuna.minetweaks.tweak;
 
-public abstract class TickingTweak extends Tweak {
-    protected TickingTweak(String name, Category category) {
-        super(name, category);
-    }
+public interface TickingTweak {
 
-    public abstract void tick();
+    public void tick();
 }

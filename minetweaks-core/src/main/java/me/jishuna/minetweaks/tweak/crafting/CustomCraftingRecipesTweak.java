@@ -58,6 +58,13 @@ public class CustomCraftingRecipesTweak extends Tweak {
         quartz.addIngredient(Material.QUARTZ_BLOCK);
         recipes.add(quartz);
 
+        ShapedRecipe dispenserDropper = new ShapedRecipe(NamespacedKey.fromString("minetweaks:dispenser_dropper"), new ItemStack(Material.DISPENSER));
+        dispenserDropper.shape("012", "132", "012");
+        dispenserDropper.setIngredient('1', Material.STICK);
+        dispenserDropper.setIngredient('2', Material.STRING);
+        dispenserDropper.setIngredient('3', Material.DROPPER);
+        recipes.add(dispenserDropper);
+
         recipes.add(new FurnaceRecipe(NamespacedKey.fromString("minetweaks:rotten_flesh_leather"), new ItemStack(Material.LEATHER), Material.ROTTEN_FLESH, 1, 200));
 
         return recipes;

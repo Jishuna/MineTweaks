@@ -11,6 +11,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
 import org.bukkit.event.Event.Result;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -19,10 +20,11 @@ import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.RegisterTweak;
+import me.jishuna.minetweaks.tweak.ToggleableTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
 @RegisterTweak
-public class DownwardsLadderPlacementTweak extends Tweak {
+public class DownwardsLadderPlacementTweak extends Tweak implements ToggleableTweak {
 
     @ConfigEntry("max-distance")
     @Comment("The maximum distance ladders can be expanded downwards")
@@ -34,8 +36,6 @@ public class DownwardsLadderPlacementTweak extends Tweak {
                 .of(ChatColor.GRAY + "Allows building ladders downwards by right clicking on a ladder while holding a ladder.",
                         ChatColor.GRAY + "Requires a valid space below the set of ladders to place another ladder.", "",
                         ChatColor.GRAY + "Maximum Distance: %max-distance%");
-
-        registerEventConsumer(PlayerInteractEvent.class, this::onInteract);
     }
 
     @Override
@@ -43,8 +43,9 @@ public class DownwardsLadderPlacementTweak extends Tweak {
         return Map.of("%max-distance%", ChatColor.GREEN.toString() + this.maxDistance);
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onInteract(PlayerInteractEvent event) {
-        if (event.useInteractedBlock() == Result.DENY || event.getAction() != Action.RIGHT_CLICK_BLOCK) {
+        if (!isEnabled(event.getPlayer()) || event.useInteractedBlock() == Result.DENY || event.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
         }
 

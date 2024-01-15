@@ -9,6 +9,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Beehive;
 import org.bukkit.event.Event.Result;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -30,10 +31,9 @@ public class BeehiveDisplayTweak extends Tweak {
     public BeehiveDisplayTweak() {
         super("beehive-display", Category.BLOCK);
         this.description = List.of(ChatColor.GRAY + "Right clicking on a beehive or bee nest with an empty hand will show information about the amount of honey and number of bees within the hive.");
-
-        registerEventConsumer(PlayerInteractEvent.class, this::onPlayerInteract);
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getHand() != EquipmentSlot.HAND || event.useInteractedBlock() == Result.DENY || event.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;

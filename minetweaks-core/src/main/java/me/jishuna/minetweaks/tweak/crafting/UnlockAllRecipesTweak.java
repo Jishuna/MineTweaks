@@ -7,6 +7,7 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Keyed;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import me.jishuna.jishlib.JishLib;
 import me.jishuna.minetweaks.tweak.Category;
@@ -19,10 +20,9 @@ public class UnlockAllRecipesTweak extends Tweak {
     public UnlockAllRecipesTweak() {
         super("unlock-all-recipes", Category.CRAFTING);
         this.description = List.of(ChatColor.GRAY + "Unlocks all recipes for players when they join the server.");
-
-        registerEventConsumer(PlayerJoinEvent.class, this::onPlayerJoin);
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
@@ -32,7 +32,7 @@ public class UnlockAllRecipesTweak extends Tweak {
                         .filter(Keyed.class::isInstance)
                         .map(Keyed.class::cast)
                         .map(Keyed::getKey)
-                        .filter(player::hasDiscoveredRecipe)
+                        .filter(key -> !player.hasDiscoveredRecipe(key))
                         .toList())
                 .thenAccept(keys -> JishLib.run(() -> player.discoverRecipes(keys)));
     }

@@ -7,6 +7,7 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Creeper;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
@@ -35,10 +36,9 @@ public class CreeperGriefingTweak extends Tweak {
     public CreeperGriefingTweak() {
         super("nerf-creeper-griefing", Category.MOB);
         this.description = List.of(ChatColor.GRAY + "Allows reducing or disabling the damage caused by creepers when they explode.");
-
-        registerEventConsumer(EntityExplodeEvent.class, this::onEntityExplode);
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onEntityExplode(EntityExplodeEvent event) {
         if (!(event.getEntity() instanceof Creeper)) {
             return;

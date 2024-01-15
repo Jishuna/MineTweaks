@@ -11,6 +11,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
@@ -35,6 +36,10 @@ public class TorchArrowTweak extends Tweak {
     @Comment("The custom name of the torch arrow item")
     private String itemName = ChatColor.YELLOW + "Torch Arrow";
 
+    @ConfigEntry("custom-model-data")
+    @Comment("The custom model data for this item, used with resource packs.")
+    private int modelData = 0;
+
     @ConfigEntry("recipe")
     @Comment("The recipe to craft a torch arrow")
     private Recipe recipe = getDefaultRecipe();
@@ -44,9 +49,6 @@ public class TorchArrowTweak extends Tweak {
         this.description = List
                 .of(ChatColor.GRAY + "Allows the crafting of torch arrows with a torch and an arrow.",
                         ChatColor.GRAY + "Torch arrows will place torches wherever they land.");
-
-        registerEventConsumer(EntityShootBowEvent.class, this::onBowShoot);
-        registerEventConsumer(ProjectileHitEvent.class, this::onProjectileHit);
     }
 
     @Override
@@ -63,6 +65,7 @@ public class TorchArrowTweak extends Tweak {
         ItemStack item = ItemBuilder
                 .modifyItem(this.recipe.getResult())
                 .name(this.itemName)
+                .modelData(this.modelData)
                 .persistentData(KEY, PDCTypes.BOOLEAN, true)
                 .build();
 
@@ -82,6 +85,7 @@ public class TorchArrowTweak extends Tweak {
         }
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onBowShoot(EntityShootBowEvent event) {
         if (!(event.getEntity() instanceof Player) || PDCUtils.get(KEY, PDCTypes.BOOLEAN, event.getConsumable()) == null) {
             return;
@@ -91,6 +95,7 @@ public class TorchArrowTweak extends Tweak {
         PDCUtils.set(KEY, PDCTypes.BOOLEAN, event.getProjectile(), true);
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onProjectileHit(ProjectileHitEvent event) {
         if (event.getHitBlockFace() == null || PDCUtils.get(KEY, PDCTypes.BOOLEAN, event.getEntity()) == null) {
             return;

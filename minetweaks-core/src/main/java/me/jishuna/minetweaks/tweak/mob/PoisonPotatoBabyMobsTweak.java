@@ -6,6 +6,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Breedable;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -26,10 +27,9 @@ public class PoisonPotatoBabyMobsTweak extends Tweak {
     public PoisonPotatoBabyMobsTweak() {
         super("poison-potato-baby-mobs", Category.MOB);
         this.description = List.of(ChatColor.GRAY + "Allows players to feed poisonous potatoes to baby mobs to stop them from becoming an adult permanently.");
-
-        registerEventConsumer(PlayerInteractEntityEvent.class, this::onEntityInteract);
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onEntityInteract(PlayerInteractEntityEvent event) {
         ItemStack item = event.getPlayer().getEquipment().getItem(event.getHand());
 

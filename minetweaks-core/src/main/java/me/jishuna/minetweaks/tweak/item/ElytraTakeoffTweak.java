@@ -9,6 +9,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -25,11 +26,9 @@ public class ElytraTakeoffTweak extends Tweak {
     public ElytraTakeoffTweak() {
         super("elytra-takeoff", Category.ITEM);
         this.description = List.of(ChatColor.GRAY + "Allows players to easily take off with an elytra by right clicking with a firework while on the ground.");
-
-        registerEventConsumer(PlayerInteractEvent.class, this::onPlayerInteract);
-        registerEventConsumer(EntityToggleGlideEvent.class, this::onToggleGliding);
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         if (player.isGliding() || (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK)) {
@@ -59,6 +58,7 @@ public class ElytraTakeoffTweak extends Tweak {
         }
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onToggleGliding(EntityToggleGlideEvent event) {
         if (event.getEntityType() != EntityType.PLAYER || event.isGliding()) {
             return;

@@ -4,27 +4,29 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.Consumer;
-import org.bukkit.event.Event;
+import org.bukkit.Bukkit;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import me.jishuna.jishlib.ClassScanner;
 import me.jishuna.jishlib.datastructure.Registry;
 import me.jishuna.minetweaks.MineTweaks;
-import me.jishuna.minetweaks.listener.EventManager;
 
 public class TweakRegistry extends Registry<String, Tweak> {
-    private final Map<Class<? extends Event>, List<Tweak>> tweaksByEvent = new HashMap<>();
     private final Map<PacketType, List<PacketTweak>> tweaksByPacket = new HashMap<>();
     private final Set<TickingTweak> tickingTweaks = new HashSet<>();
-    private final EventManager eventManager;
+    private final Set<ToggleableTweak> toggleableTweaks = new TreeSet<>(Comparator.comparing(Tweak.class::cast));
+    private final Plugin plugin;
 
     public TweakRegistry(Plugin plugin) {
-        this.eventManager = new EventManager(plugin);
+        this.plugin = plugin;
 
         new ClassScanner<>(this.getClass().getClassLoader(), Tweak.class, RegisterTweak.class)
                 .forEach((Consumer<Tweak>) this::register);
@@ -33,12 +35,16 @@ public class TweakRegistry extends Registry<String, Tweak> {
     }
 
     public void reload() {
-        this.tweaksByEvent.clear();
         this.tweaksByPacket.clear();
         this.tickingTweaks.clear();
+        this.toggleableTweaks.clear();
 
         getValues().forEach(tweak -> {
             tweak.reload();
+
+            if (tweak instanceof ToggleableTweak toggle && tweak.isEnabled()) {
+                this.toggleableTweaks.add(toggle);
+            }
 
             setupEvents(tweak);
             setupTicking(tweak);
@@ -51,13 +57,6 @@ public class TweakRegistry extends Registry<String, Tweak> {
 
     public void register(Tweak tweak) {
         register(tweak.getName(), tweak, true);
-    }
-
-    public void processEvent(Event event) {
-        List<Tweak> tweaks = this.tweaksByEvent.get(event.getClass());
-        if (tweaks != null) {
-            tweaks.forEach(tweak -> tweak.handleEvent(event));
-        }
     }
 
     public void processPacket(PacketEvent event, PacketContainer packet) {
@@ -73,11 +72,9 @@ public class TweakRegistry extends Registry<String, Tweak> {
 
     private void setupEvents(Tweak tweak) {
         if (tweak.isEnabled()) {
-            this.eventManager.registerEvents(tweak);
-            
-            for (Class<? extends Event> clazz : tweak.getEventClasses()) {
-                this.tweaksByEvent.computeIfAbsent(clazz, k -> new ArrayList<>()).add(tweak);
-            }
+            Bukkit.getPluginManager().registerEvents(tweak, this.plugin);
+        } else {
+            HandlerList.unregisterAll(tweak);
         }
     }
 
@@ -97,5 +94,9 @@ public class TweakRegistry extends Registry<String, Tweak> {
         for (PacketType type : packetTweak.getListenedPackets()) {
             this.tweaksByPacket.computeIfAbsent(type, k -> new ArrayList<>()).add(packetTweak);
         }
+    }
+
+    public Set<ToggleableTweak> getToggleableTweaks() {
+        return this.toggleableTweaks;
     }
 }

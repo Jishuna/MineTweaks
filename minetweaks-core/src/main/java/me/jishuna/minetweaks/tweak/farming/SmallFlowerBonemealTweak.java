@@ -10,6 +10,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Container;
 import org.bukkit.block.data.Directional;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -46,9 +47,6 @@ public class SmallFlowerBonemealTweak extends Tweak {
                 .of(ChatColor.GRAY + "Allows players and dispensers to quickly duplicate small flowers with bonemeal.", "",
                         ChatColor.GRAY + "Enabled For Players: %player%",
                         ChatColor.GRAY + "Enabled For Dispensers: %dispenser%");
-
-        registerEventConsumer(PlayerInteractEvent.class, this::onPlayerInteract);
-        registerEventConsumer(BlockDispenseEvent.class, this::onBlockDispense);
     }
 
     @Override
@@ -58,6 +56,7 @@ public class SmallFlowerBonemealTweak extends Tweak {
                         "%dispenser%", Utils.getDisplayString(this.enableDispenser));
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onPlayerInteract(PlayerInteractEvent event) {
         if (!this.enablePlayer) {
             return;
@@ -76,6 +75,7 @@ public class SmallFlowerBonemealTweak extends Tweak {
         }
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onBlockDispense(BlockDispenseEvent event) {
         if (!this.enableDispenser || event.getBlock().getType() != Material.DISPENSER) {
             return;

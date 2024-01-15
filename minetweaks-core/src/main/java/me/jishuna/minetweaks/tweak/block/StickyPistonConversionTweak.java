@@ -9,6 +9,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Result;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -22,10 +23,9 @@ public class StickyPistonConversionTweak extends Tweak {
     public StickyPistonConversionTweak() {
         super("sticky-piston-conversion", Category.BLOCK);
         this.description = List.of(ChatColor.GRAY + "Allows players to quickly convert pistons into sticky pistons by right clicking them while holding a slimeball.");
-
-        registerEventConsumer(PlayerInteractEvent.class, this::onPlayerInteract);
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         if (event.useInteractedBlock() == Result.DENY || event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getItem() == null) {

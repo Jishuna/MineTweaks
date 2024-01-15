@@ -12,6 +12,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Result;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -22,10 +23,11 @@ import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.RegisterTweak;
+import me.jishuna.minetweaks.tweak.ToggleableTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
 @RegisterTweak
-public class RightClickHarvestTweak extends Tweak {
+public class RightClickHarvestTweak extends Tweak implements ToggleableTweak {
     private final List<Vector> positions = new ArrayList<>();
 
     @ConfigEntry("harvestable")
@@ -35,16 +37,14 @@ public class RightClickHarvestTweak extends Tweak {
     public RightClickHarvestTweak() {
         super("right-click-harvesting", Category.FARMING);
         this.description = List.of(ChatColor.GRAY + "Allows players to quickly harvest fully-grown crops by right clicking.");
-
-        registerEventConsumer(PlayerInteractEvent.class, this::onPlayerInteract);
-        registerEventConsumer(BlockDropItemEvent.class, this::onBlockDropItems);
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         Block block = event.getClickedBlock();
-        if (event.useInteractedBlock() == Result.DENY || event.getAction() != Action.RIGHT_CLICK_BLOCK ||
-                !this.harvestable.contains(block.getType())) {
+        if (!isEnabled(player) || event.useInteractedBlock() == Result.DENY
+                || event.getAction() != Action.RIGHT_CLICK_BLOCK || !this.harvestable.contains(block.getType())) {
             return;
         }
 
@@ -65,6 +65,7 @@ public class RightClickHarvestTweak extends Tweak {
         }
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onBlockDropItems(BlockDropItemEvent event) {
         if (!this.positions.remove(event.getBlock().getLocation().toVector())) {
             return;

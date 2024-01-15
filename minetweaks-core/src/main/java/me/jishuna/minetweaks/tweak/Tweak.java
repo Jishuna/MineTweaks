@@ -1,18 +1,14 @@
 package me.jishuna.minetweaks.tweak;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.Set;
-import java.util.function.Consumer;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.event.Event;
+import org.bukkit.event.Listener;
 import org.bukkit.util.ChatPaginator;
 import me.jishuna.jishlib.JishLib;
 import me.jishuna.jishlib.config.ConfigAPI;
@@ -20,7 +16,7 @@ import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
 import me.jishuna.jishlib.util.StringUtils;
 
-public abstract class Tweak {
+public abstract class Tweak implements Listener, Comparable<Tweak> {
     private static final File TWEAK_FOLDER = new File(JishLib.getPlugin().getDataFolder(), "Tweaks");
 
     @ConfigEntry("enabled")
@@ -34,8 +30,6 @@ public abstract class Tweak {
     @ConfigEntry("description")
     @Comment("The description of this tweak as seen in game.")
     protected List<String> description = List.of(ChatColor.GRAY + "No Description");
-
-    private final Map<Class<? extends Event>, List<Consumer<? extends Event>>> eventConsumers = new HashMap<>();
 
     private final String name;
     private final Category category;
@@ -62,22 +56,6 @@ public abstract class Tweak {
                 .toList();
     }
 
-    public <T extends Event> void registerEventConsumer(Class<T> clazz, Consumer<T> consumer) {
-        this.eventConsumers.computeIfAbsent(clazz, k -> new ArrayList<>()).add(consumer);
-    }
-
-    @SuppressWarnings("unchecked")
-    public <T extends Event> void handleEvent(T event) {
-        List<Consumer<? extends Event>> eventListeners = this.eventConsumers.get(event.getClass());
-        if (eventListeners != null) {
-            eventListeners.forEach(listener -> ((Consumer<T>) listener).accept(event));
-        }
-    }
-
-    public Set<Class<? extends Event>> getEventClasses() {
-        return Collections.unmodifiableSet(this.eventConsumers.keySet());
-    }
-
     public boolean isEnabled() {
         return this.enabled;
     }
@@ -96,6 +74,11 @@ public abstract class Tweak {
 
     public Map<String, Object> getPlaceholders() {
         return Collections.emptyMap();
+    }
+
+    @Override
+    public int compareTo(Tweak other) {
+        return this.name.compareTo(other.name);
     }
 
     @Override

@@ -6,26 +6,27 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Container;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.RegisterTweak;
+import me.jishuna.minetweaks.tweak.ToggleableTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
 @RegisterTweak
-public class OpenThroughItemFramesTweak extends Tweak {
+public class OpenThroughItemFramesTweak extends Tweak implements ToggleableTweak {
 
     public OpenThroughItemFramesTweak() {
-        super("open-containers-through-item-frames", Category.BLOCK);
+        super("open-through-item-frames", Category.BLOCK);
         this.description = List
                 .of(ChatColor.GRAY + "Allows opening containers that item frames are attached to by right clicking them.",
                         ChatColor.GRAY + "Sneaking will allow interacting with the item frame as normal.");
-
-        registerEventConsumer(PlayerInteractEntityEvent.class, this::onInteractEntity);
     }
 
+    @EventHandler(ignoreCancelled = true)
     private void onInteractEntity(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
-        if (player.isSneaking() || (!(event.getRightClicked() instanceof ItemFrame frame))) {
+        if (!isEnabled(player) || player.isSneaking() || (!(event.getRightClicked() instanceof ItemFrame frame))) {
             return;
         }
 

@@ -17,9 +17,10 @@ import me.jishuna.jishlib.util.StringUtils;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.TickingTweak;
+import me.jishuna.minetweaks.tweak.Tweak;
 
 @RegisterTweak
-public class HorseStatsTweak extends TickingTweak {
+public class HorseStatsTweak extends Tweak implements TickingTweak {
     private static final DecimalFormat FORMAT = new DecimalFormat("##.#");
 
     @ConfigEntry("require-tamed")

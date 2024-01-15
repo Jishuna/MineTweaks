@@ -4,6 +4,7 @@ import org.bukkit.EntityEffect;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import me.jishuna.jishlib.message.MessageAPI;
@@ -13,7 +14,7 @@ public class Utils {
         return value ? MessageAPI.get("tweak.enabled") : MessageAPI.get("tweak.disabled");
     }
 
-    public static void reduceDurability(LivingEntity entity, ItemStack item, EquipmentSlot slot) {
+    public static boolean reduceDurability(LivingEntity entity, ItemStack item, EquipmentSlot slot) {
         ItemMeta meta = item.getItemMeta();
 
         if (meta instanceof Damageable damagable) {
@@ -42,10 +43,20 @@ public class Utils {
                 }
 
                 entity.getEquipment().setItem(slot, null);
-                return;
+                return true;
             }
 
             item.setItemMeta(damagable);
         }
+        return false;
+    }
+
+    public static ShapedRecipe copyRecipe(ShapedRecipe original, ItemStack result) {
+        ShapedRecipe newRecipe = new ShapedRecipe(original.getKey(), result);
+        newRecipe.shape(original.getShape());
+        original.getChoiceMap().forEach(newRecipe::setIngredient);
+        newRecipe.setGroup(original.getGroup());
+
+        return newRecipe;
     }
 }

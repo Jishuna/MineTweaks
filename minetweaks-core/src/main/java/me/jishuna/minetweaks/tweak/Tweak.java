@@ -9,11 +9,13 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.util.ChatPaginator;
 import me.jishuna.jishlib.JishLib;
 import me.jishuna.jishlib.config.ConfigAPI;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
+import me.jishuna.jishlib.inventory.InventorySession;
 import me.jishuna.jishlib.util.StringUtils;
 
 public abstract class Tweak implements Listener, Comparable<Tweak> {
@@ -54,6 +56,10 @@ public abstract class Tweak implements Listener, Comparable<Tweak> {
                 .flatMap(Arrays::stream)
                 .map(string -> replacePlaceholders(string, placeholders))
                 .toList();
+    }
+
+    public void onMenuClick(InventoryClickEvent event, InventorySession session) {
+        // Do nothing by default
     }
 
     public boolean isEnabled() {

@@ -2,7 +2,6 @@ package me.jishuna.minetweaks.tweak.block;
 
 import java.util.List;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.Event.Result;
@@ -10,7 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import me.jishuna.minetweaks.Utils;
+import me.jishuna.jishlib.util.ItemUtils;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
@@ -37,11 +36,10 @@ public class FireSpongeDryingTweak extends Tweak {
         if (block.getType() != Material.WET_SPONGE || item == null || item.getType() != Material.FLINT_AND_STEEL) {
             return;
         }
+
         block.setType(Material.SPONGE);
         event.setUseItemInHand(Result.DENY);
 
-        if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
-            Utils.reduceDurability(event.getPlayer(), item, event.getHand());
-        }
+        ItemUtils.reduceDurability(event.getPlayer(), item, event.getHand());
     }
 }

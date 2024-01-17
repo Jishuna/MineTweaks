@@ -1,4 +1,4 @@
-package me.jishuna.minetweaks;
+package me.jishuna.minetweaks.util;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;

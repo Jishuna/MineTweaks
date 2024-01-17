@@ -5,6 +5,8 @@ gui.painting.painting-lore: ["<white>Size: <gray>{0}x{1}", " ", "<gray>Click to 
 gui.painting.no-space.name: <red>Not enough space for this painting.
 gui.painting.no-space.lore: []
 
+gui.tweak.name: <black>Tweaks ({0})
+
 button.previous-page.name: <white>Previous Page
 button.previous-page.lore: []
 button.next-page.name: <white>Next Page

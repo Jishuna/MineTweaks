@@ -10,6 +10,7 @@ import me.jishuna.jishlib.item.provider.TranslatedItemProvider;
 
 public class InventoryConstants {
     public static final ItemStack FILLER = ItemBuilder.create(Material.BLACK_STAINED_GLASS_PANE).name(ChatColor.AQUA.toString()).build();
+    public static final ItemStack ACCENT_FILLER = ItemBuilder.create(Material.ORANGE_STAINED_GLASS_PANE).name(ChatColor.AQUA.toString()).build();
 
     public static final ItemProvider NEXT_PAGE = TranslatedItemProvider
             .create(ItemBuilder

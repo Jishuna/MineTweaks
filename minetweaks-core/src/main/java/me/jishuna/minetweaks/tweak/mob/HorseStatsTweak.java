@@ -17,10 +17,11 @@ import me.jishuna.jishlib.util.StringUtils;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.TickingTweak;
+import me.jishuna.minetweaks.tweak.ToggleableTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
 @RegisterTweak
-public class HorseStatsTweak extends Tweak implements TickingTweak {
+public class HorseStatsTweak extends Tweak implements TickingTweak, ToggleableTweak {
     private static final DecimalFormat FORMAT = new DecimalFormat("##.#");
 
     @ConfigEntry("require-tamed")
@@ -39,7 +40,7 @@ public class HorseStatsTweak extends Tweak implements TickingTweak {
     @Override
     public void tick() {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            if (!(player.getVehicle() instanceof AbstractHorse horse) || (!horse.isTamed() && this.requireTamed)) {
+            if (!(player.getVehicle() instanceof AbstractHorse horse) || !isEnabled(player) || (!horse.isTamed() && this.requireTamed)) {
                 continue;
             }
 

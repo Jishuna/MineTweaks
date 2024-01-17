@@ -7,17 +7,21 @@ import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.profile.PlayerProfile;
 import me.jishuna.jishlib.inventory.InventorySession;
 import me.jishuna.jishlib.inventory.PagedCustomInventory;
 import me.jishuna.jishlib.item.ItemBuilder;
 import me.jishuna.jishlib.message.MessageAPI;
+import me.jishuna.jishlib.util.Utils;
 import me.jishuna.minetweaks.Registries;
 import me.jishuna.minetweaks.tweak.Tweak;
 
 public class TweakListInventory extends PagedCustomInventory<Tweak, Inventory> {
+    private static final PlayerProfile ENABLED = Utils.createProfile("ac01f6796eb63d0e8a759281d037f7b3843090f9a456a74f786d049065c914c7");
+    private static final PlayerProfile DISABLED = Utils.createProfile("548d7d1e03e1af145b0125ab841285672b421265da2ab915015f9058438ba2d8");
 
     public TweakListInventory() {
-        super(Bukkit.createInventory(null, 54, "Tweaks"), getSortedTweaks(), 45);
+        super(Bukkit.createInventory(null, 54, MessageAPI.get("gui.tweak.name", Registries.TWEAK.size())), getSortedTweaks(), 45);
 
         cancelAllClicks();
 
@@ -35,18 +39,19 @@ public class TweakListInventory extends PagedCustomInventory<Tweak, Inventory> {
 
     @Override
     protected ItemStack asItemStack(Tweak tweak) {
-        String status = tweak.isEnabled() ? MessageAPI.get("tweak.enabled") : MessageAPI.get("tweak.disabled");
+        String status = me.jishuna.minetweaks.util.Utils.getDisplayString(tweak.isEnabled());
 
         return ItemBuilder
-                .create(Material.PAPER)
+                .create(Material.PLAYER_HEAD)
                 .name(MessageAPI.get("tweak.name", tweak.getDisplayName(), status))
                 .lore(tweak.getDescription())
+                .skullProfile(tweak.isEnabled() ? ENABLED : DISABLED)
                 .build();
     }
 
     @Override
     protected void onItemClicked(InventoryClickEvent event, InventorySession session, Tweak tweak) {
-        // Do nothing
+        tweak.onMenuClick(event, session);
     }
 
     private static Collection<Tweak> getSortedTweaks() {

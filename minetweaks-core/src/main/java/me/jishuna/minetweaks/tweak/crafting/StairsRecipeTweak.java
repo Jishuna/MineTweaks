@@ -11,7 +11,7 @@ import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
-import me.jishuna.minetweaks.Utils;
+import me.jishuna.jishlib.util.RecipeUtils;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
@@ -71,7 +71,7 @@ public class StairsRecipeTweak extends Tweak {
             ItemStack result = recipe.getResult();
             result.setAmount(this.amount);
 
-            ShapedRecipe newRecipe = Utils.copyRecipe(recipe, result);
+            ShapedRecipe newRecipe = RecipeUtils.copyRecipe(recipe, result);
             Bukkit.addRecipe(newRecipe);
         }
     }

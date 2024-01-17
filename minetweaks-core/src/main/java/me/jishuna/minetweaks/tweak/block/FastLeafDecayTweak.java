@@ -1,27 +1,30 @@
 package me.jishuna.minetweaks.tweak.block;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Leaves;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.BlockBreakEvent;
-import me.jishuna.jishlib.BlockVector;
+import org.bukkit.event.block.LeavesDecayEvent;
 import me.jishuna.jishlib.JishLib;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
+import me.jishuna.minetweaks.util.ConnectedBlockProcessor;
 
 @RegisterTweak
 public class FastLeafDecayTweak extends Tweak {
+    private final Set<Block> processing = new HashSet<>();
 
-    @ConfigEntry("search-radius")
-    @Comment("The radius to search for leaves that should decay when a log is broken")
-    private int searchRadius = 7;
+    @ConfigEntry("max-blocks")
+    @Comment("The maximum number of blocks to process for fast decay")
+    private int maxBlocks = 256;
 
     public FastLeafDecayTweak() {
         super("fast-leaf-decay", Category.BLOCK);
@@ -29,38 +32,26 @@ public class FastLeafDecayTweak extends Tweak {
     }
 
     @EventHandler(ignoreCancelled = true)
-    private void onBlockBreak(BlockBreakEvent event) {
+    private void onDecay(LeavesDecayEvent event) {
         Block block = event.getBlock();
-        if (!Tag.LOGS_THAT_BURN.isTagged(block.getType())) {
+        if (this.processing.contains(block)) {
             return;
         }
 
-        JishLib.runLaterAsync(() -> {
-            List<BlockVector> blocks = getDecayableLeaves(block);
-            if (!blocks.isEmpty()) {
-                new BlockDecayRunnable(blocks, block.getWorld()).runTaskTimer(JishLib.getPlugin(), 1, 1);
-            }
-        }, 20);
+        ConnectedBlockProcessor processor = new ConnectedBlockProcessor(event.getBlock(), this.maxBlocks, this::check);
+        Collection<Block> blocks = processor.process();
+        this.processing.addAll(blocks);
+
+        if (!blocks.isEmpty()) {
+            new BlockDecayRunnable(this.processing, new ArrayList<>(blocks)).runTaskTimer(JishLib.getPlugin(), 1, 1);
+        }
     }
 
-    private List<BlockVector> getDecayableLeaves(Block source) {
-        List<BlockVector> blocks = new ArrayList<>();
-
-        for (int x = -this.searchRadius; x <= this.searchRadius; x++) {
-            for (int y = -this.searchRadius; y <= this.searchRadius; y++) {
-                for (int z = -this.searchRadius; z <= this.searchRadius; z++) {
-                    Block block = source.getRelative(x, y, z);
-                    if (!(block.getBlockData() instanceof Leaves leaves)) {
-                        continue;
-                    }
-
-                    if (!leaves.isPersistent() && leaves.getDistance() >= 7) {
-                        blocks.add(BlockVector.fromLocation(block.getLocation()));
-                    }
-                }
-            }
+    private boolean check(Block block) {
+        if (block.getBlockData() instanceof Leaves leaves) {
+            return !leaves.isPersistent() && leaves.getDistance() >= 7;
         }
 
-        return blocks;
+        return false;
     }
 }

@@ -71,10 +71,10 @@ public class TweakRegistry extends Registry<String, Tweak> {
     }
 
     private void setupEvents(Tweak tweak) {
+        HandlerList.unregisterAll(tweak);
+
         if (tweak.isEnabled()) {
             Bukkit.getPluginManager().registerEvents(tweak, this.plugin);
-        } else {
-            HandlerList.unregisterAll(tweak);
         }
     }
 

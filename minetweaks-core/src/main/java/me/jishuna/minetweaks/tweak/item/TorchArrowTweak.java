@@ -1,7 +1,7 @@
 package me.jishuna.minetweaks.tweak.item;
 
 import java.util.List;
-import org.bukkit.Bukkit;
+import java.util.Objects;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -16,78 +16,29 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
-import me.jishuna.jishlib.config.annotation.Comment;
-import me.jishuna.jishlib.config.annotation.ConfigEntry;
-import me.jishuna.jishlib.item.ItemBuilder;
 import me.jishuna.jishlib.pdc.PDCTypes;
 import me.jishuna.jishlib.pdc.PDCUtils;
-import me.jishuna.minetweaks.Registries;
+import me.jishuna.minetweaks.NamespacedKeys;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.RegisterTweak;
-import me.jishuna.minetweaks.tweak.Tweak;
 
 @RegisterTweak
-public class TorchArrowTweak extends Tweak {
+public class TorchArrowTweak extends CustomItemTweak {
     private static final NamespacedKey KEY = NamespacedKey.fromString("minetweaks:torch_arrow");
 
-    @ConfigEntry("name")
-    @Comment("The custom name of the torch arrow item")
-    private String itemName = ChatColor.YELLOW + "Torch Arrow";
-
-    @ConfigEntry("custom-model-data")
-    @Comment("The custom model data for this item, used with resource packs.")
-    private int modelData = 0;
-
-    @ConfigEntry("recipe")
-    @Comment("The recipe to craft a torch arrow")
-    private Recipe recipe = getDefaultRecipe();
-
     public TorchArrowTweak() {
-        super("torch-arrows", Category.ITEM);
+        super("torch-arrows", Category.ITEM, ChatColor.WHITE + "Torch Arrow", KEY);
         this.description = List
                 .of(ChatColor.GRAY + "Allows the crafting of torch arrows with a torch and an arrow.",
-                        ChatColor.GRAY + "Torch arrows will place torches wherever they land.");
-    }
-
-    @Override
-    public void reload() {
-        super.reload();
-
-        Bukkit.removeRecipe(KEY);
-        if (this.enabled) {
-            setup();
-        }
-    }
-
-    private void setup() {
-        ItemStack item = ItemBuilder
-                .modifyItem(this.recipe.getResult())
-                .name(this.itemName)
-                .modelData(this.modelData)
-                .persistentData(KEY, PDCTypes.BOOLEAN, true)
-                .build();
-
-        Registries.ITEM.register(KEY, item, true);
-
-        if (this.recipe instanceof ShapedRecipe shaped) {
-            ShapedRecipe finalRecipe = new ShapedRecipe(KEY, item);
-            finalRecipe.shape(shaped.getShape());
-            shaped.getChoiceMap().forEach(finalRecipe::setIngredient);
-
-            Bukkit.addRecipe(finalRecipe);
-        } else if (this.recipe instanceof ShapelessRecipe shapeless) {
-            ShapelessRecipe finalRecipe = new ShapelessRecipe(KEY, item);
-            shapeless.getChoiceList().forEach(finalRecipe::addIngredient);
-
-            Bukkit.addRecipe(finalRecipe);
-        }
+                        ChatColor.GRAY + "Torch arrows will place torches wherever they land.", "",
+                        ChatColor.GREEN + "Click to view recipe.");
     }
 
     @EventHandler(ignoreCancelled = true)
     private void onBowShoot(EntityShootBowEvent event) {
-        if (!(event.getEntity() instanceof Player) || PDCUtils.get(KEY, PDCTypes.BOOLEAN, event.getConsumable()) == null) {
+        if (!(event.getEntity() instanceof Player)
+                || !Objects.equals(PDCUtils.get(NamespacedKeys.CUSTOM_ITEM, PDCTypes.NAMESPACE, event.getConsumable()), KEY)) {
             return;
         }
 
@@ -125,7 +76,8 @@ public class TorchArrowTweak extends Tweak {
         }
     }
 
-    private static Recipe getDefaultRecipe() {
+    @Override
+    protected Recipe getDefaultRecipe() {
         ShapelessRecipe recipe = new ShapelessRecipe(KEY, new ItemStack(Material.ARROW));
         recipe.addIngredient(Material.ARROW);
         recipe.addIngredient(Material.TORCH);

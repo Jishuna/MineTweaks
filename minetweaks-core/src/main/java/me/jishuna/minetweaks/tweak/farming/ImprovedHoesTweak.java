@@ -16,7 +16,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
-import me.jishuna.minetweaks.Utils;
+import me.jishuna.jishlib.util.ItemUtils;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.ToggleableTweak;
@@ -72,7 +72,7 @@ public class ImprovedHoesTweak extends Tweak implements ToggleableTweak {
             block = world.getBlockAt(x, startingY - y, z);
             if (Tag.DIRT.isTagged(block.getType()) && block.getRelative(BlockFace.UP).getType().isAir()) {
                 block.setType(Material.FARMLAND);
-                return Utils.reduceDurability(player, item, hand);
+                return ItemUtils.reduceDurability(player, item, hand);
 
             }
         }

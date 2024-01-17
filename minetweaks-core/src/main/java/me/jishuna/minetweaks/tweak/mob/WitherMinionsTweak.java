@@ -26,7 +26,7 @@ public class WitherMinionsTweak extends Tweak {
 
     public WitherMinionsTweak() {
         super("wither-minions", Category.MOB);
-        this.description = List.of(ChatColor.GRAY + "Withers spawn %amount% " + ChatColor.GRAY + "wither skeletons when reduced to half health.");
+        this.description = List.of(ChatColor.GRAY + "Withers spawn" + ChatColor.GREEN + " %amount% " + ChatColor.GRAY + "wither skeletons when reduced to half health.");
     }
 
     @Override

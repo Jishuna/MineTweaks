@@ -35,7 +35,9 @@ public class PaintingSelectorGUI extends PagedCustomInventory<Art, Inventory> {
     }
 
     private void populate() {
-        setItem(InventoryConstants.FILLER, 45, 46, 47, 48, 49, 50, 51, 52, 53);
+        setButton(49, InventoryConstants.CLOSE_INVENTORY);
+
+        setItem(InventoryConstants.FILLER, 45, 46, 47, 48, 50, 51, 52, 53);
     }
 
     @Override

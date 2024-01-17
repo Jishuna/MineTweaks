@@ -8,7 +8,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Ageable;
 import me.jishuna.jishlib.datastructure.WeightedRandom;
-import me.jishuna.minetweaks.BlockColumnProcessor;
+import me.jishuna.minetweaks.util.BlockColumnProcessor;
 
 public class FarmingUtil {
     public static boolean tryGrowTallPlant(Block block, int maxHeight) {

@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.StringUtil;
 import me.jishuna.jishlib.command.SimpleCommandHandler;
+import me.jishuna.jishlib.util.InventoryUtils;
 import me.jishuna.minetweaks.Registries;
 
 public class GiveItemCommand extends SimpleCommandHandler {
@@ -49,7 +50,7 @@ public class GiveItemCommand extends SimpleCommandHandler {
             return true;
         }
 
-        target.getInventory().addItem(item);
+        InventoryUtils.addOrDropItem(target.getInventory(), target::getLocation, item);
         return true;
     }
 

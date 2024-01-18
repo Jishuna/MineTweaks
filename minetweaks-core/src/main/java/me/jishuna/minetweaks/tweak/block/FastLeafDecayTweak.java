@@ -23,7 +23,7 @@ public class FastLeafDecayTweak extends Tweak {
     private final Set<Block> processing = new HashSet<>();
 
     @ConfigEntry("max-blocks")
-    @Comment("The maximum number of blocks to process for fast decay")
+    @Comment("The maximum number of blocks to process for fast decay.")
     private int maxBlocks = 256;
 
     public FastLeafDecayTweak() {

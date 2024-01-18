@@ -7,10 +7,12 @@ gui.painting.no-space.lore: []
 
 gui.tweak.name: <black>Tweaks ({0})
 
-button.previous-page.name: <white>Previous Page
-button.previous-page.lore: []
 button.next-page.name: <white>Next Page
 button.next-page.lore: []
+button.previous-page.name: <white>Previous Page
+button.previous-page.lore: []
+button.previous-menu.name: <white>Previous Menu
+button.previous-menu.lore: []
 button.close.name: <red>Close Menu
 button.close.lore: []
 

@@ -2,7 +2,6 @@ package me.jishuna.minetweaks.inventory;
 
 import java.util.List;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
@@ -23,7 +22,7 @@ public class CraftingRecipeInventory extends CustomInventory<Inventory> {
     private void populate(Recipe recipe) {
         placeRecipe(recipe);
 
-        setButton(45, new ItemStack(Material.ARROW), (event, session) -> session.openPrevious());
+        setButton(45, InventoryConstants.PREVIOUS_MENU, (event, session) -> session.openPrevious());
         setButton(49, InventoryConstants.CLOSE_INVENTORY);
 
         setItem(InventoryConstants.ACCENT_FILLER, 14, 15, 16, 23, 25, 32, 33, 34);

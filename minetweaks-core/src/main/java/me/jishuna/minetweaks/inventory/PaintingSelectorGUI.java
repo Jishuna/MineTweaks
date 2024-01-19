@@ -1,5 +1,6 @@
 package me.jishuna.minetweaks.inventory;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 import org.bukkit.Art;
@@ -13,19 +14,18 @@ import org.bukkit.inventory.ItemStack;
 import me.jishuna.jishlib.inventory.InventorySession;
 import me.jishuna.jishlib.inventory.PagedCustomInventory;
 import me.jishuna.jishlib.item.ItemBuilder;
-import me.jishuna.jishlib.item.provider.ItemProvider;
-import me.jishuna.jishlib.item.provider.TranslatedItemProvider;
-import me.jishuna.jishlib.message.MessageAPI;
 import me.jishuna.jishlib.util.StringUtils;
+import me.jishuna.minetweaks.tweak.misc.PaintingSelectorTweak;
 
 public class PaintingSelectorGUI extends PagedCustomInventory<Art, Inventory> {
     private static final List<Art> ALL_ART = Arrays.asList(Art.values());
-    private static final ItemProvider NO_SPACE = TranslatedItemProvider.create(Material.BARRIER, "gui.painting.no-space.name", "gui.painting.no-space.lore");
 
+    private final PaintingSelectorTweak tweak;
     private final Painting painting;
 
-    public PaintingSelectorGUI(Painting painting) {
-        super(Bukkit.createInventory(null, 54, MessageAPI.get("gui.painting.name")), ALL_ART, 45);
+    public PaintingSelectorGUI(PaintingSelectorTweak tweak, Painting painting) {
+        super(Bukkit.createInventory(null, 54, tweak.getGuiName()), ALL_ART, 45);
+        this.tweak = tweak;
         this.painting = painting;
 
         cancelAllClicks();
@@ -48,8 +48,8 @@ public class PaintingSelectorGUI extends PagedCustomInventory<Art, Inventory> {
 
         ItemBuilder builder = ItemBuilder
                 .create(Material.PAINTING)
-                .name(MessageAPI.get("gui.painting.painting-name", name))
-                .lore(MessageAPI.getList("gui.painting.painting-lore", width, height))
+                .name(MessageFormat.format(this.tweak.getPaintingName(), name))
+                .lore(this.tweak.getPaintingLore().stream().map(string -> MessageFormat.format(string, width, height)).toList())
                 .hideAll();
 
         if (art == this.painting.getArt()) {
@@ -68,7 +68,11 @@ public class PaintingSelectorGUI extends PagedCustomInventory<Art, Inventory> {
         if (this.painting.setArt(art)) {
             refreshOptions();
         } else {
-            replaceItem(event.getSlot(), NO_SPACE, 60);
+            replaceItem(event.getSlot(), ItemBuilder
+                    .create(Material.BARRIER)
+                    .name(this.tweak.getNoSpaceName())
+                    .lore(this.tweak.getNoSpaceLore())
+                    .build(), 60);
         }
     }
 

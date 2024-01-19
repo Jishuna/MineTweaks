@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Keyed;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
@@ -14,32 +15,51 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
+import me.jishuna.jishlib.inventory.InventorySession;
+import me.jishuna.minetweaks.inventory.recipe.RecipeInventory;
+import me.jishuna.minetweaks.inventory.recipe.RecipeListInventory;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
 @RegisterTweak
 public class CustomCraftingRecipesTweak extends Tweak {
+    private final List<RecipeInventory> recipeInventories = new ArrayList<>();
 
     @ConfigEntry("recipes")
     @Comment("A list of recipes that will be added when this tweak is enabled")
     private List<Recipe> recipes = getDefaultRecipes();
 
+    private RecipeListInventory inventory;
+
     public CustomCraftingRecipesTweak() {
         super("custom-crafting-recipes", Category.CRAFTING);
-        this.description = List.of(ChatColor.GRAY + "Adds various custom crafting recipes to the game.");
+        this.description = List
+                .of(ChatColor.GRAY + "Adds various custom crafting recipes to the game.", "",
+                        ChatColor.GREEN + "Click to view recipes.");
     }
 
     @Override
     public void reload() {
         super.reload();
+        this.recipeInventories.clear();
 
         this.recipes.forEach(recipe -> {
             Bukkit.removeRecipe(((Keyed) recipe).getKey());
             if (this.enabled) {
                 Bukkit.addRecipe(recipe);
+                this.recipeInventories.add(RecipeInventory.create(recipe));
             }
         });
+
+        this.inventory = new RecipeListInventory(this.recipeInventories);
+    }
+
+    @Override
+    public void onMenuClick(InventoryClickEvent event, InventorySession session) {
+        if (this.inventory != null) {
+            session.changeTo(this.inventory, true);
+        }
     }
 
     private static List<Recipe> getDefaultRecipes() {

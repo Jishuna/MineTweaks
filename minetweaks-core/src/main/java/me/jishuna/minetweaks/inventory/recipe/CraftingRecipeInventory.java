@@ -1,19 +1,21 @@
-package me.jishuna.minetweaks.inventory;
+package me.jishuna.minetweaks.inventory.recipe;
 
 import java.util.List;
 import org.bukkit.Bukkit;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
-import me.jishuna.jishlib.inventory.CustomInventory;
+import me.jishuna.jishlib.item.ItemBuilder;
+import me.jishuna.jishlib.message.MessageAPI;
+import me.jishuna.minetweaks.inventory.InventoryConstants;
 
-public class CraftingRecipeInventory extends CustomInventory<Inventory> {
+public class CraftingRecipeInventory extends RecipeInventory {
     private static final List<Integer> INGREDIENT_SLOTS = List.of(10, 11, 12, 19, 20, 21, 28, 29, 30);
 
     public CraftingRecipeInventory(Recipe recipe) {
-        super(Bukkit.createInventory(null, 54, "Recipe"));
+        super(Bukkit.createInventory(null, 54, MessageAPI.get("gui.recipe.name")), recipe.getResult());
 
         cancelAllClicks();
         populate(recipe);
@@ -38,6 +40,8 @@ public class CraftingRecipeInventory extends CustomInventory<Inventory> {
 
     private void placeRecipe(Recipe recipe) {
         if (recipe instanceof ShapedRecipe shaped) {
+            setItem(38, ItemBuilder.create(Material.CRAFTING_TABLE).name(MessageAPI.get("recipe.shaped")).build());
+
             int row = 0;
             int col = 0;
             for (String line : shaped.getShape()) {
@@ -50,6 +54,8 @@ public class CraftingRecipeInventory extends CustomInventory<Inventory> {
                 row++;
             }
         } else if (recipe instanceof ShapelessRecipe shapeless) {
+            setItem(38, ItemBuilder.create(Material.CRAFTING_TABLE).name(MessageAPI.get("recipe.shapeless")).build());
+
             int index = 0;
             for (ItemStack item : shapeless.getIngredientList()) {
                 setItem(INGREDIENT_SLOTS.get(index++), item);

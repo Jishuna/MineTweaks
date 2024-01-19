@@ -20,8 +20,7 @@ public class FireSpongeDryingTweak extends Tweak {
     public FireSpongeDryingTweak() {
         super("fire-sponge-drying", Category.BLOCK);
         this.description = List
-                .of(ChatColor.GRAY + "Allows wet sponge to be dried when right clicked with a flint and steel.",
-                        ChatColor.GRAY + "Fire spreading to a wet sponge will also dry it.");
+                .of(ChatColor.GRAY + "Allows wet sponge to be dried when right clicked with a flint and steel.");
     }
 
     @EventHandler(ignoreCancelled = true)

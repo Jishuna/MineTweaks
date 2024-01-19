@@ -136,7 +136,6 @@ public class BuildersWandTweak extends CustomItemTweak {
     }
 
     private void placeBlocks(Collection<Block> blocks, org.bukkit.block.BlockFace face, BlockData data, Player player, ItemStack item, EquipmentSlot hand) {
-        System.out.println("run");
         final World world = player.getWorld();
         final PlayerInventory inventory = player.getInventory();
         final ItemStack required = new ItemStack(data.getPlacementMaterial(), 1);

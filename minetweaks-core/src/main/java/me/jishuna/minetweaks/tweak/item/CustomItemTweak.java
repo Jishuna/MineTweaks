@@ -13,7 +13,7 @@ import me.jishuna.jishlib.pdc.PDCTypes;
 import me.jishuna.jishlib.util.RecipeUtils;
 import me.jishuna.minetweaks.NamespacedKeys;
 import me.jishuna.minetweaks.Registries;
-import me.jishuna.minetweaks.inventory.CraftingRecipeInventory;
+import me.jishuna.minetweaks.inventory.recipe.RecipeInventory;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.Tweak;
 
@@ -32,7 +32,7 @@ public abstract class CustomItemTweak extends Tweak {
     @Comment("The recipe to craft this item")
     private Recipe recipe = getDefaultRecipe();
 
-    private CraftingRecipeInventory recipeInventory;
+    private RecipeInventory recipeInventory;
 
     protected CustomItemTweak(String name, Category category, String itemName, NamespacedKey key) {
         super(name, category);
@@ -72,7 +72,7 @@ public abstract class CustomItemTweak extends Tweak {
         Recipe finalRecipe = RecipeUtils.copyRecipe(this.recipe, this.key, item);
         Bukkit.addRecipe(finalRecipe);
 
-        this.recipeInventory = new CraftingRecipeInventory(finalRecipe);
+        this.recipeInventory = RecipeInventory.create(finalRecipe);
     }
 
     protected abstract Recipe getDefaultRecipe();

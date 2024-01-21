@@ -31,6 +31,7 @@ bukkit {
     version = rootProject.version
     main = 'me.jishuna.minetweaks.MineTweaks'
     apiVersion = '1.20'
+    authors = ['Jishuna']
     softDepend = ['ProtocolLib']
     
     commands {
@@ -38,6 +39,34 @@ bukkit {
             aliases = ['tweaks', 'mt']
             description = 'Base plugin command'
             permission = 'minetweaks.command'
+        }
+    }
+    
+    
+    permissions {
+        'minetweaks.command' {
+            description = 'Allows the usage of /minetweaks'
+            setDefault('TRUE')
+        }
+        'minetweaks.command.reload' {
+            description = 'Allows the usage of /minetweaks reload'
+            setDefault('OP')
+        }
+        'minetweaks.command.giveitem' {
+            description = 'Allows the usage of /minetweaks giveitem'
+            setDefault('OP')
+        }
+        'minetweaks.command.list' {
+            description = 'Allows the usage of /minetweaks list'
+            setDefault('TRUE')
+        }
+        'minetweaks.command.toggle' {
+            description = 'Allows the usage of /minetweaks toggle'
+            setDefault('TRUE')
+        }
+        'minetweaks.command.status' {
+            description = 'Allows the usage of /minetweaks status'
+            setDefault('TRUE')
         }
     }
 }

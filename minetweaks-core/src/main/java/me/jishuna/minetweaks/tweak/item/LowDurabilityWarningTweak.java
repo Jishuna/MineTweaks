@@ -1,4 +1,4 @@
-package me.jishuna.minetweaks.tweak.misc;
+package me.jishuna.minetweaks.tweak.item;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -28,7 +28,7 @@ public class LowDurabilityWarningTweak extends Tweak implements ToggleableTweak 
     private String message = StringUtils.miniMessageToLegacy("<gold>Your <dark_aqua>{0} <gold>only has <red>{1} <gold>durability remaining!");
 
     public LowDurabilityWarningTweak() {
-        super("low-durability-warning", Category.MISC);
+        super("low-durability-warning", Category.ITEM);
         this.description = List.of(ChatColor.GRAY + "Warns players when an items durability is getting low.");
     }
 
@@ -46,8 +46,7 @@ public class LowDurabilityWarningTweak extends Tweak implements ToggleableTweak 
             return;
         }
 
-        String name = damageable.hasDisplayName() ? damageable.getDisplayName() : 
-            StringUtils.capitalizeAll(item.getType().getKey().getKey().replace('_', ' '));
+        String name = damageable.hasDisplayName() ? damageable.getDisplayName() : StringUtils.capitalizeAll(item.getType().getKey().getKey().replace('_', ' '));
 
         player.sendMessage(MessageFormat.format(this.message, name, remaining));
     }

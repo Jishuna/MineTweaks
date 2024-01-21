@@ -1,4 +1,4 @@
-package me.jishuna.minetweaks.tweak.misc;
+package me.jishuna.minetweaks.tweak.item;
 
 import java.util.List;
 import net.md_5.bungee.api.ChatColor;
@@ -17,7 +17,7 @@ import me.jishuna.minetweaks.tweak.Tweak;
 public class InventoryCraftingTweak extends Tweak {
 
     public InventoryCraftingTweak() {
-        super("inventory-crafting-table", Category.MISC);
+        super("inventory-crafting-table", Category.ITEM);
         this.description = List.of(ChatColor.GRAY + "Allows players to use crafting tables from their inventory with the swap hand key (Default: F).");
     }
 

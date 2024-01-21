@@ -1,5 +1,6 @@
 package me.jishuna.minetweaks.inventory;
 
+import java.text.MessageFormat;
 import java.util.Collection;
 import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -10,8 +11,8 @@ import me.jishuna.jishlib.inventory.PagedCustomInventory;
 
 public class MobHeadInventory extends PagedCustomInventory<ItemStack, Inventory> {
 
-    public MobHeadInventory(Collection<ItemStack> items) {
-        super(Bukkit.createInventory(null, 54, "Mob Heads"), items, 45);
+    public MobHeadInventory(Collection<ItemStack> items, String name) {
+        super(Bukkit.createInventory(null, 54, MessageFormat.format(name, items.size())), items, 45);
 
         cancelAllClicks();
 
@@ -20,7 +21,8 @@ public class MobHeadInventory extends PagedCustomInventory<ItemStack, Inventory>
     }
 
     private void populate() {
-        setButton(45, InventoryConstants.PREVIOUS_PAGE, (event, session) -> changePage(-1));
+        setButton(45, InventoryConstants.PREVIOUS_MENU, (event, session) -> session.openPrevious());
+        setButton(52, InventoryConstants.PREVIOUS_PAGE, (event, session) -> changePage(-1));
         setButton(53, InventoryConstants.NEXT_PAGE, (event, session) -> changePage(1));
         setButton(49, InventoryConstants.CLOSE_INVENTORY);
 

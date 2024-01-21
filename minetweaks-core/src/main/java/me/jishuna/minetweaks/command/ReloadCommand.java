@@ -16,6 +16,8 @@ public class ReloadCommand extends SimpleCommandHandler {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         MessageAPI.reload();
         Registries.TWEAK.reload();
+        
+        sender.sendMessage(MessageAPI.get("command.reload.success"));
         return true;
     }
 }

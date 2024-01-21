@@ -1,4 +1,4 @@
-package me.jishuna.minetweaks.tweak.misc;
+package me.jishuna.minetweaks.tweak.item;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +19,7 @@ import me.jishuna.minetweaks.tweak.Tweak;
 public class ShulkerBoxQuickDepositTweak extends Tweak {
 
     public ShulkerBoxQuickDepositTweak() {
-        super("shulker-box-quick-deposit", Category.MISC);
+        super("shulker-box-quick-deposit", Category.ITEM);
         this.description = List.of(ChatColor.GRAY + "Allows players to quickly deposit items into shulker boxes in their inventory by right clicking.");
     }
 

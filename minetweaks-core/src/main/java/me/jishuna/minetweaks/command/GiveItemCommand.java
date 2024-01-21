@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.StringUtil;
 import me.jishuna.jishlib.command.SimpleCommandHandler;
+import me.jishuna.jishlib.message.MessageAPI;
 import me.jishuna.jishlib.util.InventoryUtils;
 import me.jishuna.minetweaks.Registries;
 
@@ -23,7 +24,7 @@ public class GiveItemCommand extends SimpleCommandHandler {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length < 1) {
-            sender.sendMessage("args");
+            sender.sendMessage(MessageAPI.get("command.invalid-arg", "none", String.join(",", Registries.ITEM.getKeys().stream().map(Object::toString).toList())));
             return true;
         }
 
@@ -31,7 +32,7 @@ public class GiveItemCommand extends SimpleCommandHandler {
         ItemStack item = Registries.ITEM.get(key);
 
         if (item == null) {
-            sender.sendMessage("item");
+            sender.sendMessage(MessageAPI.get("command.invalid-arg", args[0], String.join(", ", Registries.ITEM.getKeys().stream().map(Object::toString).toList())));
             return true;
         }
 
@@ -41,16 +42,17 @@ public class GiveItemCommand extends SimpleCommandHandler {
         } else if (sender instanceof Player player) {
             target = player;
         } else {
-            sender.sendMessage("must be player");
+            sender.sendMessage(MessageAPI.get("command.giveitem.player-only"));
             return true;
         }
 
         if (target == null) {
-            sender.sendMessage("no player");
+            sender.sendMessage(MessageAPI.get("command.giveitem.player-not-found", args[1]));
             return true;
         }
 
         InventoryUtils.addOrDropItem(target.getInventory(), target::getLocation, item);
+        sender.sendMessage(MessageAPI.get("command.giveitem.success", key, target.getName()));
         return true;
     }
 
@@ -58,6 +60,10 @@ public class GiveItemCommand extends SimpleCommandHandler {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length == 1) {
             return StringUtil.copyPartialMatches(args[0], Registries.ITEM.getKeys().stream().map(Object::toString).toList(), new ArrayList<>());
+        }
+
+        if (args.length == 2) {
+            return StringUtil.copyPartialMatches(args[1], Bukkit.getOnlinePlayers().stream().map(Player::getName).toList(), new ArrayList<>());
         }
         return Collections.emptyList();
     }

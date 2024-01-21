@@ -46,8 +46,7 @@ public class LowDurabilityWarningTweak extends Tweak implements ToggleableTweak 
             return;
         }
 
-        String name = damageable.hasDisplayName() ? damageable.getDisplayName() : StringUtils.capitalizeAll(item.getType().getKey().getKey().replace('_', ' '));
-
+        String name = damageable.hasDisplayName() ? damageable.getDisplayName() : StringUtils.formatObject(item.getType().getKey().getKey());
         player.sendMessage(MessageFormat.format(this.message, name, remaining));
     }
 }

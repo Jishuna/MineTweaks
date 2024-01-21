@@ -6,7 +6,6 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.block.data.type.Door.Hinge;
 import org.bukkit.event.Event.Result;
@@ -17,6 +16,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.joml.Math;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
+import me.jishuna.jishlib.enums.Direction;
 import me.jishuna.minetweaks.tweak.Category;
 import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
@@ -100,8 +100,9 @@ public class DoubleDoorOpenTweak extends Tweak {
     }
 
     private Block getConnectedDoor(Block block, Door door) {
-        BlockFace direction = door.getHinge() == Hinge.LEFT ? BlockFace.EAST : BlockFace.WEST;
-        Block adjacent = block.getRelative(direction);
+        Direction direction = Direction.fromBlockFace(door.getFacing());
+        direction = door.getHinge() == Hinge.LEFT ? direction.rotateClockwiseY() : direction.rotateCounterClockwiseY();
+        Block adjacent = block.getRelative(direction.getBlockFace());
         if (!(adjacent.getBlockData() instanceof Door other) || door.getHalf() != other.getHalf() ||
                 door.getFacing() != other.getFacing() || door.getHinge() == other.getHinge()) {
             return null;

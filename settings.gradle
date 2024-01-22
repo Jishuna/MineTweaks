@@ -17,3 +17,6 @@ dependencyResolutionManagement {
 }
 
 include 'minetweaks-core'
+include 'minetweaks-nms'
+include 'minetweaks-nms:latest'
+

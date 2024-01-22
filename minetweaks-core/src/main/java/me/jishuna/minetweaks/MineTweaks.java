@@ -7,6 +7,7 @@ import me.jishuna.jishlib.JishLib;
 import me.jishuna.jishlib.message.MessageAPI;
 import me.jishuna.minetweaks.command.MineTweaksCommandHandler;
 import me.jishuna.minetweaks.listener.PacketListener;
+import me.jishuna.minetweaks.nms.NMS;
 
 public class MineTweaks extends JavaPlugin {
     private static boolean hasPackets;
@@ -16,6 +17,7 @@ public class MineTweaks extends JavaPlugin {
         JishLib.initialize(this);
         MessageAPI.initialize("messages.lang");
 
+        NMS.initialize(this);
         Registries.initialize(this);
 
         PluginManager manager = Bukkit.getPluginManager();

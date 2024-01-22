@@ -25,7 +25,7 @@ public class SwingThroughGrassTweak extends Tweak {
 
     @ConfigEntry("transparent-materials")
     @Comment("A list of materials that should not block attacks")
-    private Set<Material> transparentMaterials = Set.of(Material.GRASS, Material.TALL_GRASS, Material.FERN, Material.LARGE_FERN, Material.DEAD_BUSH);
+    private Set<Material> transparentMaterials = Set.of(Material.SHORT_GRASS, Material.TALL_GRASS, Material.FERN, Material.LARGE_FERN, Material.DEAD_BUSH);
 
     public SwingThroughGrassTweak() {
         super("swing-through-grass", Category.MISC);

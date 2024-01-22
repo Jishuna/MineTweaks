@@ -10,6 +10,7 @@ jar.enabled = false
 
 dependencies {
 	implementation project(path: (':minetweaks-core'), configuration: 'shadow')
+	implementation project(path: (':minetweaks-nms'), configuration: 'shadow')
 }
 
 shadowJar {

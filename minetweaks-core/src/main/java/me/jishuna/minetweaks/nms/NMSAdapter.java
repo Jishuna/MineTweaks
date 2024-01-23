@@ -1,10 +1,8 @@
 package me.jishuna.minetweaks.nms;
 
 import org.bukkit.Location;
-import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
 
 public interface NMSAdapter {
-    public void createMovingBlock(Location location, BlockFace face, boolean extending, boolean source);
-
-    public void updatePiston(Location location, boolean extending);
+    public void activatePiston(Location location, BlockData data);
 }

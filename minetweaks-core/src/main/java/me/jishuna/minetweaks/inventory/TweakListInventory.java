@@ -21,7 +21,7 @@ public class TweakListInventory extends PagedCustomInventory<Tweak, Inventory> {
     private static final PlayerProfile DISABLED = Utils.createProfile("548d7d1e03e1af145b0125ab841285672b421265da2ab915015f9058438ba2d8");
 
     public TweakListInventory() {
-        super(Bukkit.createInventory(null, 54, MessageAPI.get("gui.tweak.name", Registries.TWEAK.size())), getSortedTweaks(), 45);
+        super(Bukkit.createInventory(null, 54, MessageAPI.getLegacy("gui.tweak.name", Registries.TWEAK.size())), getSortedTweaks(), 45);
 
         cancelAllClicks();
 
@@ -43,7 +43,7 @@ public class TweakListInventory extends PagedCustomInventory<Tweak, Inventory> {
 
         return ItemBuilder
                 .create(Material.PLAYER_HEAD)
-                .name(MessageAPI.get("tweak.name", tweak.getDisplayName(), status))
+                .name(MessageAPI.getLegacy("tweak.name", tweak.getDisplayName(), status))
                 .lore(tweak.getDescription())
                 .skullProfile(tweak.isEnabled() ? ENABLED : DISABLED)
                 .build();

@@ -10,6 +10,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractHorse;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import me.jishuna.jishlib.config.annotation.Comment;
 import me.jishuna.jishlib.config.annotation.ConfigEntry;
@@ -40,7 +41,7 @@ public class HorseStatsTweak extends Tweak implements TickingTweak, ToggleableTw
     @Override
     public void tick() {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            if (!(player.getVehicle() instanceof AbstractHorse horse) || !isEnabled(player) || (!horse.isTamed() && this.requireTamed)) {
+            if (!isEnabled(player) || !(player.getVehicle() instanceof AbstractHorse horse) || horse.getType() == EntityType.CAMEL || (!horse.isTamed() && this.requireTamed)) {
                 continue;
             }
 

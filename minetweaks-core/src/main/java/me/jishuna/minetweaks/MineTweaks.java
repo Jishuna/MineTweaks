@@ -15,7 +15,7 @@ public class MineTweaks extends JavaPlugin {
     @Override
     public void onEnable() {
         JishLib.initialize(this);
-        MessageAPI.initialize("messages.lang");
+        MessageAPI.initialize("messages.yml");
 
         NMS.initialize(this);
         Registries.initialize(this);

@@ -8,10 +8,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import me.jishuna.minetweaks.nms.NMS;
 import me.jishuna.minetweaks.tweak.Category;
-import me.jishuna.minetweaks.tweak.RegisterTweak;
 import me.jishuna.minetweaks.tweak.Tweak;
 
-@RegisterTweak
 public class BetterPistonsTweak extends Tweak {
 
     public BetterPistonsTweak() {

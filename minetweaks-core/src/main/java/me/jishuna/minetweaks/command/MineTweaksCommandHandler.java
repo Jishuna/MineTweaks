@@ -1,22 +1,21 @@
 package me.jishuna.minetweaks.command;
 
-import me.jishuna.jishlib.command.ArgumentCommandHandler;
-import me.jishuna.jishlib.command.SimpleCommandHandler;
-import me.jishuna.jishlib.message.MessageAPI;
+import me.jishuna.jishlib.command.CommandNode;
+import me.jishuna.jishlib.command.RootNode;
 import me.jishuna.minetweaks.MineTweaks;
 
-public class MineTweaksCommandHandler extends ArgumentCommandHandler {
+public class MineTweaksCommandHandler extends RootNode {
 
     public MineTweaksCommandHandler(MineTweaks plugin) {
-        super("minetweaks.command", () -> MessageAPI.get("command.no-permission"), () -> MessageAPI.get("command.invalid-arg"));
+        super("minetweaks.command");
 
-        SimpleCommandHandler listCommand = new ListTweaksCommand();
-        setDefault(listCommand);
+        CommandNode listCommand = new ListTweaksCommand();
+        setDefaultNode(listCommand);
 
-        addArgumentExecutor("reload", new ReloadCommand());
-        addArgumentExecutor("giveitem", new GiveItemCommand());
-        addArgumentExecutor("list", listCommand);
-        addArgumentExecutor("toggle", new ToggleCommand());
-        addArgumentExecutor("status", new StatusCommand());
+        addChildNode("reload", new ReloadCommand());
+        addChildNode("giveitem", new GiveItemCommand());
+        addChildNode("list", listCommand);
+        addChildNode("toggle", new ToggleCommand());
+        addChildNode("status", new StatusCommand());
     }
 }
